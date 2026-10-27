@@ -624,6 +624,33 @@ section.page{padding-top:22px}
 .ra-row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:-4px 0 12px;font-size:12.5px;color:var(--ink2)}
 .ra-b{display:flex;gap:6px;margin-left:auto}
 .ra-row .btn svg{width:14px;height:14px}
+/* 即時翻譯 */
+.tr-btn svg{width:19px;height:19px}
+.tr{display:grid;gap:12px;margin-top:4px}
+.tr-dir{display:flex;align-items:center;justify-content:center;gap:12px;font-size:15px}
+.tr-dir span{min-width:70px;text-align:center;padding:4px 10px;border:1.5px solid var(--ink);border-radius:999px;background:var(--yellow-l)}
+.tr-dir span+button+span{background:var(--aqua-l)}
+.tr-sw{width:36px;height:36px;border:1.5px solid var(--ink);border-radius:50%;background:var(--paper);display:grid;place-items:center;padding:0}
+.tr-sw svg{width:18px;height:18px}
+.tr-box{border:var(--bw) solid var(--ink);border-radius:16px;background:var(--paper);padding:8px}
+.tr .tr-in{border:0;min-height:84px;resize:vertical;padding:4px 6px;line-height:1.55}
+.tr .tr-in:focus{outline:none}
+.tr-tools{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
+.tr-tools .btn svg{width:15px;height:15px}
+#trMic.rec{background:var(--coral);animation:pulse 1s ease-in-out infinite alternate}
+.tr-out{border:var(--bw) solid var(--ink);border-radius:16px;background:var(--aqua-l);padding:12px 14px}
+.tr-res{margin:0 0 10px;font-size:22px;line-height:1.5;overflow-wrap:anywhere;font-family:"Hiragino Sans","Yu Gothic","Noto Sans JP","Huninn",sans-serif}
+.tr-wait{margin:0 0 6px;font-size:14px;color:var(--ink2)}
+.tr-acts{display:flex;gap:6px;flex-wrap:wrap}
+.tr-acts .btn svg{width:15px;height:15px}
+.tr-h{margin:6px 0 0;font-size:14px;font-weight:normal;color:var(--ink2)}
+.tr-ph{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.tr-p{display:grid;gap:2px;text-align:left;border:1.5px solid var(--ink);border-radius:12px;background:var(--paper);padding:7px 9px}
+.tr-p b{font-weight:normal;font-size:13.5px}
+.tr-p span{font-size:12px;color:var(--ink2);font-family:"Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif}
+.tr-bigt{font-size:36px!important}
+#trSayBig svg{width:18px;height:18px}
+@media (max-width:360px){.brand span{font-size:14px}}
 .gate{position:fixed;inset:0;z-index:95;background:var(--paper);display:flex;align-items:center;justify-content:center;padding:calc(20px + env(safe-area-inset-top,0px)) 18px calc(20px + env(safe-area-inset-bottom,0px));overflow-y:auto}
 .gate[hidden]{display:none}
 .gt-card{width:min(360px,100%);border:var(--bw) solid var(--ink);border-radius:26px;overflow:hidden;background:var(--paper);box-shadow:0 4px 0 var(--ink)}
@@ -881,6 +908,10 @@ noscript{display:block;padding:20px;text-align:center}
   <symbol id="wx-fog" viewBox="0 0 24 24"><g class="k" style="--sw:1.7px"><path d="M6.5 13h11a3.6 3.6 0 0 0 .4-7.2A5.5 5.5 0 0 0 7 5.2a4 4 0 0 0-.5 7.8z" style="fill:#E2E2E0"/><path d="M4 16.5h16M6 20h12"/></g></symbol>
   <symbol id="wx-storm" viewBox="0 0 24 24"><g class="k" style="--sw:1.7px"><path d="M6.5 13.5h11a3.6 3.6 0 0 0 .4-7.2A5.5 5.5 0 0 0 7 5.7a4 4 0 0 0-.5 7.8z" style="fill:#C9C5C0"/><path d="M12.5 14l-2.5 4h3l-2 4" style="stroke:#3E3A39"/></g></symbol>
   <symbol id="wx-drop" viewBox="0 0 24 24"><g class="k" style="--sw:1.8px"><path d="M12 3.5c3 4 5.5 7 5.5 10a5.5 5.5 0 0 1-11 0c0-3 2.5-6 5.5-10z" style="fill:#A8D3E6"/></g></symbol>
+  <symbol id="i-trans" viewBox="0 0 24 24"><g class="k" style="--sw:1.8px"><path d="M3.5 5h9M8 3.5V5M5.5 5c.6 3 2.6 5.6 5.5 7M10.5 5c-.6 3-2.8 6-6.5 7.5"/><path d="M12.5 20.5l4-9.5 4 9.5M14 17h5"/></g></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><g class="k" style="--sw:1.9px"><path d="M4 8h14l-3.5-3.5M20 16H6l3.5 3.5"/></g></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><g class="k" style="--sw:1.8px"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></g></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><g class="k" style="--sw:1.8px"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" style="fill:#F6D27A"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></g></symbol>
 <symbol id="i-google" viewBox="0 0 24 24"><path d="M21.6 12.2c0-.7-.1-1.3-.2-1.9H12v3.7h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3z" fill="#4285F4"/><path d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22z" fill="#34A853"/><path d="M6.4 14c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2V7.4H3.1a10 10 0 0 0 0 9.2z" fill="#FBBC05"/><path d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.4L6.4 10c.8-2.3 3-4.1 5.6-4.1z" fill="#EA4335"/></symbol>
   <symbol id="i-yen" viewBox="0 0 24 24"><g class="k"><path d="M6 4l6 8 6-8M12 12v8M8 13h8M8 17h8"/></g></symbol>
 </defs>
@@ -888,7 +919,7 @@ noscript{display:block;padding:20px;text-align:center}
 
 <header class="top">
   <a class="brand" href="#home" aria-label="回到首頁"><svg aria-hidden="true"><use href="#s-maple"/></svg><span>東京手帳</span></a><span class="top-sp"></span>
-  <span class="off-tag" id="offTag" hidden><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 9.5a14 14 0 0 1 18 0M6.5 13a9 9 0 0 1 11 0M10 16.5a4 4 0 0 1 4 0M12 20h0M4 4l16 16" fill="none" stroke="#3E3A39" stroke-width="2" stroke-linecap="round"/></svg>離線中</span><button type="button" class="bell fx-btn" id="fxBtn" aria-label="匯率換算"><svg aria-hidden="true"><use href="#i-yen"/></svg></button><button type="button" class="bell" id="bell" aria-label="看最近的留言"><svg aria-hidden="true"><use href="#i-bell"/></svg><i hidden>0</i></button>
+  <span class="off-tag" id="offTag" hidden><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 9.5a14 14 0 0 1 18 0M6.5 13a9 9 0 0 1 11 0M10 16.5a4 4 0 0 1 4 0M12 20h0M4 4l16 16" fill="none" stroke="#3E3A39" stroke-width="2" stroke-linecap="round"/></svg>離線中</span><button type="button" class="bell fx-btn tr-btn" id="trBtn" aria-label="即時翻譯"><svg aria-hidden="true"><use href="#i-trans"/></svg></button><button type="button" class="bell fx-btn" id="fxBtn" aria-label="匯率換算"><svg aria-hidden="true"><use href="#i-yen"/></svg></button><button type="button" class="bell" id="bell" aria-label="看最近的留言"><svg aria-hidden="true"><use href="#i-bell"/></svg><i hidden>0</i></button>
   <span class="sync" id="sync" role="status" title="連線中…" tabindex="0"><span class="sr">連線中…</span></span>
 </header>
 
@@ -1485,7 +1516,8 @@ function src(k){if(!k)return BLANK;if(k.indexOf("ph:")===0){var id=k.slice(3);if
 /* 使用者上傳的照片：畫面需要時才下載，不再一打開就全部載入 */
 function want(id){if(WANT[id])return;WANT[id]=1;if(DB)fetchPhoto(id);}
 function fetchPhoto(id){DB.doc("photos/"+id).get().then(function(s){if(s.exists){var v=s.data();if(v&&v.d){PHOTOS[id]=v.d;photoDone();}}}).catch(function(){WANT[id]=0;});}
-function photoDone(){clearTimeout(photoT);photoT=setTimeout(function(){renderAll(true);if(typeof FORM!=="undefined"&&FORM)Object.keys(FORM.imgs||{}).forEach(drawImgs);else if($("#sheet").classList.contains("on"))reopenSheet(true);},120);}
+function photoDone(){clearTimeout(photoT);photoT=setTimeout(function(){
+  $$("img[data-pid]").forEach(function(im){var d=PHOTOS[im.dataset.pid];if(d&&im.getAttribute("src")!==d)im.src=d;});renderAll(true);if(typeof FORM!=="undefined"&&FORM)Object.keys(FORM.imgs||{}).forEach(drawImgs);else if($("#sheet").classList.contains("on"))reopenSheet(true);},120);}
 
 /* ---------- 預設資料（第一次打開時的內容；之後的修改存在共用資料庫） ---------- */
 var DAYMETA=[
@@ -1840,7 +1872,7 @@ function openFx(){
     '<label class="fx-tax"><input type="checkbox" id="fxTax"'+(FXTAX?' checked':'')+'>標價未含稅，幫我加 10% 消費稅</label>'+
     '<div class="fx-q">'+[500,1000,3000,5000,10000,30000].map(function(v){return '<button type="button" class="chip" data-fxq="'+v+'">¥'+fxFmt(v,0)+'</button>'}).join("")+'</div>'+
     '<p class="fx-info" id="fxInfo">'+esc(fxInfo())+'</p>'+
-    '<div class="fx-acts"><button type="button" class="btn ghost sm" id="fxRef">'+ic("i-spark")+'更新匯率</button>'+(DB&&!RO?'<button type="button" class="btn ghost sm" id="fxUse">設為分帳匯率</button>':'')+'</div></div>';
+    '<div class="fx-acts"><button type="button" class="btn green sm" id="fxRec">'+ic("i-yen")+'記一筆費用</button><button type="button" class="btn ghost sm" id="fxRef">'+ic("i-spark")+'更新匯率</button>'+(DB&&!RO?'<button type="button" class="btn ghost sm" id="fxUse">設為分帳匯率</button>':'')+'</div></div>';
   openSheet(h,["fx"]);
   setTimeout(function(){var j=$("#fxJ");if(j)j.focus();},200);
   fetchFx().then(function(){var i=$("#fxInfo");if(i)i.textContent=fxInfo();fxCalc();});
@@ -1857,8 +1889,85 @@ document.addEventListener("click",function(e){var t=e.target,el;
   if((el=t.closest("[data-fxq]"))){var j=$("#fxJ");if(j){j.value=fxFmt(+el.dataset.fxq,0);fxCalc("jpy");}return;}
   if((el=t.closest("#fxSw"))){var a=$("#fxJ"),b=$("#fxT");if(a){a.value="";b.value="";a.focus();}return;}
   if((el=t.closest("#fxRef"))){var i=$("#fxInfo");if(i)i.textContent="更新中…";fetchFx(true).then(function(){if(i)i.textContent=fxInfo();fxCalc();toast(FX.r&&Date.now()-FX.t<60e3?"匯率已更新":"暫時連不上，先用之前的匯率");});return;}
+  if((el=t.closest("#fxRec"))){var jv=fxNum(($("#fxJ")||{}).value);if(!isFinite(jv)||!jv){toast("先輸入金額");return;}
+    var amt=Math.round(jv*(FXTAX?1.1:1)),me=myMember(),pre={cur:"¥",amt:amt,note:FXTAX?"含 10% 消費稅":""};if(me){pre.payers=[me];}
+    var nid=uid("e");if(typeof seg==="function")seg("ex");if(typeof go==="function")go("book");editExp(nid,true,pre);
+    toast(me?"已帶入 ¥"+fxFmt(amt,0)+"，付款人是你，填個名稱就好":"已帶入 ¥"+fxFmt(amt,0)+"，請選付款人並填名稱");return;}
   if((el=t.closest("#fxUse"))){if(!FX.r){toast("還沒有即時匯率");return;}var r=Math.round(FX.r*10000)/10000;setMeta("rate",r);renderExp();toast("分帳匯率已改成 ¥1 = NT$ "+r);return;}
 });
+
+/* 誰是我（對應分帳成員名單） */
+function myMember(){var ms=members(),n=(NAMES[MYID]||"").trim();if(!n){try{n=(localStorage.getItem("tokyo_nick")||"").trim()}catch(e){}}
+  return ms.indexOf(n)>=0?n:"";}
+
+/* ---------- 即時翻譯（中文 ⇄ 日文） ---------- */
+var TR_DIR="zj",TR_KEY=KEY+"-tr",TR_HIS=[],TRT=null,TRSEQ=0,TRLAST=null;
+try{var tc=JSON.parse(localStorage.getItem(TR_KEY)||"null");if(tc){TR_DIR=tc.d||"zj";TR_HIS=tc.h||[];}}catch(e){}
+var TR_PHR=[["洗手間在哪裡？","トイレはどこですか？"],["我要這個。","これをください。"],["多少錢？","いくらですか？"],["可以刷卡嗎？","カードは使えますか？"],
+  ["可以免稅嗎？","免税できますか？"],["有中文菜單嗎？","中国語のメニューはありますか？"],["我們有 6 個人。","6人です。"],["可以外帶嗎？","持ち帰りできますか？"],
+  ["請幫我們拍照好嗎？","写真を撮っていただけますか？"],["我對花生過敏。","ピーナッツアレルギーがあります。"],["請給我收據。","領収書をください。"],["這個有到河口湖嗎？","これは河口湖に行きますか？"]];
+function trSave(){try{localStorage.setItem(TR_KEY,JSON.stringify({d:TR_DIR,h:TR_HIS.slice(0,8)}))}catch(e){}}
+function trLangs(){return TR_DIR==="zj"?["zh-TW","ja"]:["ja","zh-TW"]}
+function trFetch(q){var l=trLangs();
+  var g="https://translate.googleapis.com/translate_a/single?client=gtx&sl="+l[0]+"&tl="+l[1]+"&dt=t&q="+encodeURIComponent(q);
+  return fetch(g).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){var out=(j&&j[0]||[]).map(function(x){return x&&x[0]||""}).join("");if(!out)throw 0;return out;})
+    .catch(function(){return fetch("https://api.mymemory.translated.net/get?q="+encodeURIComponent(q)+"&langpair="+l[0]+"|"+l[1]).then(function(r){return r.json()})
+      .then(function(j){var t=j&&j.responseData&&j.responseData.translatedText;if(!t||/MYMEMORY WARNING|QUERY LENGTH/i.test(t))throw 0;return t;});});
+}
+function openTr(){
+  var zj=TR_DIR==="zj";
+  var h='<div class="sh-eyebrow">小工具</div><h2 class="sh-title" id="shTitle">即時翻譯</h2>'+
+    '<div class="tr"><div class="tr-dir"><span>'+(zj?"中文":"日本語")+'</span><button type="button" class="tr-sw" id="trSw" aria-label="交換語言">'+ic("i-swap")+'</button><span>'+(zj?"日本語":"中文")+'</span></div>'+
+    '<div class="tr-box"><textarea class="inp tr-in" id="trIn" rows="3" placeholder="'+(zj?"輸入中文，例如：請問車站怎麼走？":"日本語を入力（例：駅はどこですか？）")+'" aria-label="要翻譯的文字"></textarea>'+
+    '<div class="tr-tools">'+(window.SpeechRecognition||window.webkitSpeechRecognition?'<button type="button" class="btn ghost sm" id="trMic">'+ic("i-mic")+'用說的</button>':'')+
+    '<button type="button" class="btn ghost sm" id="trClr">清除</button><button type="button" class="btn green sm" id="trGo">翻譯</button></div></div>'+
+    '<div class="tr-out" id="trOut" hidden></div>'+
+    '<h3 class="tr-h">常用句（沒網路也能用）</h3><div class="tr-ph">'+TR_PHR.map(function(p,i){return '<button type="button" class="tr-p" data-phr="'+i+'"><b>'+esc(p[0])+'</b><span lang="ja">'+esc(p[1])+'</span></button>'}).join("")+'</div>'+
+    (TR_HIS.length?'<h3 class="tr-h">最近翻譯過</h3><div class="tr-ph">'+TR_HIS.slice(0,6).map(function(p,i){return '<button type="button" class="tr-p" data-his="'+i+'"><b>'+esc(p[0])+'</b><span>'+esc(p[1])+'</span></button>'}).join("")+'</div>':'')+
+    '</div>';
+  openSheet(h,["tr"]);
+}
+function trShow(src,out,ja){TRLAST=[src,out,ja];var o=$("#trOut");if(!o)return;o.hidden=false;
+  o.innerHTML='<p class="tr-res" lang="'+(ja===out?"ja":"zh-Hant")+'">'+esc(out)+'</p><div class="tr-acts">'+
+    '<button type="button" class="btn sm" id="trBig">'+ic("i-spark")+'大字給對方看</button>'+
+    ('speechSynthesis' in window?'<button type="button" class="btn ghost sm" id="trSay">'+ic("i-sound")+'念出來</button>':'')+
+    '<button type="button" class="btn ghost sm" id="trCopy">'+ic("i-copy")+'複製</button></div>';}
+function trRun(){var i=$("#trIn");if(!i)return;var q=i.value.trim();if(!q){toast("先輸入要翻譯的文字");return;}
+  var o=$("#trOut");o.hidden=false;o.innerHTML='<p class="tr-wait">翻譯中…</p>';var my=++TRSEQ;
+  trFetch(q).then(function(t){if(my!==TRSEQ)return;var ja=TR_DIR==="zj"?t:q;trShow(q,t,ja);
+    TR_HIS=[[q,t,TR_DIR]].concat(TR_HIS.filter(function(x){return x[0]!==q})).slice(0,8);trSave();})
+  .catch(function(){if(my!==TRSEQ)return;var l=trLangs();
+    o.innerHTML='<p class="tr-wait">'+(navigator.onLine===false?'現在沒有網路，先用下面的常用句。':'暫時翻譯不了，請再試一次。')+'</p>'+
+      '<a class="btn ghost sm" target="_blank" rel="noopener" href="https://translate.google.com/?sl='+l[0]+'&tl='+l[1]+'&text='+encodeURIComponent(q)+'&op=translate">在 Google 翻譯開啟 ↗</a>';});}
+function trSay(text,lang){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=.9;
+  var v=speechSynthesis.getVoices().filter(function(x){return x.lang&&x.lang.replace("_","-").indexOf(lang.slice(0,2))===0})[0];if(v)u.voice=v;speechSynthesis.speak(u);}catch(e){toast("這台裝置不能念出來");}}
+function trBig(ja,zh){var ov=$("#taxi");ov.innerHTML='<div class="tx-in"><p class="tx-ask">'+(ja?'<small>請看這裡 ・ こちらをご覧ください</small>':'')+'</p><p class="tx-name tr-bigt" lang="ja">'+esc(ja)+'</p><p class="tx-zh">'+esc(zh||"")+'</p>'+
+  ('speechSynthesis' in window?'<button type="button" class="btn ghost" id="trSayBig">'+ic("i-sound")+'念出來</button> ':'')+'<button type="button" class="btn" id="taxiClose">關閉</button></div>';
+  ov.hidden=false;document.body.classList.add("lock");ov._ja=ja;}
+var TR_REC=null;
+function trMic(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return;
+  if(TR_REC){try{TR_REC.stop()}catch(e){}TR_REC=null;return;}
+  var r=new SR();r.lang=TR_DIR==="zj"?"zh-TW":"ja-JP";r.interimResults=true;r.maxAlternatives=1;TR_REC=r;
+  var b=$("#trMic");if(b)b.classList.add("rec");toast("請說話…（再按一次停止）");
+  r.onresult=function(e){var t="";for(var i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;var inp=$("#trIn");if(inp)inp.value=t;
+    if(e.results[e.results.length-1].isFinal){trRun();}};
+  r.onerror=function(){toast("沒聽清楚，請再試一次，或允許使用麥克風");};
+  r.onend=function(){TR_REC=null;var b2=$("#trMic");if(b2)b2.classList.remove("rec");};
+  try{r.start()}catch(e){TR_REC=null;}}
+document.addEventListener("click",function(e){var t=e.target,el;
+  if((el=t.closest("#trBtn"))){openTr();return;}
+  if((el=t.closest("#trSw"))){TR_DIR=TR_DIR==="zj"?"jz":"zj";trSave();var v=($("#trIn")||{}).value||"";openTr();if(v){$("#trIn").value=v;}return;}
+  if((el=t.closest("#trGo"))){trRun();return;}
+  if((el=t.closest("#trClr"))){var i=$("#trIn");if(i){i.value="";i.focus();}var o=$("#trOut");if(o)o.hidden=true;return;}
+  if((el=t.closest("#trMic"))){trMic();return;}
+  if((el=t.closest("[data-phr]"))){var p=TR_PHR[+el.dataset.phr];trBig(p[1],p[0]);return;}
+  if((el=t.closest("[data-his]"))){var hh=TR_HIS[+el.dataset.his];var ja=hh[2]==="zj"?hh[1]:hh[0],zh=hh[2]==="zj"?hh[0]:hh[1];trBig(ja,zh);return;}
+  if((el=t.closest("#trBig"))&&TRLAST){var ja2=TRLAST[2],zh2=TRLAST[2]===TRLAST[1]?TRLAST[0]:TRLAST[1];trBig(ja2,zh2);return;}
+  if((el=t.closest("#trSay"))&&TRLAST){trSay(TRLAST[1],TR_DIR==="zj"?"ja-JP":"zh-TW");return;}
+  if((el=t.closest("#trSayBig"))){var ov=$("#taxi");if(ov&&ov._ja)trSay(ov._ja,"ja-JP");return;}
+  if((el=t.closest("#trCopy"))&&TRLAST){try{navigator.clipboard.writeText(TRLAST[1]).then(function(){toast("已複製")},function(){toast("請長按文字複製")})}catch(x){toast("請長按文字複製")}return;}
+});
+document.addEventListener("keydown",function(e){if(e.target&&e.target.id==="trIn"&&e.key==="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();trRun();}});
 
 function renderTabs(){
   $("#tabs").innerHTML=DAYMETA.map(function(m,i){
@@ -2385,8 +2494,8 @@ function editSv(id,isNew){
     onDelete:isNew?null:function(){setSv(list.filter(function(s){return s.id!==id}));renderSv();closeSheet();toast("已刪除");}
   });
 }
-function editExp(id,isNew){
-  var list=clone(expList()),x=isNew?{id:id,n:"",cur:"NT$",amt:"",note:"",payers:[],share:[],paid:true}:list.filter(function(e){return e.id===id})[0];
+function editExp(id,isNew,pre){
+  var list=clone(expList()),x=isNew?Object.assign({id:id,n:"",cur:"NT$",amt:"",note:"",payers:[],share:[],paid:true},pre||{}):list.filter(function(e){return e.id===id})[0];
   var vals=Object.assign({},x,{paid:x.paid!==false,
     pay:{mode:x.payMode||"eq",sel:(x.payers||[]).slice(),val:Object.assign({},x.payAmt||{})},
     sh:{mode:x.shareMode||"eq",sel:(x.share&&x.share.length)?x.share.slice():members().slice(),val:Object.assign({},x.shareAmt||{})}});
