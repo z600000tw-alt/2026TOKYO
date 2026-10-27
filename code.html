@@ -606,6 +606,21 @@ section.page{padding-top:22px}
 .tab-wx{position:absolute;top:-9px;right:-7px;width:22px;height:22px;border:1.5px solid var(--ink);border-radius:50%;background:var(--paper);display:grid;place-items:center}
 .tab-wx svg{width:17px;height:17px}
 .tabs{padding-top:10px}
+.fx-btn{margin-right:2px}
+.fx-btn svg{width:18px;height:18px;--sw:2px}
+.fx{display:grid;gap:10px;margin-top:4px}
+.fx-row{display:flex;align-items:center;gap:8px;border:var(--bw) solid var(--ink);border-radius:16px;background:var(--yellow-l);padding:6px 10px}
+.fx-row+.fx-sw+.fx-row{background:var(--aqua-l)}
+.fx-cur{flex:none;min-width:44px;font-size:18px}
+.fx .fx-in{border:0;background:transparent;font-size:28px!important;min-height:44px;padding:0;text-align:right;font-variant-numeric:tabular-nums;width:100%}
+.fx .fx-in:focus{outline:none}
+.fx-row:focus-within{box-shadow:0 0 0 3px rgba(62,58,57,.15)}
+.fx-sw{justify-self:center;margin:-4px 0;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);padding:2px 14px;font-size:12.5px}
+.fx-tax{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2)}
+.fx-q{display:flex;flex-wrap:wrap;gap:6px}
+.fx-q .chip{font-size:13px;padding:2px 11px;cursor:pointer;background:var(--paper)}
+.fx-info{margin:0;font-size:12.5px;color:var(--ink2)}
+.fx-acts{display:flex;gap:8px;flex-wrap:wrap}
 .gate{position:fixed;inset:0;z-index:95;background:var(--paper);display:flex;align-items:center;justify-content:center;padding:calc(20px + env(safe-area-inset-top,0px)) 18px calc(20px + env(safe-area-inset-bottom,0px));overflow-y:auto}
 .gate[hidden]{display:none}
 .gt-card{width:min(360px,100%);border:var(--bw) solid var(--ink);border-radius:26px;overflow:hidden;background:var(--paper);box-shadow:0 4px 0 var(--ink)}
@@ -870,7 +885,7 @@ noscript{display:block;padding:20px;text-align:center}
 
 <header class="top">
   <a class="brand" href="#home" aria-label="回到首頁"><svg aria-hidden="true"><use href="#s-maple"/></svg><span>東京手帳</span></a><span class="top-sp"></span>
-  <span class="off-tag" id="offTag" hidden><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 9.5a14 14 0 0 1 18 0M6.5 13a9 9 0 0 1 11 0M10 16.5a4 4 0 0 1 4 0M12 20h0M4 4l16 16" fill="none" stroke="#3E3A39" stroke-width="2" stroke-linecap="round"/></svg>離線中</span><button type="button" class="bell" id="bell" aria-label="看最近的留言"><svg aria-hidden="true"><use href="#i-bell"/></svg><i hidden>0</i></button>
+  <span class="off-tag" id="offTag" hidden><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 9.5a14 14 0 0 1 18 0M6.5 13a9 9 0 0 1 11 0M10 16.5a4 4 0 0 1 4 0M12 20h0M4 4l16 16" fill="none" stroke="#3E3A39" stroke-width="2" stroke-linecap="round"/></svg>離線中</span><button type="button" class="bell fx-btn" id="fxBtn" aria-label="匯率換算"><svg aria-hidden="true"><use href="#i-yen"/></svg></button><button type="button" class="bell" id="bell" aria-label="看最近的留言"><svg aria-hidden="true"><use href="#i-bell"/></svg><i hidden>0</i></button>
   <span class="sync" id="sync" role="status" title="連線中…" tabindex="0"><span class="sr">連線中…</span></span>
 </header>
 
@@ -1137,7 +1152,8 @@ function enter(name){
     if(!online||(MODE==="code"&&!SEED_OK))return;
     return FS.collection(path("shared")).limit(1).get({source:"server"}).then(function(s){
       if(!s.empty)return;
-      var b=FS.batch();Object.keys(SEED).forEach(function(p){b.set(FS.doc(path(p)),enc(SEED[p]))});return b.commit();
+      var b=FS.batch();Object.keys(SEED).forEach(function(p){b.set(FS.doc(path(p)),enc(SEED[p]))});
+      if(!SEED["shared/meta"])b.set(FS.doc(path("shared/meta")),{created:Date.now()},{merge:true});return b.commit();
     });
   }).then(function(){
     /* 先讀回之前存的名字和頭像，沒有自己重新填的話就沿用，不會被 Google 名字或預設頭像蓋掉 */
@@ -1221,7 +1237,7 @@ function backupTrip(){
   readAll(BK_COLLS).then(function(data){
     delete data["shared/moved"];
     var n=Object.keys(data).length,d=new Date(),p2=function(x){return ("0"+x).slice(-2)};
-    var name="東京手帳備份-"+d.getFullYear()+p2(d.getMonth()+1)+p2(d.getDate())+"-"+p2(d.getHours())+p2(d.getMinutes())+".json";
+    var name=(($(".brand span")||{}).textContent||"旅行手帳")+"備份-"+d.getFullYear()+p2(d.getMonth()+1)+p2(d.getDate())+"-"+p2(d.getHours())+p2(d.getMinutes())+".json";
     var blob=new Blob([JSON.stringify({app:"tokyo-trip",v:1,at:Date.now(),data:data})],{type:"application/json"});
     var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();
     setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},4000);
@@ -1312,7 +1328,7 @@ function drawInstall(){
   if(isStandalone()||load("tokyo_noinstall"))return;var old=$("#inst");if(old)old.remove();
   var host=$("#crew")||$("#sos");if(!host)return;
   var ios=/iphone|ipad|ipod/i.test(navigator.userAgent),el=document.createElement("section");el.id="inst";el.className="inst";
-  el.innerHTML='<img src="apple-touch-icon.png" alt="" onerror="this.remove()"><div class="inst-b"><b>把東京手帳加到主畫面</b>'+
+  el.innerHTML='<img src="apple-touch-icon.png" alt="" onerror="this.remove()"><div class="inst-b"><b>把'+esc(($(".brand span")||{}).textContent||"旅行手帳")+'加到主畫面</b>'+
     (BIP?'<span>像 App 一樣一鍵打開，沒訊號也能看行程。</span><button type="button" class="btn sm green inst-go">加到主畫面</button>':
      ios?'<span>用 Safari 打開，按下方的「分享」<svg aria-hidden="true" viewBox="0 0 24 24" class="inst-sh"><path d="M12 3v12M8 7l4-4 4 4M6 11H5v10h14V11h-1" fill="none" stroke="#3E3A39" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>，再選「加入主畫面」。從主畫面打開時要再輸入一次密碼。</span>':
      '<span>點瀏覽器右上角的「⋮」，選「加到主畫面」或「安裝應用程式」。</span>')+
@@ -1399,7 +1415,7 @@ document.addEventListener("change",function(e){
       var d=new Date(bk.at||0),n=Object.keys(bk.data).length,old=$("#gate .gt-rs-go");if(old)old.remove();
       bkMsg("選好了：備份時間 "+(d.getMonth()+1)+"/"+d.getDate()+" "+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)+"，共 "+n+" 筆。按下面的紅色按鈕開始還原（成員名單和留言不會被改動）。",true);
       var b=document.createElement("button");b.type="button";b.className="btn coral gt-rs-go";b.innerHTML="<span>還原成這個備份</span>";$("#gate .adm-bk-msg").after(b);
-    }catch(x){RS_DATA=null;bkMsg("這不是東京手帳的備份檔");}};rd.readAsText(inp.files[0]);inp.value="";
+    }catch(x){RS_DATA=null;bkMsg("這不是旅行手帳的備份檔");}};rd.readAsText(inp.files[0]);inp.value="";
 });
 document.addEventListener("submit",function(e){
   var f=e.target;if(!f.classList||!f.classList.contains("gt-f")||!f.querySelector("#gtNick"))return;e.preventDefault();
@@ -1480,7 +1496,7 @@ var DAYMETA=[
   extra:'<g class="k float" style="--sw:1.8px"><circle cx="70" cy="44" r="10" fill="#F6D27A"/><path d="M70 54 Q66 68 70 88"/></g><g class="k float b" style="--sw:1.8px"><circle cx="252" cy="50" r="10" fill="#A8D3E6"/><path d="M252 60 Q256 74 252 92"/></g>'},
  {d:"11/21",w:"六",title:"回家",bg:"#E6F1DE",stay:"",art:[["s-cloud",236,10,52,"drift b"],["s-plane",132,12,80,"float"],["s-house",28,18,78]]}
 ];
-var HERO={tag:"畢導旅行團出花~~~!",title:"東京 11/14 – 11/21",route:"東京・橫濱・鎌倉・河口湖・迪士尼",len:"7 晚 8 天"};
+var HERO={brand:"東京手帳",tag:"畢導旅行團出花~~~!",title:"東京 11/14 – 11/21",route:"東京・橫濱・鎌倉・河口湖・迪士尼",len:"7 晚 8 天"};
 var FLIGHTS=[
  {dir:"去程",date:"11/14（六）",no:"星宇 JX802",fc:"TPE",ft:"10:10",fn:"桃園 第1航廈",tc:"NRT",tt:"14:20",tn:"成田 第2航廈",dur:"3h10m"},
  {dir:"回程",date:"11/21（六）",no:"星宇 JX801",fc:"NRT",ft:"12:45",fn:"成田 第2航廈",tc:"TPE",tt:"16:50",tn:"桃園 第1航廈",dur:"4h05m"}
@@ -1736,7 +1752,10 @@ function tick(){
 }
 
 /* ---------- 首頁、航班 ---------- */
-function renderHero(){var h=hero();
+function applyBrand(n){n=String(n||"").trim()||"東京手帳";var bs=$(".brand span");if(bs&&bs.textContent!==n)bs.textContent=n;
+  var ib=$("#inst b");if(ib)ib.textContent="把"+n+"加到主畫面";var m=document.querySelector('meta[name="apple-mobile-web-app-title"]');if(m)m.setAttribute("content",n);try{localStorage.setItem(KEY+"-brand",n)}catch(e){}}
+try{var cb=localStorage.getItem(KEY+"-brand");if(cb)document.addEventListener("DOMContentLoaded",function(){applyBrand(cb)});}catch(e){}
+function renderHero(){var h=hero();applyBrand(h.brand);
   $("#heroTag").textContent=h.tag;$("#heroTitle").textContent=h.title;
   $("#heroRoute").innerHTML=String(h.route||"").split(/[・,，、]/).filter(Boolean).map(function(x){return '<b>'+esc(x.trim())+'</b>'}).join('<i></i>')+(h.len?'　'+esc(h.len):'');}
 function renderFlights(){
@@ -1790,6 +1809,53 @@ function wxHTML(i){var w=WX[i],l=WXLOC[i];
 function wxTabs(){DAYMETA.forEach(function(m,i){var t=$("#tab"+i);if(!t)return;var o=t.querySelector(".tab-wx");if(o)o.remove();var w=WX[i];if(!w)return;
   var n=WXN[w.c]||["","cloud"];var e=document.createElement("i");e.className="tab-wx";e.setAttribute("aria-hidden","true");e.innerHTML=ic("wx-"+n[1]);t.appendChild(e);});}
 document.addEventListener("visibilitychange",function(){if(!document.hidden)fetchWx();});
+
+/* ---------- 即時匯率換算（日幣 ⇄ 台幣） ---------- */
+var FX={r:null,t:0,src:""},FX_KEY=KEY+"-fx",FXTAX=false,FXLAST="jpy";
+try{var fc=JSON.parse(localStorage.getItem(FX_KEY)||"null");if(fc&&fc.r)FX=fc;}catch(e){}
+function fetchFx(force){
+  if(!window.fetch)return Promise.resolve();
+  if(!force&&FX.r&&Date.now()-FX.t<30*60e3)return Promise.resolve();
+  function save(r,src){if(!(r>0))throw 0;FX={r:r,t:Date.now(),src:src};try{localStorage.setItem(FX_KEY,JSON.stringify(FX))}catch(e){}}
+  return fetch("https://open.er-api.com/v6/latest/JPY").then(function(r){return r.json()}).then(function(j){save(j&&j.rates&&j.rates.TWD,"ExchangeRate-API");})
+    .catch(function(){return fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/jpy.json").then(function(r){return r.json()}).then(function(j){save(j&&j.jpy&&j.jpy.twd,"fawazahmed0");});})
+    .catch(function(){});
+}
+function fxRate(){return FX.r||rate()}
+function fxNum(v){v=String(v||"").replace(/[^\d.]/g,"");return v===""?NaN:+v}
+function fxFmt(n,d){if(!isFinite(n))return "";return n.toLocaleString("en-US",{maximumFractionDigits:d})}
+function fxInfo(){
+  if(!FX.r)return '暫時抓不到即時匯率，先用分帳匯率 ¥1 = NT$ '+rate();
+  var d=new Date(FX.t),old=Date.now()-FX.t>6*3600e3;
+  return '¥1 = NT$ '+fxFmt(FX.r,4)+'　'+(old?'（'+(d.getMonth()+1)+'/'+d.getDate()+' '+p2(d.getHours())+':'+p2(d.getMinutes())+' 的匯率，連上網會更新）':'（'+p2(d.getHours())+':'+p2(d.getMinutes())+' 更新）');
+}
+function openFx(){
+  var h='<div class="sh-eyebrow">小工具</div><h2 class="sh-title" id="shTitle">匯率換算</h2>'+
+    '<div class="fx"><label class="fx-row"><span class="fx-cur">¥</span><input class="inp fx-in" id="fxJ" inputmode="decimal" autocomplete="off" placeholder="日幣" aria-label="日幣金額"></label>'+
+    '<button type="button" class="fx-sw" id="fxSw">清除</button>'+
+    '<label class="fx-row"><span class="fx-cur">NT$</span><input class="inp fx-in" id="fxT" inputmode="decimal" autocomplete="off" placeholder="台幣" aria-label="台幣金額"></label>'+
+    '<label class="fx-tax"><input type="checkbox" id="fxTax"'+(FXTAX?' checked':'')+'>標價未含稅，幫我加 10% 消費稅</label>'+
+    '<div class="fx-q">'+[500,1000,3000,5000,10000,30000].map(function(v){return '<button type="button" class="chip" data-fxq="'+v+'">¥'+fxFmt(v,0)+'</button>'}).join("")+'</div>'+
+    '<p class="fx-info" id="fxInfo">'+esc(fxInfo())+'</p>'+
+    '<div class="fx-acts"><button type="button" class="btn ghost sm" id="fxRef">'+ic("i-spark")+'更新匯率</button>'+(DB&&!RO?'<button type="button" class="btn ghost sm" id="fxUse">設為分帳匯率</button>':'')+'</div></div>';
+  openSheet(h,["fx"]);
+  setTimeout(function(){var j=$("#fxJ");if(j)j.focus();},200);
+  fetchFx().then(function(){var i=$("#fxInfo");if(i)i.textContent=fxInfo();fxCalc();});
+}
+function fxCalc(from){
+  from=from||FXLAST;FXLAST=from;var r=fxRate(),k=FXTAX?1.1:1,j=$("#fxJ"),t=$("#fxT");if(!j||!t)return;
+  if(from==="jpy"){var a=fxNum(j.value);t.value=isFinite(a)?fxFmt(a*k*r,0):"";}
+  else{var b=fxNum(t.value);j.value=isFinite(b)?fxFmt(b/r/k,0):"";}
+}
+document.addEventListener("input",function(e){if(e.target.id==="fxJ")fxCalc("jpy");else if(e.target.id==="fxT")fxCalc("twd");else if(e.target.id==="fxTax"){FXTAX=e.target.checked;fxCalc();}});
+document.addEventListener("change",function(e){if(e.target.id==="fxTax"){FXTAX=e.target.checked;fxCalc();}});
+document.addEventListener("click",function(e){var t=e.target,el;
+  if((el=t.closest("#fxBtn"))){openFx();return;}
+  if((el=t.closest("[data-fxq]"))){var j=$("#fxJ");if(j){j.value=fxFmt(+el.dataset.fxq,0);fxCalc("jpy");}return;}
+  if((el=t.closest("#fxSw"))){var a=$("#fxJ"),b=$("#fxT");if(a){a.value="";b.value="";a.focus();}return;}
+  if((el=t.closest("#fxRef"))){var i=$("#fxInfo");if(i)i.textContent="更新中…";fetchFx(true).then(function(){if(i)i.textContent=fxInfo();fxCalc();toast(FX.r&&Date.now()-FX.t<60e3?"匯率已更新":"暫時連不上，先用之前的匯率");});return;}
+  if((el=t.closest("#fxUse"))){if(!FX.r){toast("還沒有即時匯率");return;}var r=Math.round(FX.r*10000)/10000;setMeta("rate",r);renderExp();toast("分帳匯率已改成 ¥1 = NT$ "+r);return;}
+});
 
 function renderTabs(){
   $("#tabs").innerHTML=DAYMETA.map(function(m,i){
@@ -2333,7 +2399,7 @@ function editFlight(i){
 function editHero(){
   var h=hero();
   openForm({eyebrow:"編輯首頁",title:"標題與路線",values:h,
-    fields:[{k:"tag",label:"小標語"},{k:"title",label:"大標題"},{k:"route",label:"路線（用「・」分隔）"},{k:"len",label:"天數"}],
+    fields:[{k:"brand",label:"網站名稱（左上角，也是加到主畫面時的名字）",ph:"例如：東京手帳"},{k:"tag",label:"小標語"},{k:"title",label:"大標題"},{k:"route",label:"路線（用「・」分隔）"},{k:"len",label:"天數"}],
     onSave:function(v){setMeta("hero",v);renderHero();closeSheet();toast("已儲存");}
   });
 }
