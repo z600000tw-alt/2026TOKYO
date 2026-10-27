@@ -1063,6 +1063,8 @@ function hex(buf){return Array.prototype.map.call(new Uint8Array(buf),function(b
 function sha(s){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)).then(hex)}
 
 /* ---------- 登入後：確認權限、第一次自動搬入原本的資料 ---------- */
+var ENTRY={nick:false,av:false};
+document.addEventListener("change",function(e){if(e.target&&e.target.name==="gtAv")ENTRY.av=true;});
 var ENTERED=false,SEED_OK=false,MOVING=false,STARTED=false;
 function enter(name){
   if(ENTERED)return;ENTERED=true;
@@ -1078,8 +1080,14 @@ function enter(name){
       var b=FS.batch();Object.keys(SEED).forEach(function(p){b.set(FS.doc(path(p)),enc(SEED[p]))});return b.commit();
     });
   }).then(function(){
-    FS.doc(path("users/"+ME.uid)).set({name:name||"旅伴",av:myAv(),g:gLinked()?1:0,gmail:gLinked()?gEmail():"",at:Date.now()},{merge:true}).catch(function(){});
-    hideGate();account(name);resolveReady(true);crew();setTimeout(drawInstall,900);setTimeout(admState,800);
+    /* 先讀回之前存的名字和頭像，沒有自己重新填的話就沿用，不會被 Google 名字或預設頭像蓋掉 */
+    var uref=FS.doc(path("users/"+ME.uid));
+    return uref.get().then(function(sn){return sn.exists?(sn.data()||{}):{}},function(){return {}}).then(function(d){
+      var nm=(ENTRY.nick||!d.name)?(name||"旅伴"):d.name,av=(ENTRY.av||!AVN[d.av])?myAv():d.av;
+      store("tokyo_nick",nm);store("tokyo_av",av);NICK=nm;
+      uref.set({name:nm,av:av,g:gLinked()?1:0,gmail:gLinked()?gEmail():"",at:Date.now()},{merge:true}).catch(function(){});
+      hideGate();account(nm);resolveReady(true);crew();setTimeout(drawInstall,900);setTimeout(admState,800);
+    });
     if(MODE==="code")FS.doc(path("shared/moved")).onSnapshot(function(sn){
       if(sn.exists&&!MOVING){store("tokyo_code",null);store("tokyo_moved","1");location.reload();}},function(){});
   }).catch(function(e){if(e!=="denied"){ENTERED=false;busy(false);err("連線失敗，請檢查網路後再試一次");}});
@@ -1266,7 +1274,7 @@ document.addEventListener("click",function(e){
     if(inLine()){err("LINE 裡面不能登入 Google，請點右上角「⋯」選「用瀏覽器開啟」");return;}
     var av=pickedAv();if(av)store("tokyo_av",av);err("");
     AUTH.signInWithPopup(gProvider()).then(function(r){ME=r.user;var nm=nick||(r.user.displayName||"旅伴").slice(0,12);
-      busy(true,"確認中…");return tryCode(code,nm,false);}).catch(function(x){busy(false,"進入");var m=gMsg(x);if(m)err(m);});
+      ENTRY.nick=!!nick;busy(true,"確認中…");return tryCode(code,nm,false);}).catch(function(x){busy(false,"進入");var m=gMsg(x);if(m)err(m);});
     return;}
   if(t.closest(".gl-link")){
     if(inLine()){glErr("LINE 裡面不能登入 Google，請點右上角「⋯」選「用瀏覽器開啟」");return;}
@@ -1293,7 +1301,7 @@ document.addEventListener("submit",function(e){
   var av=pickedAv();if(av)store("tokyo_av",av);
   if(!ci){store("tokyo_nick",nick);NICK=nick;busy(true,"儲存中…");FS.doc(path("users/"+ME.uid)).set({name:nick,av:av,at:Date.now()},{merge:true}).then(function(){location.reload();},function(){location.reload();});return;}
   var code=ci.value.trim();err("");busy(true,"確認中…");
-  tryCode(code,nick,false).catch(function(){busy(false,"進入");err("連線失敗，請檢查網路後再試一次");});
+  ENTRY.nick=true;tryCode(code,nick,false).catch(function(){busy(false,"進入");err("連線失敗，請檢查網路後再試一次");});
 });
 /* 管理員表單 */
 document.addEventListener("submit",function(e){
