@@ -1,6 +1,6 @@
 /* 東京手帳：離線快取。網頁、圖示、Firebase 程式碼存在手機裡，沒訊號也能打開；
    行程資料由 Firebase 自己存在手機裡，有網路時自動同步。 */
-const V = "tokyo-v1";
+const V = "tokyo-v2";
 const CORE = ["./", "./index.html", "./code.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"];
 
 self.addEventListener("install", e => {
@@ -35,6 +35,7 @@ self.addEventListener("fetch", e => {
   const r = e.request;
   if (r.method !== "GET") return;
   const u = new URL(r.url);
+  if (u.searchParams.has("ping")) return; /* 網路檢查：不要用快取回答 */
   if (u.origin === self.location.origin) { e.respondWith(netFirst(r)); return; }
   if (u.host === "www.gstatic.com" || u.host === "fonts.googleapis.com" || u.host === "fonts.gstatic.com") { e.respondWith(cacheFirst(r)); return; }
   /* 其他（Firebase 資料庫、登入）交給 Firebase 自己處理 */

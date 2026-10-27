@@ -1192,6 +1192,18 @@ function isStandalone(){return window.navigator.standalone===true||(window.match
 var BIP=null;
 window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();BIP=e;drawInstall();});
 if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost")){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}
+/* 真的連得上網路嗎？（iPhone 開飛航模式時 Wi-Fi 常常還開著，或連到沒網路的 Wi-Fi） */
+var NETOFF=false;
+function setNet(off){if(off===NETOFF)return;NETOFF=off;window.TRIP_NETOFF=off;try{window.dispatchEvent(new CustomEvent("tripnet",{detail:off}))}catch(e){}}
+function ping(){
+  if(document.hidden)return;
+  if(navigator.onLine===false){setNet(true);return;}
+  var done=false,t=setTimeout(function(){if(!done){done=true;setNet(true);}},6000);
+  fetch("manifest.webmanifest?ping="+Date.now(),{cache:"no-store"}).then(function(r){if(!done){done=true;clearTimeout(t);setNet(!(r&&(r.ok||r.status===404)));}})
+  .catch(function(){if(!done){done=true;clearTimeout(t);setNet(true);}});
+}
+if(location.protocol!=="file:"){setInterval(ping,15000);window.addEventListener("online",ping);window.addEventListener("offline",function(){setNet(true)});
+  document.addEventListener("visibilitychange",function(){if(!document.hidden)ping();});setTimeout(ping,2500);}
 function drawInstall(){
   if(isStandalone()||load("tokyo_noinstall"))return;var old=$("#inst");if(old)old.remove();
   var host=$("#crew")||$("#sos");if(!host)return;
@@ -1457,12 +1469,13 @@ function save(){try{localStorage.setItem(KEY,JSON.stringify(DB?{day:S.day}:Objec
 function toast(m){var el=$("#toast");el.textContent=m;el.classList.add("on");clearTimeout(toast._t);toast._t=setTimeout(function(){el.classList.remove("on")},2800);}
 function syncChip(){var c=$("#sync");if(!c)return;
   document.body.classList.toggle("readonly",RO);
-  var txt,cls,off=navigator.onLine===false,ot=$("#offTag");if(ot)ot.hidden=!off;
+  var txt,cls,off=navigator.onLine===false||window.TRIP_NETOFF===true,ot=$("#offTag");if(ot)ot.hidden=!off;
   if(off&&(DB||window.claude)){cls="sync off";txt="離線中：先用手機裡的資料，連上網會自動同步";}
   else if(!DB){cls="sync";txt=(window.claude&&!LOCAL)?"連線中…":"只存在這台裝置（不會同步給其他人）";}
   else if(RO){cls="sync ro";txt="檢視模式：你可以看，但不能修改";}
   else{cls="sync on"+(pending?" busy":"");txt=pending?"同步中…":"已同步，大家看到的是同一份";}
   c.className=cls;c.title=txt;c.setAttribute("aria-label","同步狀態："+txt);var t=c.querySelector(".sr");if(t)t.textContent=txt;}
+window.addEventListener("tripnet",function(e){var off=!!(e&&e.detail);syncChip();toast(off?"沒有網路了：先用手機裡的資料，修改會在連上網後自動同步":"網路恢復了，正在同步");});
 window.addEventListener("offline",function(){syncChip();toast("沒有網路了：先用手機裡的資料，修改會在連上網後自動同步");});
 window.addEventListener("online",function(){syncChip();toast("網路恢復了，正在同步");});
 var queue={},busy={};
