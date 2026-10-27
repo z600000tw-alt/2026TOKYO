@@ -234,7 +234,7 @@ h1{margin:0;font-size:30px;line-height:1.25;font-weight:normal;letter-spacing:.0
 .got{position:absolute;top:8px;right:8px;z-index:2;display:flex;align-items:center;gap:4px;border:1.5px solid var(--ink);border-radius:999px;background:rgba(255,252,246,.95);padding:1px 8px 1px 3px;font-size:12px}
 .got input{margin:0}
 .x-del{position:absolute;top:8px;left:8px;z-index:2;width:26px;height:26px;border:1.5px solid var(--ink);border-radius:50%;background:var(--paper);padding:0;line-height:1}
-.add-sv{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.add-sv{margin-top:14px;display:flex;justify-content:center}
 .add-sv .inp{flex:1 1 100%;width:auto}
 .add-sv select.inp,.add-sv input[name=where]{flex:1 1 0;min-width:0}
 
@@ -915,12 +915,7 @@ noscript{display:block;padding:20px;text-align:center}
   <div class="sh"><h2><i style="--c:var(--yellow)"><svg aria-hidden="true"><use href="#s-gift"/></svg></i><span><small>Must buy</small>伴手禮・必吃・必買</span></h2><span class="aside" id="svText"></span></div>
   <div class="filters" id="svFilters" role="group" aria-label="依類型篩選"></div>
   <div class="sv-grid" id="svList"></div>
-  <form class="add-sv" id="svForm" autocomplete="off">
-    <input class="inp" type="text" name="n" placeholder="新增想買的東西…" maxlength="40" required aria-label="名稱">
-    <select class="inp" name="cat" aria-label="類型"></select>
-    <input class="inp" type="text" name="where" placeholder="購買點" maxlength="30" aria-label="購買點">
-    <button class="btn" type="submit">加入</button>
-  </form>
+  <div class="more-acts add-sv"><button type="button" class="btn sm" data-new="sv">＋ 新增伴手禮</button></div>
 </section>
 
 <section id="book" data-sec="book" class="page" data-page="book" hidden>
@@ -1840,8 +1835,12 @@ function flushLog(t){var q=LOGQ[t];if(!q)return;delete LOGQ[t];clearTimeout(q.ti
 function flushAll(){Object.keys(LOGQ).forEach(flushLog);}
 document.addEventListener("visibilitychange",function(){if(document.hidden)flushAll();});
 window.addEventListener("pagehide",flushAll);
-function writeLog(e){if(!DB||!MYID)return;e.by=MYID;e.at=Date.now();var id=uid("l");
-  LOG.push(Object.assign({id:id},e));DB.doc("log/"+id).set(e).catch(function(){});}
+function writeLog(e){if(!DB||!MYID)return;e.by=MYID;e.at=Date.now();
+  /* 同一個人 10 分鐘內連續改同一項，只留一筆（例如先新增、再補照片） */
+  if(e.k){var prev=null;for(var i=LOG.length-1;i>=0;i--){var x=LOG[i];if(x.by===MYID&&x.k===e.k&&e.at-(x.at||0)<600000){prev=x;break;}}
+    if(prev){if(/^新增了/.test(prev.txt)&&/^修改了/.test(e.txt))e.txt=e.txt.replace(/^修改了/,"新增了");
+      prev.txt=e.txt;prev.at=e.at;prev.pg=e.pg;DB.doc("log/"+prev.id).set({by:MYID,at:e.at,txt:e.txt,k:e.k,pg:e.pg}).catch(function(){});return;}}
+  var id=uid("l");LOG.push(Object.assign({id:id},e));DB.doc("log/"+id).set(e).catch(function(){});}
 function gotLog(list){
   var before={};LOG.forEach(function(x){before[x.id]=1});
   LOG=list.sort(function(a,b){return (a.at||0)-(b.at||0)});
@@ -2444,12 +2443,10 @@ function bind(){
     if(f.classList&&f.classList.contains("medit-f")){e.preventDefault();saveEditMsg(f.dataset.mid,f.querySelector("textarea").value);return;}
     if(f.classList&&f.classList.contains("thr-f")){e.preventDefault();var ta=f.querySelector("textarea");if(postMsg(f.dataset.k,ta.value)){ta.value="";ta.focus();var ol=f.parentNode.querySelector(".msgs");if(ol&&ol.lastElementChild)ol.lastElementChild.scrollIntoView({block:"nearest"});}return;}
     if(f.id==="fm"){e.preventDefault();if(!FORM)return;var r=FORM.onSave(readForm());if(r!==false)FORM=null;return;}
-    if(f.id==="svForm"){e.preventDefault();var sn=f.n.value.trim();if(!sn)return;
-      setSv(clone(svList()).concat([{id:uid("c"),n:sn,cat:+f.cat.value,shop:f.where.value.trim(),desc:"",img:[]}]));f.reset();renderSv();toast("已加入，點卡片可加照片");return;}
     if(f.dataset.g){e.preventDefault();var v=f.n.value.trim();if(!v)return;setTodo(f.dataset.g,clone(todoList(f.dataset.g)).concat([{id:uid("t"),n:v}]));renderTodo();
       var nf2=$('form[data-g="'+f.dataset.g+'"] input');if(nf2)nf2.focus();}
   });
-  $("#svForm select").innerHTML=CATS.map(function(c,i){return '<option value="'+i+'">'+c+'</option>'}).join("");
+
   $("#shClose").addEventListener("click",closeSheet);
   $("#sheetBg").addEventListener("click",function(){if(FORM){toast("按「取消」或「儲存」關閉編輯");return;}closeSheet();});
   document.addEventListener("keydown",function(e){
