@@ -553,6 +553,10 @@ section.page{padding-top:22px}
 .av.ani{background:#E2F0F6;padding:0;overflow:hidden}
 .av.ani svg{width:100%;height:100%;display:block}
 .mdel.adm{border-style:dashed}
+.off-tag{flex:none;display:inline-flex;align-items:center;gap:3px;font-size:11.5px;line-height:1.7;padding:0 8px 0 6px;border:1.5px solid var(--ink);border-radius:999px;background:var(--yellow-l);white-space:nowrap}
+.off-tag[hidden]{display:none}
+.off-tag svg{width:14px;height:14px}
+.sync.off{background:#CFC8BE}
 .gate{position:fixed;inset:0;z-index:95;background:var(--paper);display:flex;align-items:center;justify-content:center;padding:calc(20px + env(safe-area-inset-top,0px)) 18px calc(20px + env(safe-area-inset-bottom,0px));overflow-y:auto}
 .gate[hidden]{display:none}
 .gt-card{width:min(360px,100%);border:var(--bw) solid var(--ink);border-radius:26px;overflow:hidden;background:var(--paper);box-shadow:0 4px 0 var(--ink)}
@@ -803,7 +807,7 @@ noscript{display:block;padding:20px;text-align:center}
 
 <header class="top">
   <a class="brand" href="#home" aria-label="回到首頁"><svg aria-hidden="true"><use href="#s-maple"/></svg><span>東京手帳</span></a><span class="top-sp"></span>
-  <button type="button" class="bell" id="bell" aria-label="看最近的留言"><svg aria-hidden="true"><use href="#i-bell"/></svg><i hidden>0</i></button>
+  <span class="off-tag" id="offTag" hidden><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 9.5a14 14 0 0 1 18 0M6.5 13a9 9 0 0 1 11 0M10 16.5a4 4 0 0 1 4 0M12 20h0M4 4l16 16" fill="none" stroke="#3E3A39" stroke-width="2" stroke-linecap="round"/></svg>離線中</span><button type="button" class="bell" id="bell" aria-label="看最近的留言"><svg aria-hidden="true"><use href="#i-bell"/></svg><i hidden>0</i></button>
   <span class="sync" id="sync" role="status" title="連線中…" tabindex="0"><span class="sr">連線中…</span></span>
 </header>
 
@@ -1453,11 +1457,14 @@ function save(){try{localStorage.setItem(KEY,JSON.stringify(DB?{day:S.day}:Objec
 function toast(m){var el=$("#toast");el.textContent=m;el.classList.add("on");clearTimeout(toast._t);toast._t=setTimeout(function(){el.classList.remove("on")},2800);}
 function syncChip(){var c=$("#sync");if(!c)return;
   document.body.classList.toggle("readonly",RO);
-  var txt,cls;
-  if(!DB){cls="sync";txt=(window.claude&&!LOCAL)?"連線中…":"只存在這台裝置（不會同步給其他人）";}
+  var txt,cls,off=navigator.onLine===false,ot=$("#offTag");if(ot)ot.hidden=!off;
+  if(off&&(DB||window.claude)){cls="sync off";txt="離線中：先用手機裡的資料，連上網會自動同步";}
+  else if(!DB){cls="sync";txt=(window.claude&&!LOCAL)?"連線中…":"只存在這台裝置（不會同步給其他人）";}
   else if(RO){cls="sync ro";txt="檢視模式：你可以看，但不能修改";}
   else{cls="sync on"+(pending?" busy":"");txt=pending?"同步中…":"已同步，大家看到的是同一份";}
   c.className=cls;c.title=txt;c.setAttribute("aria-label","同步狀態："+txt);var t=c.querySelector(".sr");if(t)t.textContent=txt;}
+window.addEventListener("offline",function(){syncChip();toast("沒有網路了：先用手機裡的資料，修改會在連上網後自動同步");});
+window.addEventListener("online",function(){syncChip();toast("網路恢復了，正在同步");});
 var queue={},busy={};
 function push(area,patch){
   if(!DB){save();return;}
