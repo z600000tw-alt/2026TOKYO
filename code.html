@@ -438,7 +438,7 @@ body.readonly .thr-f,body.readonly .mdel,body.readonly .mbtn{display:none!import
 .trs b{margin-left:auto;font-weight:normal;font-variant-numeric:tabular-nums}
 .tr-l{flex:1;min-width:0;display:flex;align-items:center;gap:5px;white-space:nowrap}
 .trs .tr-l .arr{width:28px}
-.pay-ok{flex:none;display:inline-flex;align-items:center;gap:3px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);padding:2px 9px 2px 6px;font-size:12.5px;line-height:1.6;white-space:nowrap;transition:transform .15s,background .2s}
+.pay-ok{flex:none;display:inline-flex;align-items:center;gap:3px;border:1.5px dashed var(--ink);border-radius:999px;background:var(--paper);color:var(--ink2);padding:2px 9px 2px 6px;font-size:12.5px;line-height:1.6;white-space:nowrap;transition:transform .15s,background .2s}
 .pay-ok svg{width:14px;height:14px}
 .pay-ok:hover{background:var(--green-l)}
 .pay-ok:active{transform:scale(.94)}
@@ -621,6 +621,9 @@ section.page{padding-top:22px}
 .fx-q .chip{font-size:13px;padding:2px 11px;cursor:pointer;background:var(--paper)}
 .fx-info{margin:0;font-size:12.5px;color:var(--ink2)}
 .fx-acts{display:flex;gap:8px;flex-wrap:wrap}
+.ra-row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:-4px 0 12px;font-size:12.5px;color:var(--ink2)}
+.ra-b{display:flex;gap:6px;margin-left:auto}
+.ra-row .btn svg{width:14px;height:14px}
 .gate{position:fixed;inset:0;z-index:95;background:var(--paper);display:flex;align-items:center;justify-content:center;padding:calc(20px + env(safe-area-inset-top,0px)) 18px calc(20px + env(safe-area-inset-bottom,0px));overflow-y:auto}
 .gate[hidden]{display:none}
 .gt-card{width:min(360px,100%);border:var(--bw) solid var(--ink);border-radius:26px;overflow:hidden;background:var(--paper);box-shadow:0 4px 0 var(--ink)}
@@ -2048,9 +2051,9 @@ function gotLog(list){
   loadNames();bell();if(sheetView&&sheetView[0]==="recent")reopenSheet(true);
 }
 function unreadLog(){var t=SEEN.__log||0,n=0;LOG.forEach(function(x){if(x.by!==MYID&&(x.at||0)>t)n++});return n}
-function seeLog(){var last=0;LOG.forEach(function(x){if((x.at||0)>last)last=x.at});if(!last||(SEEN.__log||0)>=last)return;SEEN.__log=last;
+function seeLog(){var last=0;LOG.forEach(function(x){if((x.at||0)>last)last=x.at});if(!last||(SEEN.__log||0)>=last)return false;SEEN.__log=last;
   try{localStorage.setItem(SEEN_KEY,JSON.stringify(SEEN))}catch(e){}
-  clearTimeout(seenT);seenT=setTimeout(function(){if(DB&&MYID&&!RO)DB.doc("data/users/"+MYID+"/seen").set(SEEN).catch(function(){});},1200);bell();}
+  clearTimeout(seenT);seenT=setTimeout(function(){if(DB&&MYID&&!RO)DB.doc("data/users/"+MYID+"/seen").set(SEEN).catch(function(){});},1200);bell();return true;}
 function gotoChange(key,pg){
   var i=key.indexOf("_"),k=key.slice(0,i),id=key.slice(i+1);
   closeSheet();
@@ -2066,25 +2069,42 @@ function gotoChange(key,pg){
 }
 function bell(){var b=$("#bell");if(!b)return;var n=unreadAll()+unreadLog();var i=b.querySelector("i");
   b.classList.toggle("new",n>0);i.textContent=n>99?"99+":n;i.hidden=!n;b.setAttribute("aria-label",n?n+" 則新通知，看最近的留言和變更":"看最近的留言和變更");}
+/* 清除已讀：每個人各自把看過的通知從清單收掉（存在自己的已讀紀錄裡） */
+function clrOf(k){return SEEN["clr:"+k]||0}
+function visMsgs(){return MSGS.filter(function(m){return (m.at||0)>clrOf(m.k)})}
+function visLog(){var c=clrOf("__log");return LOG.filter(function(x){return (x.at||0)>c})}
+function readVisible(tab){var n=0;
+  if(tab!=="log")visMsgs().forEach(function(m){if(isMine(m)||(m.at||0)<=(SEEN[m.k]||0))n++});
+  if(tab!=="msg"){var t=SEEN.__log||0;visLog().forEach(function(x){if(x.by===MYID||(x.at||0)<=t)n++});}return n}
+function clearRead(tab){
+  if(tab!=="log")MSGS.forEach(function(m){if(isMine(m)||(m.at||0)<=(SEEN[m.k]||0)){var k="clr:"+m.k;if((m.at||0)>(SEEN[k]||0))SEEN[k]=m.at;}});
+  if(tab!=="msg"){var t=SEEN.__log||0,c=0;LOG.forEach(function(x){if((x.by===MYID||(x.at||0)<=t)&&(x.at||0)>c)c=x.at});if(c>(SEEN["clr:__log"]||0))SEEN["clr:__log"]=c;}
+  try{localStorage.setItem(SEEN_KEY,JSON.stringify(SEEN))}catch(e){}
+  clearTimeout(seenT);seenT=setTimeout(function(){if(DB&&MYID&&!RO)DB.doc("data/users/"+MYID+"/seen").set(SEEN).catch(function(){});},600);
+}
 function openRecent(tab){
   var uc=unreadAll(),ul=unreadLog();
   if(tab)RTAB=tab;else if(!RTAB||!QUIET)RTAB=(ul&&!uc)?"log":(RTAB||"msg");
   if(!DB)RTAB="msg";
   var h='<div class="sh-eyebrow">通知</div><h2 class="sh-title" id="shTitle">'+(RTAB==="log"?"最近的變更":"最近的留言")+'</h2>'+
     (DB?'<div class="seg rtabs" role="tablist"><button type="button" role="tab" data-rtab="msg" class="'+(RTAB==="msg"?"on":"")+'">留言'+(uc?'<span class="seg-n warn">'+uc+'</span>':'')+'</button>'+
-      '<button type="button" role="tab" data-rtab="log" class="'+(RTAB==="log"?"on":"")+'">變更'+(ul?'<span class="seg-n warn">'+ul+'</span>':'')+'</button></div>':'');
+      '<button type="button" role="tab" data-rtab="log" class="'+(RTAB==="log"?"on":"")+'">變更'+(ul?'<span class="seg-n warn">'+ul+'</span>':'')+'</button></div>':'')+
+    (function(){var un=RTAB==="log"?ul:uc,rv=readVisible(RTAB),w=RTAB==="log"?"變更":"留言";if(!un&&!rv)return "";
+      return '<div class="ra-row"><span>'+(un?'有 '+un+' 則'+w+'沒看過':w+'都看過了')+'</span><span class="ra-b">'+
+      (un?'<button type="button" class="btn ghost sm" id="readAll">'+ic("i-check2")+'全部已讀</button>':'')+
+      (rv?'<button type="button" class="btn ghost sm" id="clearRead">'+ic("i-x")+'清除已讀</button>':'')+'</span></div>';})();
   if(RTAB==="log"){
-    var seenT0=SEEN.__log||0,ls=LOG.slice().reverse().slice(0,60);
-    if(!ls.length)h+='<p class="thr-empty" style="display:flex"><span>還沒有人改過內容</span></p>';
+    var seenT0=SEEN.__log||0,ls=visLog().reverse().slice(0,60);
+    if(!ls.length)h+='<p class="thr-empty" style="display:flex"><span>'+(LOG.length?'已讀的變更都清掉了':'還沒有人改過內容')+'</span></p>';
     else h+='<ul class="recent">'+ls.map(function(x){var nw=x.by!==MYID&&(x.at||0)>seenT0,nm=who(x.by),go=x.k||x.pg;
       return '<li><button type="button" class="rc'+(nw?' new':'')+(go?'':' nogo')+'" data-chg="'+esc(x.k||"")+'" data-pg="'+esc(x.pg||"")+'">'+avHTML(x.by,nm)+'<span class="rb"><span class="rt"><b>'+esc(nm)+'</b>'+(nw?'<em>新</em>':'')+'</span><span class="rx">'+esc(x.txt)+'</span><time>'+when(x.at)+'</time></span></button></li>'}).join("")+'</ul>';
-    openSheet(h,["recent"]);setTimeout(seeLog,600);return;
+    openSheet(h,["recent"]);setTimeout(function(){if(seeLog()&&sheetView&&sheetView[0]==="recent"&&RTAB==="log")openRecent("log");},900);return;
   }
-  var ms=MSGS.slice().sort(function(a,b){return (b.at||0)-(a.at||0)}).slice(0,40);
-  if(!ms.length)h+='<p class="thr-empty" style="display:flex"><svg viewBox="0 0 120 56" aria-hidden="true"><g class="float"><use href="#i-chat" x="18" y="4" width="42" height="42"/></g><g class="float b"><use href="#i-chat" x="64" y="14" width="34" height="34"/></g></svg><span>還沒有任何留言</span></p>';
+  var ms=visMsgs().sort(function(a,b){return (b.at||0)-(a.at||0)}).slice(0,40);
+  if(!ms.length)h+='<p class="thr-empty" style="display:flex"><svg viewBox="0 0 120 56" aria-hidden="true"><g class="float"><use href="#i-chat" x="18" y="4" width="42" height="42"/></g><g class="float b"><use href="#i-chat" x="64" y="14" width="34" height="34"/></g></svg><span>'+(MSGS.length?'看過的留言都清掉了':'還沒有任何留言')+'</span></p>';
   else h+='<ul class="recent">'+ms.map(function(m){var nw=!isMine(m)&&(m.at||0)>(SEEN[m.k]||0),nm=who(m.by);
     return '<li><button type="button" class="rc'+(nw?' new':'')+'" data-goto="'+esc(m.k)+'">'+avHTML(m.by,nm)+'<span class="rb"><span class="rt"><b>'+esc(nm)+'</b> 在「'+esc(titleOf(m.k))+'」'+(nw?'<em>新</em>':'')+'</span><span class="rx">'+esc(m.text)+'</span><time>'+when(m.at)+'</time></span></button></li>'}).join("")+'</ul>'+
-    (unreadAll()?'<div class="sh-acts"><button type="button" class="btn ghost sm" id="readAll">全部標為已讀</button></div>':'');
+    '';
   openSheet(h,["recent"]);
 }
 function gotoThread(key){var i=key.indexOf("_"),k=key.slice(0,i),id=key.slice(i+1);startComment(k,id);}
@@ -2442,7 +2462,7 @@ function renderBook(){
   function r(b){var it=b.it,on=isB(it.bid);
     return '<li class="row" id="c_bk_'+esc(it.id)+'"><span class="nm"><button type="button" class="linkish" data-open="'+esc(it.id)+'">'+esc(it.n)+'</button><small>'+esc(it.bwhen||("Day "+(b.day+1)))+'</small></span>'+
       '<button type="button" class="bk-btn" data-bk="'+esc(it.bid)+'" aria-pressed="'+on+'">'+(on?'已訂位 ✓':'未訂位')+'</button>'+cmBtn("bk",it.id,it.n)+'</li>';}
-  var bn=$("#segBkN");if(bn){bn.textContent=no.length?no.length+" 未訂":"全訂好";bn.className="seg-n"+(no.length?" warn":"");}
+  var bn=$("#segBkN");if(bn){bn.textContent=no.length?"未訂 "+no.length:"全訂好";bn.className="seg-n"+(no.length?" warn":"");}
   setHTML($("#bookList"),'<div class="panel" style="--c:var(--green-l)"><h3>需預先訂位／訂票<small>已訂 '+yes.length+' / '+all.length+'</small></h3>'+
     '<div class="grp"><p class="grp-h"><span class="chip no">未訂位</span>'+no.length+' 項</p><ul class="rows">'+(no.map(r).join("")||'<li class="row"><span class="nm">全部都訂好了！</span></li>')+'</ul></div>'+
     '<div class="grp"><p class="grp-h"><span class="chip yes">已訂位</span>'+yes.length+' 項</p><ul class="rows">'+yes.map(r).join("")+'</ul></div>'+
@@ -2460,10 +2480,10 @@ var ST_OPEN=false;
 function renderSettle(){
   var r=settle(),ms=members(),pend=expList().filter(function(e){return !counted(e)});
   var max=Math.max.apply(null,r.bal.map(function(b){return Math.abs(b.d)}).concat([1]));
-  var pays=payList(),en=$("#segExN");if(en){en.textContent=r.tr.length?r.tr.length+" 待付":"已結清";en.className="seg-n"+(r.tr.length?" warn":"");}
+  var pays=payList(),en=$("#segExN");if(en){en.textContent=r.tr.length?"待付 "+r.tr.length:"已結清";en.className="seg-n"+(r.tr.length?" warn":"");}
   var h='<h4 class="st-h" style="margin-top:10px">'+(pays.length?'還要付的錢':'怎麼還最簡單')+'</h4>'+(r.tr.length?'<ol class="trs">'+r.tr.map(function(t){
     return '<li><span class="tr-l"><span class="who2">'+esc(t.from)+'</span><svg class="arr" viewBox="0 0 60 16" aria-hidden="true"><g class="k"><path d="M2 8 Q30 2 54 8"/><path d="M48 3 L55 8 L48 13"/></g></svg><span class="who2">'+esc(t.to)+'</span><b>'+nt(t.v)+'</b></span>'+
-      '<button type="button" class="pay-ok" data-pay-from="'+esc(t.from)+'" data-pay-to="'+esc(t.to)+'" data-pay-v="'+Math.round(t.v)+'" aria-label="'+esc(t.from)+' 已付給 '+esc(t.to)+'">'+ic("i-check2")+'已付款</button></li>'}).join("")+'</ol>':
+      '<button type="button" class="pay-ok" data-pay-from="'+esc(t.from)+'" data-pay-to="'+esc(t.to)+'" data-pay-v="'+Math.round(t.v)+'" aria-label="記錄 '+esc(t.from)+' 已經付給 '+esc(t.to)+'">'+ic("i-check2")+'記為已付</button></li>'}).join("")+'</ol>':
     (pays.length?'<p class="st-done">'+ic("i-spark")+'全部結清了，辛苦大家！</p>':'<p class="st-none">目前大家都打平了</p>'));
   if(pays.length)h+='<h4 class="st-h">已完成的付款<small>'+pays.length+' 筆</small></h4><ul class="pays">'+pays.map(function(p){
     return '<li><span class="pl">'+esc(p.from)+' → '+esc(p.to)+'<small>'+mdOf(p.at)+(p.note?'・'+esc(p.note):'')+'</small></span><b>'+nt(p.v)+'</b><button type="button" class="pay-undo" data-unpay="'+esc(p.id)+'">取消</button></li>'}).join("")+'</ul>';
@@ -2580,7 +2600,10 @@ function bind(){
     if((el=t.closest("[data-goto]"))){gotoThread(el.dataset.goto);return;}
     if((el=t.closest("[data-rtab]"))){openRecent(el.dataset.rtab);return;}
     if((el=t.closest("[data-chg]"))){gotoChange(el.dataset.chg,el.dataset.pg);return;}
-    if((el=t.closest("#readAll"))){var now=Date.now();MSGS.forEach(function(m){if((m.at||0)>(SEEN[m.k]||0))SEEN[m.k]=m.at});markSeen("_all");openRecent();toast("全部標為已讀");return;}
+    if((el=t.closest("#readAll"))){
+      if(RTAB==="log")seeLog();else{MSGS.forEach(function(m){if((m.at||0)>(SEEN[m.k]||0))SEEN[m.k]=m.at});markSeen("_all");}
+      bell();openRecent(RTAB);toast("全部標為已讀");return;}
+    if((el=t.closest("#clearRead"))){clearRead(RTAB);openRecent(RTAB);toast("已清除看過的通知");return;}
     if((el=t.closest("[data-cm]"))){e.stopPropagation();startComment(el.dataset.cm,el.dataset.id);return;}
     if((el=t.closest("[data-medit]"))){startEditMsg(el.dataset.medit);return;}
     if((el=t.closest("[data-mcancel]"))){endEditMsg(el.dataset.mcancel);return;}
