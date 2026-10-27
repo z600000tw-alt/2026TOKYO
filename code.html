@@ -583,6 +583,29 @@ section.page{padding-top:22px}
 .lb-nav:disabled{opacity:0;pointer-events:none}
 .lb.one .lb-nav{display:none}
 @media (hover:none){.lb-nav{display:none}}
+.ck-note{margin:-8px 0 12px;font-size:12px;color:var(--ink2)}
+.gal{position:relative}
+.gal-n{position:absolute;right:28px;bottom:10px;display:inline-flex;align-items:center;gap:3px;padding:1px 8px 1px 6px;border:1.5px solid var(--ink);border-radius:999px;background:rgba(255,252,246,.92);font-size:12px;pointer-events:none}
+.gal-n svg{width:14px;height:14px;--sw:1.8px}
+.more-ph{margin:18px 0 4px;padding-top:12px;border-top:1.5px dashed var(--line)}
+.more-ph h3{margin:0 0 8px;font-size:15px;font-weight:normal;display:flex;align-items:baseline;gap:8px}
+.more-ph h3 small{font-size:12px;color:var(--ink2)}
+.mp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mp-grid img{width:100%;aspect-ratio:1;object-fit:cover;border:1.5px solid var(--ink);border-radius:12px;background:var(--soft);cursor:zoom-in}
+.wx{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 0;padding:6px 12px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);font-size:14px;width:fit-content;max-width:100%}
+.wx>svg{width:26px;height:26px;flex:none}
+.wx b{font-weight:normal}
+.wx-t{font-variant-numeric:tabular-nums}
+.wx-p{display:inline-flex;align-items:center;gap:2px;color:var(--ink2);font-size:13px}
+.wx-p svg{width:14px;height:14px}
+.wx small{font-size:11.5px;color:var(--ink2)}
+.wx.w-sun{background:var(--yellow-l)}.wx.w-rain,.wx.w-storm{background:var(--aqua-l)}.wx.w-pc{background:#FDF7E6}
+.wx.none{border-style:dashed;font-size:12px;color:var(--ink2);border-radius:12px}
+.wx.none>svg{width:20px;height:20px;opacity:.7}
+.tab{position:relative}
+.tab-wx{position:absolute;top:-9px;right:-7px;width:22px;height:22px;border:1.5px solid var(--ink);border-radius:50%;background:var(--paper);display:grid;place-items:center}
+.tab-wx svg{width:17px;height:17px}
+.tabs{padding-top:10px}
 .gate{position:fixed;inset:0;z-index:95;background:var(--paper);display:flex;align-items:center;justify-content:center;padding:calc(20px + env(safe-area-inset-top,0px)) 18px calc(20px + env(safe-area-inset-bottom,0px));overflow-y:auto}
 .gate[hidden]{display:none}
 .gt-card{width:min(360px,100%);border:var(--bw) solid var(--ink);border-radius:26px;overflow:hidden;background:var(--paper);box-shadow:0 4px 0 var(--ink)}
@@ -651,6 +674,11 @@ section.page{padding-top:22px}
 .inst-b .btn{justify-self:start;margin-top:4px}
 .inst-sh{width:15px;height:15px;vertical-align:-3px}
 .inst-x{position:absolute;top:6px;right:6px;width:26px;height:26px;border:1.5px solid var(--ink);border-radius:50%;background:var(--paper);font-size:11px;padding:0;line-height:1}
+.adm-row{display:flex;gap:8px;flex-wrap:wrap}
+.adm-row .btn{font-size:14px}
+.gt-rs-l{cursor:pointer}
+.gate .gt-rs-go{margin-top:8px}
+.gate .gt-rs-go.armed{background:#E58A7B}
 .crew{width:min(360px,100%);margin:0 auto 18px;text-align:left;border:var(--bw) solid var(--ink);border-radius:var(--r);background:var(--paper);overflow:hidden;color:var(--ink);padding:0}
 .crew-h{display:flex;align-items:center;gap:8px;padding:7px 12px;background:var(--aqua-l);border-bottom:var(--bw) solid var(--ink);font-size:15px}
 .crew-h svg{width:22px;height:22px;--sw:1.6px}
@@ -826,6 +854,15 @@ noscript{display:block;padding:20px;text-align:center}
   <symbol id="av-hedgehog" viewBox="0 0 48 48"><g class="k" style="--sw:2px"><path d="M7 30 L4 24 L9 23 L6 17 L12 17 L11 11 L17 13 L18 7 L23 11 L26 6 L29 11 L34 8 L34 14 L40 13 L38 19 L44 21 L40 25 L44 30 Z" style="fill:#8C6E5A"/><ellipse cx="24" cy="31" rx="15" ry="11" style="fill:#F2D9BE"/><circle cx="17.5" cy="29.5" r="1.9" style="fill:#3E3A39;stroke:none"/><circle cx="30.5" cy="29.5" r="1.9" style="fill:#3E3A39;stroke:none"/><circle cx="24" cy="33" r="1.8" style="fill:#3E3A39;stroke:none"/><ellipse cx="13.5" cy="33" rx="2.6" ry="1.6" style="fill:#F2A497;stroke:none;opacity:.8"/><ellipse cx="34.5" cy="33" rx="2.6" ry="1.6" style="fill:#F2A497;stroke:none;opacity:.8"/></g></symbol>
   <symbol id="av-lion" viewBox="0 0 48 48"><g class="k" style="--sw:2px"><circle cx="24" cy="26" r="18" style="fill:#E8A766"/><path d="M8 20 Q6 26 8 32 M40 20 Q42 26 40 32 M14 9.5 Q19 7 24 8 Q29 7 34 9.5" style="stroke-width:1.6px"/><circle cx="24" cy="27" r="12.5" style="fill:#F6D27A"/><circle cx="15" cy="16" r="3" style="fill:#F6D27A"/><circle cx="33" cy="16" r="3" style="fill:#F6D27A"/><circle cx="19" cy="25" r="1.9" style="fill:#3E3A39;stroke:none"/><circle cx="29" cy="25" r="1.9" style="fill:#3E3A39;stroke:none"/><path d="M22.3 29 H25.7 L24 30.8 Z" style="fill:#3E3A39;stroke-width:1.2px"/><path d="M21.5 32.5 Q24 34.5 26.5 32.5" style="stroke-width:1.4px"/><ellipse cx="15.5" cy="30" rx="2.6" ry="1.6" style="fill:#F2A497;stroke:none;opacity:.8"/><ellipse cx="32.5" cy="30" rx="2.6" ry="1.6" style="fill:#F2A497;stroke:none;opacity:.8"/></g></symbol>
   <symbol id="av-deer" viewBox="0 0 48 48"><g class="k" style="--sw:2px"><path d="M15 12 L12 4 M12 7.5 L8.5 6 M33 12 L36 4 M36 7.5 L39.5 6" style="stroke:#8C6E5A;stroke-width:2.4px"/><ellipse cx="9" cy="20" rx="5" ry="2.8" transform="rotate(-25 9 20)" style="fill:#D9A97E"/><ellipse cx="39" cy="20" rx="5" ry="2.8" transform="rotate(25 39 20)" style="fill:#D9A97E"/><path d="M11 24 C11 16 17 13 24 13 C31 13 37 16 37 24 C37 33 31 41 24 41 C17 41 11 33 11 24 Z" style="fill:#D9A97E"/><circle cx="16" cy="20" r="1.1" style="fill:#FFFCF6;stroke:none"/><circle cx="32" cy="19" r="1.1" style="fill:#FFFCF6;stroke:none"/><circle cx="29" cy="16.5" r=".9" style="fill:#FFFCF6;stroke:none"/><ellipse cx="24" cy="34" rx="6" ry="4.5" style="fill:#F6E3CC"/><circle cx="18" cy="25.5" r="1.9" style="fill:#3E3A39;stroke:none"/><circle cx="30" cy="25.5" r="1.9" style="fill:#3E3A39;stroke:none"/><ellipse cx="24" cy="32.5" rx="2" ry="1.4" style="fill:#3E3A39;stroke:none"/><ellipse cx="14" cy="30" rx="2.6" ry="1.6" style="fill:#F2A497;stroke:none;opacity:.8"/><ellipse cx="34" cy="30" rx="2.6" ry="1.6" style="fill:#F2A497;stroke:none;opacity:.8"/></g></symbol>
+  <symbol id="i-img" viewBox="0 0 24 24"><g class="k"><rect x="3.5" y="5" width="17" height="14" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M4 17l5-4.5 4 3.5 3-2.5 4 3.5"/></g></symbol>
+  <symbol id="wx-sun" viewBox="0 0 24 24"><g class="k" style="--sw:1.7px"><circle cx="12" cy="12" r="4.5" style="fill:#F6D27A"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></g></symbol>
+  <symbol id="wx-pc" viewBox="0 0 24 24"><g class="k" style="--sw:1.7px"><circle cx="9" cy="9" r="3.8" style="fill:#F6D27A"/><path d="M9 2.5v1.4M2.5 9h1.4M4.4 4.4l1 1M13.6 4.4l-1 1"/><path d="M8 19.5h10.5a3.5 3.5 0 0 0 .3-7A5 5 0 0 0 9.3 12 3.8 3.8 0 0 0 8 19.5z" style="fill:#FFFCF6"/></g></symbol>
+  <symbol id="wx-cloud" viewBox="0 0 24 24"><g class="k" style="--sw:1.7px"><path d="M6.5 18.5h11a4 4 0 0 0 .4-8A6 6 0 0 0 6.6 9.6 4.5 4.5 0 0 0 6.5 18.5z" style="fill:#E2E2E0"/></g></symbol>
+  <symbol id="wx-rain" viewBox="0 0 24 24"><g class="k" style="--sw:1.7px"><path d="M6.5 14.5h11a3.6 3.6 0 0 0 .4-7.2A5.5 5.5 0 0 0 7 6.7a4 4 0 0 0-.5 7.8z" style="fill:#A8D3E6"/><path d="M8 17.5l-1 3M12 17.5l-1 3M16 17.5l-1 3"/></g></symbol>
+  <symbol id="wx-snow" viewBox="0 0 24 24"><g class="k" style="--sw:1.7px"><path d="M6.5 14h11a3.6 3.6 0 0 0 .4-7.2A5.5 5.5 0 0 0 7 6.2a4 4 0 0 0-.5 7.8z" style="fill:#E2F0F6"/><path d="M8 17.5v3M6.7 19h2.6M12 17.5v3M10.7 19h2.6M16 17.5v3M14.7 19h2.6"/></g></symbol>
+  <symbol id="wx-fog" viewBox="0 0 24 24"><g class="k" style="--sw:1.7px"><path d="M6.5 13h11a3.6 3.6 0 0 0 .4-7.2A5.5 5.5 0 0 0 7 5.2a4 4 0 0 0-.5 7.8z" style="fill:#E2E2E0"/><path d="M4 16.5h16M6 20h12"/></g></symbol>
+  <symbol id="wx-storm" viewBox="0 0 24 24"><g class="k" style="--sw:1.7px"><path d="M6.5 13.5h11a3.6 3.6 0 0 0 .4-7.2A5.5 5.5 0 0 0 7 5.7a4 4 0 0 0-.5 7.8z" style="fill:#C9C5C0"/><path d="M12.5 14l-2.5 4h3l-2 4" style="stroke:#3E3A39"/></g></symbol>
+  <symbol id="wx-drop" viewBox="0 0 24 24"><g class="k" style="--sw:1.8px"><path d="M12 3.5c3 4 5.5 7 5.5 10a5.5 5.5 0 0 1-11 0c0-3 2.5-6 5.5-10z" style="fill:#A8D3E6"/></g></symbol>
 <symbol id="i-google" viewBox="0 0 24 24"><path d="M21.6 12.2c0-.7-.1-1.3-.2-1.9H12v3.7h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3z" fill="#4285F4"/><path d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22z" fill="#34A853"/><path d="M6.4 14c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2V7.4H3.1a10 10 0 0 0 0 9.2z" fill="#FBBC05"/><path d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.4L6.4 10c.8-2.3 3-4.1 5.6-4.1z" fill="#EA4335"/></symbol>
   <symbol id="i-yen" viewBox="0 0 24 24"><g class="k"><path d="M6 4l6 8 6-8M12 12v8M8 13h8M8 17h8"/></g></symbol>
 </defs>
@@ -913,6 +950,7 @@ noscript{display:block;padding:20px;text-align:center}
 
 <section id="souvenir" data-sec="souvenir" class="page" data-page="souvenir" hidden>
   <div class="sh"><h2><i style="--c:var(--yellow)"><svg aria-hidden="true"><use href="#s-gift"/></svg></i><span><small>Must buy</small>伴手禮・必吃・必買</span></h2><span class="aside" id="svText"></span></div>
+  <p class="ck-note">「已買」只記錄你自己的，別人看不到，也不會影響別人。</p>
   <div class="filters" id="svFilters" role="group" aria-label="依類型篩選"></div>
   <div class="sv-grid" id="svList"></div>
   <div class="more-acts add-sv"><button type="button" class="btn sm" data-new="sv">＋ 新增伴手禮</button></div>
@@ -933,6 +971,7 @@ noscript{display:block;padding:20px;text-align:center}
 
 <section id="todo" data-sec="todo" class="page" data-page="todo" hidden>
   <div class="sh"><h2><i style="--c:var(--green)"><svg aria-hidden="true"><use href="#s-check"/></svg></i><span><small>Checklist</small>出發清單</span></h2><span class="aside" id="progText"></span></div>
+  <p class="ck-note">打勾只記錄你自己的進度，別人看不到，也不會影響別人。</p>
   <div class="prog"><i id="progBar"></i></div>
   <div id="todoList"></div>
 </section>
@@ -1162,6 +1201,9 @@ function showAdmin(def){
     '<form class="gt-f gt-move" autocomplete="off"><label><span>新的旅行密碼</span><input class="inp" id="mvA" required minlength="4"></label>'+
     '<label><span>再輸入一次</span><input class="inp" id="mvB" required minlength="4"></label>'+
     '<button type="submit" class="btn coral gt-go"><span>換密碼並搬移資料</span></button><p class="gt-err" hidden></p></form></section>'+
+    '<section class="adm-s"><h2>備份與還原</h2><p class="gt-p">把目前所有行程、照片、費用、清單下載成一個備份檔。萬一有人誤刪，可以用備份檔還原回來。建議出發前、回國前各備份一次。</p>'+
+    '<div class="adm-row"><button type="button" class="btn green gt-bk"><span>下載備份</span></button><label class="btn ghost gt-rs-l"><span>從備份還原</span><input type="file" accept=".json,application/json" class="gt-rs" hidden></label></div>'+
+    '<p class="gt-err adm-bk-msg" hidden></p></section>'+
     '<section class="adm-s"><h2>成員名單</h2><p class="gt-p">有連 Google 的人會顯示他的 Gmail；只用暱稱的人會寫「只用暱稱」。</p><ul class="adm-l" id="admList"></ul><p class="gt-s">「移除」只會讓他從名單上消失；知道密碼的人重新打開又會出現。要真正擋人，請更換旅行密碼。</p></section>'+
     '<section class="adm-s"><h2>管理員密碼</h2><form class="gt-f gt-admpw" autocomplete="off"><label><span>新的管理員密碼</span><input class="inp" id="apA" type="password" required minlength="4"></label>'+
     '<label><span>再輸入一次</span><input class="inp" id="apB" type="password" required minlength="4"></label>'+
@@ -1170,6 +1212,39 @@ function showAdmin(def){
     '<p class="gt-s"><button type="button" class="linkish adm-out">登出管理員</button></p>');
   drawAdmList();
 }
+/* ---------- 備份與還原 ---------- */
+var BK_COLLS=["shared","svi","expi","todoi","payi","photos","chat","msgs","users","log"],RS_COLLS=["shared","svi","expi","todoi","payi","photos"];
+function bkMsg(t,ok){var m=$("#gate .adm-bk-msg");if(m){m.textContent=t;m.hidden=!t;m.classList.toggle("ok",!!ok);}}
+function readAll(colls){return Promise.all(colls.map(function(c){return FS.collection(path(c)).get({source:"server"}).then(function(sn){return sn.docs.map(function(d){return [c+"/"+d.id,d.data()]})})})).then(function(a){var o={};[].concat.apply([],a).forEach(function(x){o[x[0]]=x[1]});return o;});}
+function backupTrip(){
+  bkMsg("準備備份中…",true);
+  readAll(BK_COLLS).then(function(data){
+    delete data["shared/moved"];
+    var n=Object.keys(data).length,d=new Date(),p2=function(x){return ("0"+x).slice(-2)};
+    var name="東京手帳備份-"+d.getFullYear()+p2(d.getMonth()+1)+p2(d.getDate())+"-"+p2(d.getHours())+p2(d.getMinutes())+".json";
+    var blob=new Blob([JSON.stringify({app:"tokyo-trip",v:1,at:Date.now(),data:data})],{type:"application/json"});
+    var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},4000);
+    bkMsg("已下載備份（"+n+" 筆資料，約 "+Math.max(1,Math.round(blob.size/1024))+" KB）。iPhone 會存在「檔案」App 的「下載項目」。",true);
+  }).catch(function(){bkMsg("備份失敗，請確認有網路後再試一次");});
+}
+var RS_DATA=null;
+function restoreTrip(bk){
+  var src=bk.data||{},want={};Object.keys(src).forEach(function(k){if(RS_COLLS.indexOf(k.split("/")[0])>=0&&k!=="shared/moved")want[k]=src[k]});
+  bkMsg("讀取目前的資料…",true);
+  return readAll(RS_COLLS).then(function(cur){
+    var del=Object.keys(cur).filter(function(k){return !want[k]&&k!=="shared/moved"}),put=Object.keys(want),i=0,j=0,tot=put.length+del.length;
+    function step(){if(i>=put.length)return Promise.resolve();var ch=put.slice(i,i+6);i+=6;bkMsg("還原中… "+Math.min(i,put.length)+" / "+tot,true);
+      return Promise.all(ch.map(function(k){return FS.doc(path(k)).set(want[k])})).then(step);}
+    function rm(){if(j>=del.length)return Promise.resolve();var ch=del.slice(j,j+10);j+=10;bkMsg("清除多出來的資料… "+(put.length+Math.min(j,del.length))+" / "+tot,true);
+      return Promise.all(ch.map(function(k){return FS.doc(path(k)).delete().catch(function(){})})).then(rm);}
+    return step().then(rm).then(function(){
+      var d=new Date(bk.at||0);
+      FS.doc(path("log/l"+Date.now().toString(36))).set({by:ME.uid,at:Date.now(),txt:"用備份檔還原了全部內容（備份時間 "+(d.getMonth()+1)+"/"+d.getDate()+" "+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)+"）",k:"",pg:"home"}).catch(function(){});
+    });
+  });
+}
+
 function moveTrip(newCode,prog){
   return sha("trip:"+newCode).then(function(k){
     var NEW="c_"+k.slice(0,40);if(NEW===ROOT)throw "same";
@@ -1312,8 +1387,19 @@ document.addEventListener("click",function(e){
   if(t.closest(".gt-x")){hideGate();return;}
   if(t.closest(".adm-out")){store("tokyo_admin",null);hideGate();admState();return;}
   if(t.closest(".adm-reload")){location.reload();return;}
+  if(t.closest(".gt-bk")){backupTrip();return;}
+  var rg=t.closest(".gt-rs-go");if(rg){if(!RS_DATA)return;if(!rg.classList.contains("armed")){rg.classList.add("armed");rg.lastChild.textContent="確定？目前內容會被取代，再按一次";return;}
+    rg.disabled=true;restoreTrip(RS_DATA).then(function(){RS_DATA=null;bkMsg("還原完成！頁面會重新整理。",true);setTimeout(function(){location.reload();},1500);}).catch(function(){rg.disabled=false;bkMsg("還原失敗，請檢查網路後再試一次");});return;}
   var k=t.closest("[data-kick]");if(k){if(!k.classList.contains("armed")){k.classList.add("armed");k.textContent="確定？";return;}
     FS.doc(path("users/"+k.dataset.kick)).delete().catch(function(){});return;}
+});
+document.addEventListener("change",function(e){
+  var inp=e.target;if(!inp.classList||!inp.classList.contains("gt-rs")||!inp.files||!inp.files[0])return;
+  var rd=new FileReader();rd.onload=function(){try{var bk=JSON.parse(rd.result);if(!bk||bk.app!=="tokyo-trip"||!bk.data)throw 0;RS_DATA=bk;
+      var d=new Date(bk.at||0),n=Object.keys(bk.data).length,old=$("#gate .gt-rs-go");if(old)old.remove();
+      bkMsg("選好了：備份時間 "+(d.getMonth()+1)+"/"+d.getDate()+" "+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)+"，共 "+n+" 筆。按下面的紅色按鈕開始還原（成員名單和留言不會被改動）。",true);
+      var b=document.createElement("button");b.type="button";b.className="btn coral gt-rs-go";b.innerHTML="<span>還原成這個備份</span>";$("#gate .adm-bk-msg").after(b);
+    }catch(x){RS_DATA=null;bkMsg("這不是東京手帳的備份檔");}};rd.readAsText(inp.files[0]);inp.value="";
 });
 document.addEventListener("submit",function(e){
   var f=e.target;if(!f.classList||!f.classList.contains("gt-f")||!f.querySelector("#gtNick"))return;e.preventDefault();
@@ -1527,11 +1613,15 @@ function flush(area){
   .catch(failed).then(function(){busy[area]=false;pending--;syncChip();flush(area);});
 }
 function one(k,v){var p={};p[k]=v;return p}
-function setCheck(k,v){S.checks[k]=v?1:0;push("checks",one(k,v?1:0));
-  var sv=svList().filter(function(x){return x.id===k})[0];
-  if(sv)logAct("","sv_"+k,{t:"sv"+(v?1:0),name:sv.n,word:v?"標記已買":"取消已買",unit:"個伴手禮",pg:"souvenir"});
-  else{var td=null;TODOG.forEach(function(g){todoList(g.k).forEach(function(x){if(x.id===k)td=x})});
-    if(td)logAct("","td_"+k,{t:"td"+(v?1:0),name:td.n,word:v?"完成了":"取消完成",unit:"個清單項目",pg:"todo"});}}
+/* 勾選（已買、清單完成）是每個人自己的：存在自己的文件裡，別人看不到也改不到 */
+var MYCK={};
+function isCk(k){return DB?!!MYCK[k]:!!S.checks[k]}
+function setCheck(k,v){
+  if(!DB){S.checks[k]=v?1:0;save();return;}
+  if(!MYID){toast("還在確認你的身分，請稍等一下再勾");return;}
+  if(v)MYCK[k]=1;else delete MYCK[k];
+  clearTimeout(setCheck._t);setCheck._t=setTimeout(function(){saveMine().catch(failed).then(function(){setCheck._t=null;});},400);
+}
 function setBk(k,v){S.bk[k]=v?1:0;push("bk",one(k,v?1:0));
   var b=allBookings().filter(function(x){return x.it.bid===k})[0];
   if(b)logAct("","it_"+b.it.id,{t:"bk"+(v?1:0),name:b.it.n,word:v?"標記已訂位":"改成未訂位",unit:"個預約",pg:"book"});}
@@ -1669,10 +1759,43 @@ function chipsFor(it){
   if(it.bid){var ok=isB(it.bid);c+='<span class="chip '+(ok?'yes':'no')+'">'+(ok?'已訂位 ✓':'未訂位')+'</span>';}
   return c+cntChip("it_"+it.id);
 }
+/* ---------- 天氣預報（Open-Meteo，免費、不用帳號；出發前約 16 天內才有資料） ---------- */
+var WXLOC=[["東京・上野",35.712,139.774],["橫濱",35.454,139.638],["鎌倉",35.319,139.547],["河口湖",35.497,138.758],["河口湖",35.497,138.758],["東京・原宿",35.670,139.703],["舞濱",35.632,139.881],["成田",35.772,140.393]];
+var WX={},WXT=0,WX_KEY=KEY+"-wx";
+try{var wc=JSON.parse(localStorage.getItem(WX_KEY)||"null");if(wc&&wc.d){WX=wc.d;WXT=wc.t||0;}}catch(e){}
+var WXN={0:["晴","sun"],1:["晴時多雲","pc"],2:["晴時多雲","pc"],3:["陰","cloud"],45:["霧","fog"],48:["霧","fog"],51:["毛毛雨","rain"],53:["毛毛雨","rain"],55:["毛毛雨","rain"],56:["凍雨","rain"],57:["凍雨","rain"],
+  61:["小雨","rain"],63:["雨","rain"],65:["大雨","rain"],66:["凍雨","rain"],67:["凍雨","rain"],71:["小雪","snow"],73:["雪","snow"],75:["大雪","snow"],77:["雪","snow"],80:["陣雨","rain"],81:["陣雨","rain"],82:["大陣雨","rain"],85:["陣雪","snow"],86:["陣雪","snow"],95:["雷雨","storm"],96:["雷雨","storm"],99:["雷雨","storm"]};
+function wxDate(i){var m=DAYMETA[i].d.split("/");return "2026-"+m[0]+"-"+m[1];}
+function fetchWx(){
+  if(!window.fetch||Date.now()-WXT<3*3600e3&&Object.keys(WX).length)return;
+  var start=new Date("2026-11-14T00:00:00+09:00").getTime(),now=Date.now();
+  if(now>start+9*864e5)return;                 /* 旅行結束了 */
+  if(start-now>15.5*864e5)return;              /* 還太早，預報只到 16 天後 */
+  var uniq=[],idx={};WXLOC.forEach(function(l){var k=l[1]+","+l[2];if(idx[k]==null){idx[k]=uniq.length;uniq.push(l);}});
+  var today=new Date(now+9*3600e3).toISOString().slice(0,10),from=today>"2026-11-14"?today:"2026-11-14";
+  var url="https://api.open-meteo.com/v1/forecast?latitude="+uniq.map(function(l){return l[1]}).join(",")+"&longitude="+uniq.map(function(l){return l[2]}).join(",")+
+    "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FTokyo&start_date="+from+"&end_date=2026-11-21";
+  fetch(url).then(function(r){return r.ok?r.json():null}).then(function(j){if(!j)return;var arr=Array.isArray(j)?j:[j],out={};
+    DAYMETA.forEach(function(m,i){var l=WXLOC[i],d=arr[idx[l[1]+","+l[2]]],dd=d&&d.daily;if(!dd)return;var p=dd.time.indexOf(wxDate(i));if(p<0)return;
+      if(dd.weather_code[p]==null)return;
+      out[i]={c:dd.weather_code[p],hi:Math.round(dd.temperature_2m_max[p]),lo:Math.round(dd.temperature_2m_min[p]),pop:dd.precipitation_probability_max[p]};});
+    if(!Object.keys(out).length)return;WX=out;WXT=Date.now();try{localStorage.setItem(WX_KEY,JSON.stringify({d:WX,t:WXT}))}catch(e){}
+    wxTabs();var w=$("#wx");if(w&&S.day!=null)w.outerHTML=wxHTML(S.day);}).catch(function(){});
+}
+function wxHTML(i){var w=WX[i],l=WXLOC[i];
+  if(!w){var start=new Date("2026-11-14T00:00:00+09:00").getTime();if(Date.now()>start+9*864e5)return '<div id="wx" hidden></div>';
+    return '<div class="wx none" id="wx">'+ic("wx-pc")+'<span>天氣預報約在出發前 2 週出現（'+esc(l[0])+'）</span></div>';}
+  var n=WXN[w.c]||["",'cloud'];
+  return '<div class="wx w-'+n[1]+'" id="wx">'+ic("wx-"+n[1])+'<b>'+n[0]+'</b><span class="wx-t">'+w.lo+'°～'+w.hi+'°</span>'+(w.pop!=null?'<span class="wx-p">'+ic("wx-drop")+w.pop+'%</span>':'')+'<small>'+esc(l[0])+'</small></div>';}
+function wxTabs(){DAYMETA.forEach(function(m,i){var t=$("#tab"+i);if(!t)return;var o=t.querySelector(".tab-wx");if(o)o.remove();var w=WX[i];if(!w)return;
+  var n=WXN[w.c]||["","cloud"];var e=document.createElement("i");e.className="tab-wx";e.setAttribute("aria-hidden","true");e.innerHTML=ic("wx-"+n[1]);t.appendChild(e);});}
+document.addEventListener("visibilitychange",function(){if(!document.hidden)fetchWx();});
+
 function renderTabs(){
   $("#tabs").innerHTML=DAYMETA.map(function(m,i){
     return '<button class="tab" role="tab" id="tab'+i+'" aria-selected="false" aria-controls="pane" tabindex="-1" data-i="'+i+'" style="--c:'+COLORS[i%4]+'"><small>DAY '+(i+1)+'</small><b>'+m.d+'</b><span>'+m.w+'</span></button>';
   }).join("");
+  wxTabs();setTimeout(fetchWx,1500);
 }
 function hotelOptions(sel){return '<option value="">（不住宿）</option>'+hotelKeys().map(function(k){return '<option value="'+esc(k)+'"'+(k===sel?' selected':'')+'>'+esc(hotel(k).name)+'</option>'}).join("");}
 function renderDay(i,animate){
@@ -1680,7 +1803,7 @@ function renderDay(i,animate){
   var html='<div class="dayband">'+band(m)+'</div><div class="day-h"><h3><small>DAY '+(i+1)+'・'+m.d+'（'+m.w+'）</small>'+esc(dm.title)+'</h3>'+
     '<button type="button" class="btn ghost sm edit-t" id="editT" aria-pressed="'+editing+'">'+(editing?'完成':'編輯')+'</button></div>'+
     '<div class="day-meta"><label>這天的標題<input class="inp" id="dmTitle" maxlength="30" value="'+esc(dm.title)+'"></label><label>今晚住宿<select class="inp" id="dmStay">'+hotelOptions(dm.stay)+'</select></label></div>'+
-    (H?'<button type="button" class="stay-btn" data-hotel="'+esc(dm.stay)+'">'+ic("s-hotel")+'今晚住 '+esc(H.name)+'</button>':'')+
+    (H?'<button type="button" class="stay-btn" data-hotel="'+esc(dm.stay)+'">'+ic("s-hotel")+'今晚住 '+esc(H.name)+'</button>':'')+wxHTML(i)+
     '<ol class="tl" style="margin-top:14px">'+ids.map(function(id,j){
       var it=item(id),th=it.img&&it.img[0];
       return '<li class="tl-item k-'+esc(it.k)+'" style="--i:'+j+'"><div class="time">'+esc(it.t||"")+'</div><div class="dot"></div><div>'+
@@ -1739,9 +1862,16 @@ function selectDay(i,opts){
 /* ---------- 詳細資訊視窗 ---------- */
 var lastFocus=null,sheetView=null;
 function row(icon,label,val,raw){if(!val)return "";return '<div><dt>'+ic(icon)+'</dt><dd><b>'+label+'</b>'+(raw?val:esc(val))+'</dd></div>';}
+/* 第一張當封面放大顯示；第二張以後縮小放在下面「其他照片」，點了都能全螢幕看 */
 function gallery(list,alt){
   if(!list||!list.length)return "";
-  return '<div class="gal'+(list.length>1?' multi':'')+'">'+list.map(function(k,i){return '<img alt="'+esc(alt)+'" src="'+esc(src(k))+'" data-lb="'+i+'" tabindex="0" role="button" aria-label="放大看照片'+(list.length>1?'（第 '+(i+1)+' 張，共 '+list.length+' 張）':'')+'">'}).join("")+'</div>';
+  return '<div class="gal"><img alt="'+esc(alt)+'" src="'+esc(src(list[0]))+'" data-lb="0" tabindex="0" role="button" aria-label="放大看照片'+(list.length>1?'（共 '+list.length+' 張）':'')+'">'+
+    (list.length>1?'<span class="gal-n" aria-hidden="true">'+ic("i-img")+list.length+'</span>':'')+'</div>';
+}
+function morePhotos(list,alt){
+  if(!list||list.length<2)return "";
+  return '<section class="more-ph"><h3>其他照片<small>'+(list.length-1)+' 張</small></h3><div class="mp-grid">'+list.slice(1).map(function(k,i){
+    return '<img alt="'+esc(alt)+'" src="'+esc(src(k))+'" loading="lazy" data-lb="'+(i+1)+'" tabindex="0" role="button" aria-label="放大看第 '+(i+2)+' 張照片">'}).join("")+'</div></section>';
 }
 /* ---------- 照片放大檢視：左右滑動換張、點兩下放大 ---------- */
 var LB=null;
@@ -1923,7 +2053,8 @@ function refreshThreads(){
   bell();
 }
 /* 每個人的留言存在自己的文件 chat/<自己的 id>，資料庫規則只允許本人改 */
-function saveMine(){if(!DB||!MYID)return Promise.reject({code:"no_id"});return DB.doc("chat/"+MYID).set({m:MINE});}
+function gotCk(){var n=clone((CHAT[MYID]&&CHAT[MYID].ck)||{});if(JSON.stringify(n)===JSON.stringify(MYCK))return;MYCK=n;renderSv();renderTodo();}
+function saveMine(){if(!DB||!MYID)return Promise.reject({code:"no_id"});return DB.doc("chat/"+MYID).set({m:MINE,ck:MYCK});}
 /* 管理員隱藏的留言（Firebase 版） */
 var HIDDEN={},ISADM=false;
 window.addEventListener("tripadmin",function(e){var v=!!(e&&e.detail);if(v!==ISADM){ISADM=v;$$(".msgs").forEach(function(o){o._h=null});refreshThreads();}});
@@ -1997,7 +2128,7 @@ function openItem(id){
   (inf.links||[]).forEach(function(l){h+='<a class="btn ghost" href="'+esc(l[1])+'" target="_blank" rel="noopener">'+ic("i-link")+esc(l[0].length>18?l[0].slice(0,18)+"…":l[0])+'</a>'});
   if(it.bid)h+='<button type="button" class="btn '+(isB(it.bid)?'ghost':'green')+' sh-edit" data-bk="'+esc(it.bid)+'" data-reopen="'+esc(id)+'">'+(isB(it.bid)?'改回未訂位':'標記為已訂位')+'</button>';
   var jj=jaOfItem(it);if(jj[1])h+=taxiBtn("it",id);
-  h+=editBtn("item",id)+'</div>'+threadHTML("it_"+id);
+  h+=editBtn("item",id)+'</div>'+morePhotos(it.img,it.n)+threadHTML("it_"+id);
   openSheet(h,["item",id]);
 }
 function openHotel(key){
@@ -2007,16 +2138,16 @@ function openHotel(key){
   h+='<div class="sh-chips">'+(H.dates?'<span class="chip c2">'+esc(H.dates)+'</span>':'')+(H.nights?'<span class="chip">'+esc(H.nights)+' 晚</span>':'')+'</div><dl class="dl">';
   h+=row("i-bed","房型",H.room);h+=row("i-route","交通",H.access);h+=row("i-note","筆記",H.note);h+=row("i-pin","地址",H.addr);
   h+='</dl><div class="sh-acts">'+(H.url?'<a class="btn" href="'+esc(H.url)+'" target="_blank" rel="noopener">'+ic("i-link")+esc(H.site||"網站")+'</a>':'')+
-     (H.addr?'<a class="btn aqua" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(H.addr)+'" target="_blank" rel="noopener">'+ic("i-pin")+'Google 地圖</a>':'')+taxiBtn("ht",key)+editBtn("hotel",key)+'</div>'+threadHTML("ht_"+key);
+     (H.addr?'<a class="btn aqua" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(H.addr)+'" target="_blank" rel="noopener">'+ic("i-pin")+'Google 地圖</a>':'')+taxiBtn("ht",key)+editBtn("hotel",key)+'</div>'+morePhotos(H.img,H.name)+threadHTML("ht_"+key);
   openSheet(h,["hotel",key]);
 }
 function openSv(id){
   var x=svList().filter(function(s){return s.id===id})[0];if(!x)return;
   var h=gallery(x.img,x.n)||artBox("s-gift","var(--yellow-l)");
   h+='<div class="sh-eyebrow">'+esc(CATS[x.cat]||"")+'</div><h2 class="sh-title" id="shTitle">'+esc(x.n)+'</h2>';
-  h+='<div class="sh-chips"><span class="chip '+(S.checks[x.id]?'yes':'no')+'">'+(S.checks[x.id]?'已買 ✓':'還沒買')+'</span></div><dl class="dl">';
+  h+='<div class="sh-chips"><span class="chip '+(isCk(x.id)?'yes':'no')+'">'+(isCk(x.id)?'我已買 ✓':'我還沒買')+'</span></div><dl class="dl">';
   h+=row("i-shop","購買點",x.shop);h+=row("i-note","說明",x.desc);
-  h+='</dl><div class="sh-acts"><button type="button" class="btn '+(S.checks[x.id]?'ghost':'green')+' sh-edit" data-buy="'+esc(x.id)+'">'+(S.checks[x.id]?'改回還沒買':'標記為已買')+'</button>'+editBtn("sv",id)+'</div>'+threadHTML("sv_"+id);
+  h+='</dl><div class="sh-acts"><button type="button" class="btn '+(isCk(x.id)?'ghost':'green')+' sh-edit" data-buy="'+esc(x.id)+'">'+(isCk(x.id)?'改回還沒買':'我買了')+'</button>'+editBtn("sv",id)+'</div>'+morePhotos(x.img,x.n)+threadHTML("sv_"+id);
   openSheet(h,["sv",id]);
 }
 
@@ -2229,9 +2360,9 @@ function renderSv(){
   var all=svList();
   setHTML($("#svFilters"),['<button type="button" data-f="-1" aria-pressed="'+(svFilter===-1)+'">全部</button>'].concat(CATS.map(function(c,i){return '<button type="button" data-f="'+i+'" aria-pressed="'+(svFilter===i)+'">'+c+'</button>'})).join(""));
   var list=all.filter(function(x){return svFilter===-1||x.cat===svFilter});
-  $("#svText").textContent="已買 "+all.filter(function(x){return S.checks[x.id]}).length+" / "+all.length;
+  $("#svText").textContent="我已買 "+all.filter(function(x){return isCk(x.id)}).length+" / "+all.length;
   setHTML($("#svList"),list.map(function(x,i){
-    var on=!!S.checks[x.id],im=x.img&&x.img[0];
+    var on=isCk(x.id),im=x.img&&x.img[0];
     return '<article class="sv'+(on?' done':'')+'" id="c_sv_'+esc(x.id)+'" style="animation-delay:'+(i*40)+'ms">'+
       '<label class="got"><input type="checkbox" data-k="'+esc(x.id)+'"'+(on?' checked':'')+' aria-label="已買 '+esc(x.n)+'">已買</label>'+
       '<button type="button" class="sv-open" data-sv="'+esc(x.id)+'"><div class="ph'+(im?'':' none')+'">'+(im?'<img alt="" loading="lazy" src="'+esc(src(im))+'">':'<svg viewBox="0 0 100 100" aria-hidden="true"><use href="#s-gift"/></svg>')+'</div>'+
@@ -2310,13 +2441,13 @@ function editSplit(){
 function renderTodo(){
   var total=0,done=0;
   setHTML($("#todoList"),TODOG.map(function(g){
-    var its=todoList(g.k),dn=its.filter(function(x){return S.checks[x.id]}).length;total+=its.length;done+=dn;
-    return '<div class="panel" style="--c:'+g.c+'"><h3>'+g.t+'<small>'+dn+' / '+its.length+'</small></h3><ul class="rows grp">'+its.map(function(x){var on=!!S.checks[x.id];
+    var its=todoList(g.k),dn=its.filter(function(x){return isCk(x.id)}).length;total+=its.length;done+=dn;
+    return '<div class="panel" style="--c:'+g.c+'"><h3>'+g.t+'<small>'+dn+' / '+its.length+'</small></h3><ul class="rows grp">'+its.map(function(x){var on=isCk(x.id);
       return '<li class="row'+(on?' done':'')+'" id="c_td_'+esc(x.id)+'"><input type="checkbox" data-k="'+esc(x.id)+'"'+(on?' checked':'')+' aria-label="完成：'+esc(x.n)+'"><button type="button" class="nm td-open" data-edit="todo" data-g="'+g.k+'" data-id="'+esc(x.id)+'"><span>'+esc(x.n)+'</span></button>'+cmBtn("td",x.id,x.n)+'</li>';}).join("")+'</ul>'+
       (g.link?'<div class="link-row"><a href="'+g.link.u+'" target="_blank" rel="noopener">'+esc(g.link.t)+' ↗</a></div>':'')+
       '<form class="add" data-g="'+g.k+'" autocomplete="off"><input class="inp" name="n" maxlength="40" required placeholder="新增項目…" aria-label="新增到'+g.t+'"><button class="btn sm" type="submit">加入</button></form></div>';
   }).join(""));
-  $("#progText").textContent="完成 "+done+" / "+total;
+  $("#progText").textContent="我完成 "+done+" / "+total;
   $("#progBar").style.width=(total?Math.round(done/total*100):0)+"%";
 }
 /* 勾選時只更新計數與快取，不重畫卡片，避免畫面閃爍 */
@@ -2375,7 +2506,7 @@ function bind(){
     if((el=t.closest("[data-pay-new]"))){recordPay({});return;}
     if((el=t.closest("[data-unpay]"))){if(!el.classList.contains("armed")){el.classList.add("armed");el.textContent="確定？";setTimeout(function(){if(el.isConnected){el.classList.remove("armed");el.textContent="取消";}},3000);return;}undoPay(el.dataset.unpay);return;}
     if((el=t.closest("#sync"))){toast(el.title);return;}
-    if((el=t.closest(".gal img[data-lb]"))){var g=el.closest(".gal"),im=$$("img",g);lbOpen(im.map(function(x){return x.currentSrc||x.src}),+el.dataset.lb,el.alt);return;}
+    if((el=t.closest("img[data-lb]"))){var im=$$("#shBody img[data-lb]").sort(function(a,b){return a.dataset.lb-b.dataset.lb});lbOpen(im.map(function(x){return x.currentSrc||x.src}),+el.dataset.lb,el.alt);return;}
     if((el=t.closest("#lbX"))){lbClose();return;}
     if((el=t.closest("#lbPrev"))){lbGo(-1);return;}
     if((el=t.closest("#lbNext"))){lbGo(1);return;}
@@ -2416,7 +2547,7 @@ function bind(){
       var dd=Object.assign({},S.meta.days||{});dd["d"+di3]=null;setMeta("days",dd);NOLOG=false;logAct("把 Day "+(di3+1)+" 還原成原始行程","",null,"days");renderDay(di3,false);renderBook();toast("已還原 Day "+(di3+1));return;}
     if((el=t.closest("[data-bk]"))){var b2=el.dataset.bk;setBk(b2,!isB(b2));renderBook();renderDay(S.day,false);
       if(el.dataset.reopen)openItem(el.dataset.reopen);else{var f=$('#bookList [data-bk="'+b2+'"]');if(f)f.focus();}return;}
-    if((el=t.closest("[data-buy]"))){var bk=el.dataset.buy;setCheck(bk,!S.checks[bk]);renderSv();openSv(bk);return;}
+    if((el=t.closest("[data-buy]"))){var bk=el.dataset.buy;setCheck(bk,!isCk(bk));renderSv();openSv(bk);return;}
     if((el=t.closest("#svFilters button"))){svFilter=+el.dataset.f;var g=$("#svList");g.classList.remove("anim");void g.offsetWidth;g.classList.add("anim");renderSv();clearTimeout(g._t);g._t=setTimeout(function(){g.classList.remove("anim")},900);return;}
   });
   document.addEventListener("keydown",function(e){
@@ -2451,7 +2582,7 @@ function bind(){
   $("#sheetBg").addEventListener("click",function(){if(FORM){toast("按「取消」或「儲存」關閉編輯");return;}closeSheet();});
   document.addEventListener("keydown",function(e){
     if(LB&&!LB.hidden){if(e.key==="Escape"){e.preventDefault();lbClose();}else if(e.key==="ArrowLeft")lbGo(-1);else if(e.key==="ArrowRight")lbGo(1);return;}
-    if(e.target&&e.target.matches&&e.target.matches(".gal img[data-lb]")&&(e.key==="Enter"||e.key===" ")){e.preventDefault();e.target.click();return;}
+    if(e.target&&e.target.matches&&e.target.matches("img[data-lb]")&&(e.key==="Enter"||e.key===" ")){e.preventDefault();e.target.click();return;}
     if(!$("#taxi").hidden&&e.key==="Escape"){hideTaxi();return;}
     if(!$("#sheet").classList.contains("on"))return;
     if(e.key==="Escape"&&!FORM){closeSheet();return;}
@@ -2538,10 +2669,10 @@ function loadNames(){if(!USER||!USER.profiles)return;var ids=[];MSGS.concat(LOG)
       mine.forEach(function(m){MINE[m.id]={k:m.k,text:m.text,at:m.at,ed:m.ed}});
       saveMine().then(function(){mine.forEach(function(m){DB.doc("msgs/"+m.id).delete().catch(function(){})});}).catch(function(){});}
     db.collection("msgs").onSnapshot(function(snap){LEG=snap.docs.map(function(d){var v=d.data()||{};return {id:d.id,k:v.k,by:v.by,text:v.text,at:v.at,ed:v.ed,legacy:true}});gotLeg=true;msgsChanged();},function(){gotLeg=true;msgsChanged();});
-    db.collection("chat").onSnapshot(function(snap){CHAT={};snap.docs.forEach(function(d){CHAT[d.id]=clone(d.data()||{})});if(MYID)MINE=clone((CHAT[MYID]&&CHAT[MYID].m)||{});gotChat=true;msgsChanged();},function(){gotChat=true;msgsChanged();});
+    db.collection("chat").onSnapshot(function(snap){CHAT={};snap.docs.forEach(function(d){CHAT[d.id]=clone(d.data()||{})});if(MYID){MINE=clone((CHAT[MYID]&&CHAT[MYID].m)||{});if(!setCheck._t)gotCk();}gotChat=true;msgsChanged();},function(){gotChat=true;msgsChanged();});
     window.claude.use("user").then(function(u){if(!u)return;USER=u;
       if(u.can)Promise.resolve(u.can("data.write")).then(function(ok){if(ok===false){RO=true;syncChip();}});
-      Promise.resolve(u.id&&u.id()).then(function(id){if(id){MYID=id;loadNames();if(CHAT[id])MINE=clone(CHAT[id].m||{});if(gotLeg&&gotChat)migrate();
+      Promise.resolve(u.id&&u.id()).then(function(id){if(id){MYID=id;loadNames();if(CHAT[id])MINE=clone(CHAT[id].m||{});gotCk();if(gotLeg&&gotChat)migrate();
         DB.doc("data/users/"+id+"/seen").get().then(function(sn){if(sn.exists){var v=sn.data()||{};Object.keys(v).forEach(function(k){if((v[k]||0)>(SEEN[k]||0))SEEN[k]=v[k]});try{localStorage.setItem(SEEN_KEY,JSON.stringify(SEEN))}catch(e){}}refreshThreads();renderAll(true);bell();}).catch(function(){refreshThreads();renderAll(true);bell();});}}).catch(function(){});
     }).catch(function(){});
   }).catch(function(){syncChip();});
