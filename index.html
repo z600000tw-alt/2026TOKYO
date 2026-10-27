@@ -190,6 +190,17 @@ input[type=checkbox]{
 }
 input[type=checkbox]:checked{background:var(--green)}
 input[type=checkbox]:checked::after{content:"";width:7px;height:13px;border:solid var(--ink);border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.bk-grp{padding:0 12px}
+.bk-grp+.bk-grp{border-top:3px dashed var(--ink)}
+.bk-grp ul{padding:0 0 4px}
+.bk-h{margin:10px 2px 2px;display:flex;align-items:center;gap:8px;font-size:13px}
+.bk-btn{
+  flex:none;border:3px solid var(--ink);border-radius:999px;background:var(--paper);border-style:dashed;
+  padding:3px 12px;font-size:13px;cursor:pointer;white-space:nowrap;box-shadow:0 3px 0 var(--ink);
+}
+.bk-btn[aria-pressed="true"]{background:var(--green);border-style:solid}
+.bk-btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+.row.booked .nm{opacity:.75}
 .del{flex:none;width:28px;height:28px;border:2.5px solid var(--ink);border-radius:50%;background:var(--paper);cursor:pointer;line-height:1;font-size:16px;padding:0}
 .add{display:flex;gap:8px;padding:4px 12px 12px;flex-wrap:wrap}
 .add input[type=text],.add select{
@@ -474,7 +485,7 @@ var DAYS=[
    {t:"14:20",n:"抵達成田國際機場 第2航廈",note:"星宇航空 JX802 降落",k:"move"},
    {t:"15:00",n:"成田機場到住宿",tr:[["train","Skyliner"]],note:"Skyliner 到上野",loc:"東京Schole里士滿酒店Premier",k:"stay"},
    {n:"阿美橫町逛街",tr:[["train","地鐵"]],must:1,k:"spot"},
-   {t:"19:30",n:"晚餐 - 一頭牛燒肉",k:"meal"},
+   {t:"19:30",n:"晚餐 - 一頭牛燒肉",bid:"bk1",k:"meal"},
    {n:"上野恩賜公園",tr:[["walk","步行"]],k:"spot"},
    {n:"回飯店",tr:[["train","地鐵"]],loc:"東京Schole里士滿酒店Premier",k:"stay"},
    {n:"六本木新城展望台",tr:[["train","地鐵"]],opt:1,k:"spot"}
@@ -500,18 +511,18 @@ var DAYS=[
    {n:"稻村崎",tr:[["train","江電"]],k:"spot"},
    {n:"鎌倉高校前（灌籃高手平交道）",tr:[["train","江電"]],must:1,k:"spot"},
    {n:"江之島",tr:[["train","江電"]],must:1,k:"spot"},
-   {t:"19:30",n:"晚餐－（壽喜燒）人形町今半",book:"11/16 19:30・尚未訂位",must:1,k:"meal"},
+   {t:"19:30",n:"晚餐－（壽喜燒）人形町今半",bid:"bk2",k:"meal"},
    {n:"回飯店",tr:[["train","電車"]],loc:"東京Schole里士滿酒店Premier",k:"stay"}
   ]},
  {d:"11/17",w:"二",title:"包車去河口湖",bg:"#F6D27A",stay:"miire",alt:"富士山與鳥居",
   art:[["s-cloud",232,4,60,"drift"],["s-fuji",116,-8,120],["s-torii",22,30,68],["s-maple",252,62,36,"float b"]],
   items:[
-   {t:"09:00",n:"東京包車出發",tr:[["car","包車"]],k:"move"},
+   {t:"09:00",n:"東京包車出發",note:"從飯店出發，包車 10 小時",tr:[["car","包車"]],bid:"bk3",k:"move"},
    {n:"新倉富士淺間神社",tr:[["car","包車"]],must:1,k:"spot"},
    {n:"富士吉田懷舊商店街",tr:[["car","包車"]],k:"spot"},
-   {t:"12:30",n:"午餐－鰻世櫻富士山店",k:"meal"},
+   {t:"12:30",n:"午餐－鰻世櫻富士山店",bid:"bk4",k:"meal"},
    {n:"忍野八海",tr:[["car","包車"]],must:1,k:"spot"},
-   {n:"山中湖 KABA BUS",tr:[["bus","KABA BUS"]],book:"11/17・尚未預約",k:"spot"},
+   {n:"山中湖 KABA BUS",tr:[["bus","KABA BUS"]],bid:"bk5",k:"spot"},
    {n:"平野之濱",tr:[["car","包車"]],k:"spot"},
    {n:"河口湖楓葉迴廊",tr:[["car","包車"]],must:1,k:"spot"},
    {n:"晚餐（楓葉迴廊周邊？）",k:"meal"},
@@ -522,7 +533,7 @@ var DAYS=[
   items:[
    {n:"產屋ヶ崎（日出？）",k:"spot"},
    {n:"天上山公園纜車",tr:[["cable","纜車"]],k:"spot"},
-   {t:"12:00",n:"午餐：甲州屋 炸牛排",k:"meal"},
+   {t:"12:00",n:"午餐：甲州屋 炸牛排",bid:"bk6",k:"meal"},
    {n:"大石公園",must:1,k:"spot"},
    {n:"西湖根場",k:"spot"},
    {n:"精進湖（日落？）",k:"spot"},
@@ -533,7 +544,7 @@ var DAYS=[
   art:[["s-cloud",150,4,50,"drift"],["s-bus",12,18,102,"sway"],["s-torii",128,32,66],["s-tokyotower",224,2,106]],
   items:[
    {n:"早餐",k:"meal"},
-   {t:"10:30",n:"河口湖駅－搭乘高速巴士",tr:[["bus","高速巴士"]],k:"move"},
+   {t:"10:30",n:"河口湖駅－搭乘高速巴士",tr:[["bus","高速巴士"]],bid:"bk7",k:"move"},
    {n:"東京車站放行李",k:"move"},
    {t:"14:00",n:"明治神宮",tr:[["train","電車"]],must:1,k:"spot"},
    {n:"東京車站一番街",tr:[["train","電車"]],k:"spot"},
@@ -544,14 +555,14 @@ var DAYS=[
   art:[["s-cloud",14,10,60,"drift"],["s-castle",108,0,104],["s-cloud",232,14,56,"drift b"]],
   extra:'<g class="k float"><circle cx="64" cy="40" r="12" fill="#F6D27A"/><path d="M64 52 Q60 70 64 92"/></g><g class="k float b"><circle cx="258" cy="48" r="12" fill="#A8D3E6"/><path d="M258 60 Q262 76 258 94"/></g><g class="k float"><circle cx="284" cy="62" r="10" fill="#B9DAA5"/><path d="M284 72 Q280 84 284 96"/></g>',
   items:[
-   {n:"東京迪士尼樂園",note:"伴手禮清單：阿布髮帶",must:1,k:"spot"},
+   {n:"東京迪士尼樂園",note:"伴手禮清單：阿布髮帶",bid:"bk8",k:"spot"},
    {n:"回飯店",loc:"星野1955（迪士尼住宿）",k:"stay"}
   ]},
  {d:"11/21",w:"六",title:"回家",bg:"#B9DAA5",stay:null,alt:"飛機與溫暖的家",
   art:[["s-cloud",236,10,60,"drift b"],["s-plane",128,8,92,"float"],["s-house",20,16,86]],
   items:[
    {n:"早餐",k:"meal"},
-   {t:"09:00",n:"機場接送",tr:[["bus","接送"]],book:"尚未預約",k:"move"},
+   {t:"09:00",n:"機場接送",tr:[["bus","接送"]],bid:"bk9",k:"move"},
    {t:"12:45",n:"JX801 成田第2航廈起飛",note:"星宇航空・16:50 抵達桃園第1航廈",k:"move"},
    {n:"溫暖的家",k:"stay"}
   ]}
@@ -561,7 +572,15 @@ var TODO=[
  {k:"pre",t:"行前注意",c:"#A8D3E6",items:[["pre1","網路（eSIM）"],["pre2","航班線上報到"],["pre3","Visit Japan"],["pre4","旅遊保險"],["pre5","護照有效期限"]],
   link:{u:"https://vocus.cc/article/6acdd728fd897800017ce6e0",t:"日本退稅流程全攻略（無患旅誌）"}},
  {k:"pack",t:"打包注意",c:"#B9DAA5",items:[["pk1","日幣"],["pk2","身分證正反面影本（備用）"],["pk3","充電線（手機）"],["pk4","行動電源"],["pk5","大頭照（備用）"],["pk6","信用卡"],["pk7","常備藥品"]]},
- {k:"book",t:"需預先訂位／訂票",c:"#F2A497",items:[["bk1","晚餐－（壽喜燒）人形町今半","11/16 19:30・訂位"],["bk2","山中湖 KABA BUS","11/17・購票"],["bk3","機場接送","11/21 09:00・預約"]]}
+ {k:"book",t:"需預先訂位／訂票",c:"#F2A497",items:[["bk1","晚餐 - 一頭牛燒肉","11/14（六）19:30",1],
+  ["bk2","晚餐－（壽喜燒）人形町今半","11/16（一）19:30",0],
+  ["bk3","東京包車（河口湖）","11/17（二）09:00・從飯店出發，包車 10 小時",1],
+  ["bk4","午餐－鰻世櫻富士山店","11/17（二）12:30",1],
+  ["bk5","山中湖 KABA BUS","11/17（二）",0],
+  ["bk6","午餐：甲州屋 炸牛排","11/18（三）12:00",1],
+  ["bk7","河口湖駅－高速巴士","11/19（四）10:30",1],
+  ["bk8","東京迪士尼樂園","11/20（五）",1],
+  ["bk9","機場接送","11/21（六）09:00",0]]}
 ];
 
 var HOTEL_CARDS=[
@@ -585,10 +604,10 @@ var CATS=["伴手禮 / 零食","必吃美食 / 超商","藥妝 / 保健","雜貨
 var CATCLS={"伴手禮 / 零食":"coral","必吃美食 / 超商":"yellow","藥妝 / 保健":"green","雜貨 / 料理用":"aqua"};
 
 /* ---------- 狀態 ---------- */
-var S={checks:{},custom:{pre:[],pack:[],book:[],sv:[]},day:null};
+var S={checks:{},bk:{},custom:{pre:[],pack:[],book:[],sv:[]},day:null};
 try{
   var raw=localStorage.getItem(KEY);
-  if(raw){var o=JSON.parse(raw);S.checks=o.checks||{};S.day=typeof o.day==="number"?o.day:null;
+  if(raw){var o=JSON.parse(raw);S.checks=o.checks||{};S.bk=o.bk||{};S.day=typeof o.day==="number"?o.day:null;
     S.custom=Object.assign({pre:[],pack:[],book:[],sv:[]},o.custom||{});}
 }catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
@@ -649,7 +668,7 @@ function renderDay(i,animate){
       var chips="";
       if(it.opt)chips+='<span class="chip opt">選配</span>';
       (it.tr||[]).forEach(function(t){chips+='<span class="chip '+t[0]+'">'+esc(t[1])+'</span>'});
-      if(it.book)chips+='<span class="chip todo">'+esc(it.book)+'</span>';
+      if(it.bid){var ok=isB(it.bid);chips+='<span class="chip '+(ok?'green':'todo')+'">'+(ok?'已訂位 ✓':'未訂位')+'</span>';}
       return '<li class="tl-item k-'+it.k+'" style="--i:'+j+'"><div class="time">'+(it.t||"")+'</div><div class="dot"></div><div class="tl-card"><div class="ttl">'+esc(it.n)+'</div>'+
         (it.note?'<div class="note">'+esc(it.note)+'</div>':'')+
         (it.loc?'<div class="loc"><svg class="ico sm" aria-hidden="true"><use href="#s-pin"/></svg>'+esc(it.loc)+'</div>':'')+
@@ -681,7 +700,7 @@ function selectDay(i,opts){
 
 /* ---------- 待辦 ---------- */
 function allTodo(g){
-  var base=g.items.map(function(x){return {id:x[0],n:x[1],m:x[2]||"",c:false}});
+  var base=g.items.map(function(x){return {id:x[0],n:x[1],m:x[2]||"",c:false,def:!!x[3]}});
   var cus=(S.custom[g.k]||[]).map(function(x){return {id:x.id,n:x.n,m:"",c:true}});
   return base.concat(cus);
 }
@@ -690,9 +709,26 @@ function rowHtml(it,key){
   return '<li class="row'+(done?" done":"")+'"><label><input type="checkbox" data-k="'+it.id+'"'+(done?" checked":"")+'><span class="nm">'+esc(it.n)+(it.m?'<small class="sub2">'+esc(it.m)+'</small>':'')+(it.shop?'':'')+'</span></label>'+
     (it.c?'<button class="del" type="button" data-del="'+key+'" data-id="'+it.id+'" aria-label="刪除 '+esc(it.n)+'">×</button>':'')+'</li>';
 }
+var BKDEF={};TODO.forEach(function(g){if(g.k==="book")g.items.forEach(function(x){BKDEF[x[0]]=!!x[3]})});
+function isB(id){return S.bk.hasOwnProperty(id)?!!S.bk[id]:!!BKDEF[id]}
+function bookRow(it){
+  var on=isB(it.id);
+  return '<li class="row bk'+(on?" booked":"")+'"><span class="nm">'+esc(it.n)+(it.m?'<small class="sub2">'+esc(it.m)+'</small>':'')+'</span>'+
+    '<button type="button" class="bk-btn" data-bk="'+it.id+'" aria-pressed="'+on+'" aria-label="'+esc(it.n)+'：'+(on?'已訂位，點一下改回未訂位':'未訂位，點一下改成已訂位')+'">'+(on?'已訂位 ✓':'未訂位')+'</button>'+
+    (it.c?'<button class="del" type="button" data-del="book" data-id="'+it.id+'" aria-label="刪除 '+esc(it.n)+'">×</button>':'')+'</li>';
+}
+function bookCard(g){
+  var its=allTodo(g);
+  var yes=its.filter(function(x){return isB(x.id)}),no=its.filter(function(x){return !isB(x.id)});
+  return {n:its.length,d:yes.length,html:'<div class="card"><h3 style="--c:'+g.c+'">'+g.t+'<small>已訂 '+yes.length+' / '+its.length+'</small></h3>'+
+    '<div class="bk-grp"><p class="bk-h"><span class="chip todo">未訂位</span>'+no.length+' 項</p><ul>'+(no.map(bookRow).join("")||'<li class="row"><span class="nm">全部都訂好了！</span></li>')+'</ul></div>'+
+    '<div class="bk-grp"><p class="bk-h"><span class="chip green">已訂位</span>'+yes.length+' 項</p><ul>'+(yes.map(bookRow).join("")||'<li class="row"><span class="nm sub2">還沒有已訂位的項目</span></li>')+'</ul></div>'+
+    '<form class="add" data-g="'+g.k+'" autocomplete="off"><input type="text" name="n" maxlength="40" placeholder="新增要預約的項目…" required aria-label="新增到'+g.t+'"><button class="btn" type="submit">加入</button></form></div>'};
+}
 function renderTodo(){
   var total=0,done=0;
   $("#todoList").innerHTML=TODO.map(function(g){
+    if(g.k==="book"){var bc=bookCard(g);total+=bc.n;done+=bc.d;return bc.html;}
     var its=allTodo(g);
     var dn=its.filter(function(x){return S.checks[x.id]}).length;
     total+=its.length;done+=dn;
@@ -757,6 +793,15 @@ function bind(){
     save();renderTodo();renderSv();
   });
   document.addEventListener("click",function(e){
+    var bk=e.target.closest(".bk-btn");
+    if(bk){
+      var id=bk.dataset.bk;
+      var nv=!isB(id);
+      if(nv===!!BKDEF[id])delete S.bk[id];else S.bk[id]=nv?1:0;
+      save();renderTodo();if(S.day!=null)renderDay(S.day,false);
+      var nb=document.querySelector('[data-bk="'+id+'"]');if(nb)nb.focus();
+      return;
+    }
     var d=e.target.closest(".del");
     if(d){
       var key=d.dataset.del,id=d.dataset.id;
