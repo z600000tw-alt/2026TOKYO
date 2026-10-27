@@ -199,26 +199,37 @@ h1{margin:0;font-size:30px;line-height:1.25;font-weight:normal;letter-spacing:.0
 .filters::-webkit-scrollbar{display:none}
 .filters button{flex:none;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);padding:2px 12px;font-size:13px}
 .filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-.sv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-@media (min-width:600px){.sv-grid{grid-template-columns:repeat(3,1fr)}}
-.sv{position:relative;border:var(--bw) solid var(--ink);border-radius:16px;background:var(--paper);overflow:hidden;display:flex;flex-direction:column;animation:rise .4s both}
-.sv-open{display:block;width:100%;text-align:left;padding:0;border:0;background:none;flex:1}
-.sv .ph{aspect-ratio:1/1;background:var(--soft);border-bottom:var(--bw) solid var(--ink);overflow:hidden}
+.sv-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:600px){.sv-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.sv{position:relative;border:var(--bw) solid var(--ink);border-radius:16px;background:var(--paper);overflow:hidden;display:flex;flex-direction:column}
+.sv-grid.anim .sv{animation:rise .4s both}
+.sv-open{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;width:100%;text-align:center;padding:0;border:0;background:none;flex:1}
+.sv .ph{position:relative;width:calc(100% - 10px);aspect-ratio:4/3;margin:5px auto 0;background:var(--soft);border:1.5px solid var(--ink);border-radius:10px;overflow:hidden}
+.sv .ph img{position:absolute;inset:0}
 .sv .ph img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
 .sv:hover .ph img{transform:scale(1.04)}
 .sv .ph.none{display:grid;place-items:center}
 .sv .ph.none svg{width:46%;height:46%}
-.sv .bd{padding:8px 10px 10px}
+.sv{border-radius:14px}
+.sv .bd{padding:7px 8px 0;min-width:0;flex:1;display:flex;flex-direction:column}
+.sv .nm{font-size:14px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sv .wh{font-size:12px;margin-top:2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv .meta{margin-top:auto;padding-top:6px}
+.sv .meta .chip{font-size:11.5px;padding:0 8px;line-height:1.65}
+.sv .meta{justify-content:center}
 .sv .nm{font-size:14px;line-height:1.4;overflow-wrap:anywhere}
 .sv .wh{font-size:12px;color:var(--ink2);margin-top:2px;line-height:1.4}
 .sv.done .ph img{filter:grayscale(.6) opacity(.65)}
 .sv.done .nm{text-decoration:line-through;text-decoration-thickness:1.5px}
+.sv .got{position:static;order:2;align-self:center;margin:7px 0 9px;font-size:12px;line-height:1;padding:3px 9px 3px 4px;gap:5px}
+.sv .got input[type=checkbox]{width:15px;height:15px;border-width:1.5px}
+.sv .got input[type=checkbox]:checked::after{width:3px;height:6px;border-width:0 1.5px 1.5px 0}
 .got{position:absolute;top:8px;right:8px;z-index:2;display:flex;align-items:center;gap:4px;border:1.5px solid var(--ink);border-radius:999px;background:rgba(255,252,246,.95);padding:1px 8px 1px 3px;font-size:12px}
 .got input{margin:0}
 .x-del{position:absolute;top:8px;left:8px;z-index:2;width:26px;height:26px;border:1.5px solid var(--ink);border-radius:50%;background:var(--paper);padding:0;line-height:1}
 .add-sv{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
 .add-sv .inp{flex:1 1 100%;width:auto}
-.add-sv select.inp,.add-sv input[name=where]{flex:1 1 30%}
+.add-sv select.inp,.add-sv input[name=where]{flex:1 1 0;min-width:0}
 
 
 /* ---------- 勾選 ---------- */
@@ -292,6 +303,9 @@ input[type=checkbox]:checked::after{content:"";width:5px;height:10px;border:soli
 body.lock .toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 .pen{flex:none;width:30px;height:30px;border:1.5px solid var(--ink);border-radius:50%;background:var(--paper);display:inline-grid;place-items:center;padding:0;font-size:14px;line-height:1}
 .pen:hover{background:var(--yellow-l)}
+.pen svg{width:17px;height:17px;--sw:1.6px}
+.fl-h .pen svg,.row .pen svg{width:15px;height:15px}
+.ed button svg{width:16px;height:16px}
 .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
 .fl-h .pen{width:26px;height:26px;font-size:12px;margin-left:6px}
 .more-acts{display:flex;justify-content:flex-end;margin-top:10px}
@@ -321,6 +335,37 @@ body.readonly .pen,body.readonly .edit-t,body.readonly [data-new],body.readonly 
 .editing .day-meta{display:grid}
 .day-meta label{font-size:12px;color:var(--ink2);display:flex;flex-direction:column;gap:2px}
 .row .pen{width:26px;height:26px;font-size:12px}
+.pen,.ed button{display:inline-flex;align-items:center;justify-content:center}
+.pen svg,.ed button svg{display:block;margin:0}
+.exp-row .cm,.row .cm{margin-left:2px}
+.pen.cm{position:relative}
+.pen.cm i{position:absolute;top:-6px;right:-7px;min-width:17px;height:17px;padding:0 4px;border:1.5px solid var(--ink);border-radius:999px;background:var(--coral);font-style:normal;font-size:10px;line-height:14px;text-align:center;color:var(--ink)}
+.chip.cmt{gap:3px;background:var(--yellow-l)}
+.chip.cmt svg{width:13px;height:13px;--sw:1.4px}
+.thr{margin-top:22px;padding-top:16px;border-top:2px dashed var(--line)}
+.thr-h{margin:0 0 12px;display:flex;align-items:center;gap:8px;font-size:17px;font-weight:normal}
+.thr-h svg{width:26px;height:26px;--sw:1.6px}
+.thr-h small{margin-left:auto;font-size:12px;color:var(--ink2)}
+.msgs{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:12px}
+.thr-empty{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0 2px;color:var(--ink2);font-size:13px}
+.thr-empty svg{width:120px;height:56px}
+.msg{display:grid;grid-template-columns:34px 1fr;gap:8px;align-items:start;animation:rise .35s both}
+.msg .av{width:34px;height:34px;border:var(--bw) solid var(--ink);border-radius:50%;background:var(--c);display:grid;place-items:center;font-size:14px;line-height:1}
+.msg .bub{position:relative;min-width:0;border:var(--bw) solid var(--ink);border-radius:4px 16px 16px 16px;background:var(--paper);padding:7px 11px 8px;box-shadow:2px 2px 0 var(--ink)}
+.msg .mh{display:flex;align-items:baseline;gap:8px;font-size:12px;color:var(--ink2)}
+.msg .mh b{font-weight:normal;color:var(--ink);font-size:13px}
+.msg .mh time{font-variant-numeric:tabular-nums}
+.msg p{margin:2px 0 0;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55}
+.msg.me{grid-template-columns:1fr 34px}
+.msg.me .av{grid-column:2;grid-row:1}
+.msg.me .bub{grid-column:1;grid-row:1;border-radius:16px 4px 16px 16px;background:var(--yellow-l);box-shadow:-2px 2px 0 var(--ink)}
+.mdel{margin-left:auto;width:22px;height:22px;border:1.5px solid var(--ink);border-radius:50%;background:var(--paper);padding:0;display:inline-flex;align-items:center;justify-content:center;align-self:center}
+.mdel svg{width:11px;height:11px;--sw:2px}
+.thr-f{display:flex;gap:8px;align-items:flex-end;padding:10px;border:var(--bw) dashed var(--ink);border-radius:16px;background:var(--soft)}
+.thr-f textarea{flex:1;min-height:44px;resize:vertical;border-radius:12px;line-height:1.5}
+.thr-f .btn{flex:none}
+.thr-f textarea:focus-visible{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px var(--yellow)}
+body.readonly .thr-f,body.readonly .mdel{display:none!important}
 .foot{text-align:center;padding:44px 0 48px;font-size:13px;color:var(--ink2)}
 .foot svg{width:72px;height:72px;display:block;margin:0 auto 6px}
 noscript{display:block;padding:20px;text-align:center}
@@ -434,6 +479,8 @@ noscript{display:block;padding:20px;text-align:center}
   <symbol id="i-down" viewBox="0 0 24 24"><g class="k"><path d="M6 9l6 6 6-6"/></g></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><g class="k"><path d="M6 6l12 12M18 6L6 18"/></g></symbol>
   <symbol id="i-chev" viewBox="0 0 24 24"><g class="k"><path d="M9 5l7 7-7 7"/></g></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><g class="k"><path d="M4 6.5Q4 4 6.5 4h11Q20 4 20 6.5v7Q20 16 17.5 16H11l-4.2 3.6c-.4.3-.8.1-.8-.4V16h0Q4 16 4 13.5z" fill="#FCF0CF"/><circle cx="8.6" cy="10" r=".9" fill="#3E3A39" stroke="none"/><circle cx="12" cy="10" r=".9" fill="#3E3A39" stroke="none"/><circle cx="15.4" cy="10" r=".9" fill="#3E3A39" stroke="none"/></g></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><g class="k"><path d="M15.5 4.5l4 4L9 19l-5 1 1-5z" fill="#E2F0F6"/><path d="M13.5 6.5l4 4"/><path d="M5 15l4 4" /></g></symbol>
   <symbol id="i-yen" viewBox="0 0 24 24"><g class="k"><path d="M6 4l6 8 6-8M12 12v8M8 13h8M8 17h8"/></g></symbol>
 </defs>
 </svg>
@@ -476,7 +523,7 @@ noscript{display:block;padding:20px;text-align:center}
     <g class="fall l3"><use href="#s-maple" x="300" y="28" width="15" height="15"/></g>
   </svg>
   <div class="hero-b">
-    <div class="hero-top"><p class="tagline" id="heroTag">畢導旅行團出花~~~!</p><button type="button" class="pen" data-edit="hero" aria-label="編輯標題">✎</button></div>
+    <div class="hero-top"><p class="tagline" id="heroTag">畢導旅行團出花~~~!</p><button type="button" class="pen" data-edit="hero" aria-label="編輯標題"><svg aria-hidden="true"><use href="#i-pen"/></svg></button></div>
     <h1 id="heroTitle">東京 11/14 – 11/21</h1>
     <p class="route" id="heroRoute"></p>
     <p class="cd-l" id="cdLabel">距離出發還有</p>
@@ -490,7 +537,7 @@ noscript{display:block;padding:20px;text-align:center}
 </div>
 
 <section id="flights" data-sec="flights" class="reveal">
-  <div class="sh"><h2><i style="--c:var(--aqua)"><svg aria-hidden="true"><use href="#s-plane"/></svg></i><span><small>Flights</small>航班</span></h2><span class="aside">皆為當地時間・點 ✎ 修改</span></div>
+  <div class="sh"><h2><i style="--c:var(--aqua)"><svg aria-hidden="true"><use href="#s-plane"/></svg></i><span><small>Flights</small>航班</span></h2><span class="aside">皆為當地時間</span></div>
   <div class="fl-grid" id="flightList"></div>
 </section>
 
@@ -558,11 +605,13 @@ var reduceMq=window.matchMedia("(prefers-reduced-motion: reduce)");
 function $(s,r){return (r||document).querySelector(s)}
 function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]})}
+function setHTML(el,h,force){if(!el)return false;if(!force&&el._h===h)return false;el._h=h;el.innerHTML=h;return true;}
 function ic(id){return '<svg aria-hidden="true"><use href="#'+id+'"/></svg>'}
 function clone(o){return o==null?o:JSON.parse(JSON.stringify(o))}
 function uid(p){return (p||"x")+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 var BLANK="data:image/gif;base64,R0lGODlhAQABAAAAACw=";
 var PHOTOS={};
+var MSGS=[],MYID=null,NAMES={},USER=null;
 function src(k){if(!k)return BLANK;if(k.indexOf("ph:")===0)return PHOTOS[k.slice(3)]||BLANK;return IMG[k]||k}
 
 /* ---------- 預設資料（第一次打開時的內容；之後的修改存在共用資料庫） ---------- */
@@ -638,10 +687,10 @@ var S={checks:{},bk:{},order:{},items:{},hotels:{},svlist:null,exp:null,todo:{},
 var DB=null,RO=false,pending=0,LOCAL=!window.claude;
 function loadLocal(){try{var raw=localStorage.getItem(KEY);if(!raw)return;var o=JSON.parse(raw);
   S.day=typeof o.day==="number"?o.day:null;
-  if(LOCAL){["checks","bk","order","items","hotels","todo","meta"].forEach(function(k){if(o[k])S[k]=o[k]});S.svlist=o.svlist||null;S.exp=o.exp||null;if(o.photos)PHOTOS=o.photos;}
+  if(LOCAL){["checks","bk","order","items","hotels","todo","meta"].forEach(function(k){if(o[k])S[k]=o[k]});S.svlist=o.svlist||null;S.exp=o.exp||null;if(o.photos)PHOTOS=o.photos;if(o.msgs)MSGS=o.msgs;}
 }catch(e){}}
 loadLocal();
-function save(){try{localStorage.setItem(KEY,JSON.stringify(DB?{day:S.day}:Object.assign({},S,{photos:PHOTOS})))}catch(e){if(!DB)toast("這台裝置的空間不足，照片可能無法保存");}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(DB?{day:S.day}:Object.assign({},S,{photos:PHOTOS,msgs:MSGS})))}catch(e){if(!DB)toast("這台裝置的空間不足，照片可能無法保存");}}
 function toast(m){var el=$("#toast");el.textContent=m;el.classList.add("on");clearTimeout(toast._t);toast._t=setTimeout(function(){el.classList.remove("on")},2800);}
 function syncChip(){var c=$("#sync");if(!c)return;
   document.body.classList.toggle("readonly",RO);
@@ -711,11 +760,11 @@ function renderHero(){var h=hero();
   $("#heroTag").textContent=h.tag;$("#heroTitle").textContent=h.title;
   $("#heroRoute").innerHTML=String(h.route||"").split(/[・,，、]/).filter(Boolean).map(function(x){return '<b>'+esc(x.trim())+'</b>'}).join('<i></i>')+(h.len?'　'+esc(h.len):'');}
 function renderFlights(){
-  $("#flightList").innerHTML=flights().map(function(f,i){
+  setHTML($("#flightList"),flights().map(function(f,i){
     function ap(c,t,n){return '<div><span class="code">'+esc(c)+'</span><span class="tm">'+esc(t)+'</span><small>'+esc(n)+'</small></div>'}
-    return '<article class="card"><div class="fl-h" style="--c:'+(i%2?'var(--yellow-l)':'var(--aqua-l)')+'"><span>'+esc(f.dir)+'・'+esc(f.date)+'</span><span>'+esc(f.no)+'<button type="button" class="pen" data-edit="flight" data-i="'+i+'" aria-label="編輯'+esc(f.dir)+'航班">✎</button></span></div><div class="fl-b">'+ap(f.fc,f.ft,f.fn)+
+    return '<article class="card" id="c_fl_'+i+'"><div class="fl-h" style="--c:'+(i%2?'var(--yellow-l)':'var(--aqua-l)')+'"><span>'+esc(f.dir)+'・'+esc(f.date)+'</span><span>'+esc(f.no)+'<button type="button" class="pen" data-edit="flight" data-i="'+i+'" aria-label="編輯'+esc(f.dir)+'航班"><svg aria-hidden="true"><use href="#i-pen"/></svg></button>'+cmBtn("fl",i,f.dir+"航班")+'</span></div><div class="fl-b">'+ap(f.fc,f.ft,f.fn)+
       '<div class="fl-mid"><svg aria-hidden="true"><use href="#s-plane"/></svg><i></i>'+esc(f.dur)+'</div>'+ap(f.tc,f.tt,f.tn)+'</div></article>';
-  }).join("");
+  }).join(""));
 }
 
 /* ---------- 每日行程 ---------- */
@@ -728,7 +777,7 @@ function band(m){
 function chipsFor(it){
   var c="";(it.tr||[]).forEach(function(t){if(t&&t[1])c+='<span class="chip '+esc(t[0])+'">'+esc(t[1])+'</span>'});
   if(it.bid){var ok=isB(it.bid);c+='<span class="chip '+(ok?'yes':'no')+'">'+(ok?'已訂位 ✓':'未訂位')+'</span>';}
-  return c;
+  return c+cntChip("it_"+it.id);
 }
 function renderTabs(){
   $("#tabs").innerHTML=DAYMETA.map(function(m,i){
@@ -745,16 +794,16 @@ function renderDay(i,animate){
     '<ol class="tl" style="margin-top:14px">'+ids.map(function(id,j){
       var it=item(id),th=it.img&&it.img[0];
       return '<li class="tl-item k-'+esc(it.k)+'" style="--i:'+j+'"><div class="time">'+esc(it.t||"")+'</div><div class="dot"></div><div>'+
-        '<button type="button" class="tl-card" data-open="'+esc(id)+'"><span class="tl-main"><span class="ttl">'+esc(it.n)+'</span>'+
+        '<button type="button" class="tl-card" id="c_it_'+esc(id)+'" data-open="'+esc(id)+'"><span class="tl-main"><span class="ttl">'+esc(it.n)+'</span>'+
         (chipsFor(it)?'<span class="meta">'+chipsFor(it)+'</span>':'')+'</span>'+
         (th?'<img class="thumb" alt="" loading="lazy" src="'+esc(src(th))+'">':'')+'<svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>'+
         '<div class="ed"><button type="button" data-mv="-1" data-id="'+esc(id)+'" aria-label="往上移 '+esc(it.n)+'"'+(j===0?' disabled':'')+'>'+ic("i-up")+'</button>'+
         '<button type="button" data-mv="1" data-id="'+esc(id)+'" aria-label="往下移 '+esc(it.n)+'"'+(j===ids.length-1?' disabled':'')+'>'+ic("i-down")+'</button>'+
-        '<button type="button" data-edit="item" data-id="'+esc(id)+'" aria-label="修改 '+esc(it.n)+'">✎</button>'+
+        '<button type="button" data-edit="item" data-id="'+esc(id)+'" aria-label="修改 '+esc(it.n)+'"><svg aria-hidden="true"><use href="#i-pen"/></svg></button>'+
         '<button type="button" class="x" data-rm="'+esc(id)+'" aria-label="刪除 '+esc(it.n)+'">'+ic("i-x")+'</button></div></div></li>';
     }).join("")+'</ol>'+
     '<div class="addbox"><div class="add-acts"><button type="button" class="btn ghost sm" id="resetDay">還原這天的原始行程</button><button type="button" class="btn sm" data-new="item">＋ 新增行程</button></div></div>';
-  var pane=$("#pane");pane.innerHTML=html;pane.classList.toggle("editing",editing);
+  var pane=$("#pane");setHTML(pane,html,!!animate);pane.classList.toggle("editing",editing);
   pane.setAttribute("aria-labelledby","tab"+i);pane.classList.remove("enter");
   if(animate){void pane.offsetWidth;pane.classList.add("enter");}
 }
@@ -779,8 +828,11 @@ var QUIET=false;
 function openSheet(html,view){
   var wasOn=$("#sheet").classList.contains("on");if(!wasOn)lastFocus=document.activeElement;
   sheetView=view||null;
-  var st=$("#shBody").scrollTop;$("#shBody").innerHTML=html;$("#shBody").scrollTop=QUIET?st:0;
-  if(QUIET)return;
+  var body=$("#shBody"),core=html.replace(/<section class="thr"[\s\S]*$/,"");
+  if(QUIET){if(body._core===core){refreshThreads();return;}
+    var dr=$("#shBody .thr-f textarea"),dv=dr?dr.value:"",df=dr&&document.activeElement===dr,st=body.scrollTop;
+    body.innerHTML=html;body._core=core;body.scrollTop=st;var nd=$("#shBody .thr-f textarea");if(nd&&dv){nd.value=dv;if(df)nd.focus({preventScroll:true});}return;}
+  body._core=core;body.innerHTML=html;body.scrollTop=0;
   $("#sheet").classList.add("on");$("#sheetBg").classList.add("on");document.body.classList.add("lock");
   setTimeout(function(){var f=$("#shBody .fm input, #shBody .fm textarea");(f||$("#shClose")).focus()},80);
 }
@@ -788,7 +840,59 @@ function closeSheet(){
   sheetView=null;$("#sheet").classList.remove("on");$("#sheetBg").classList.remove("on");document.body.classList.remove("lock");
   if(lastFocus&&lastFocus.focus&&lastFocus.isConnected)lastFocus.focus();
 }
-function editBtn(kind,id){return '<button type="button" class="btn ghost sh-edit" data-edit="'+kind+'" data-id="'+esc(id)+'">✎ 編輯內容</button>';}
+function editBtn(kind,id){return '<button type="button" class="btn ghost sh-edit" data-edit="'+kind+'" data-id="'+esc(id)+'"><svg aria-hidden="true"><use href="#i-pen"/></svg>編輯內容</button>';}
+function cmBtn(k,id,name){var n=cnt((TKEY[k]||k)+"_"+id);return '<button type="button" class="pen cm'+(n?' has':'')+'" data-cm="'+k+'" data-id="'+esc(id)+'" aria-label="討論：'+esc(name)+(n?'（'+n+' 則）':'')+'"><svg aria-hidden="true"><use href="#i-chat"/></svg>'+(n?'<i>'+n+'</i>':'')+'</button>';}
+/* ---------- 討論串（存在共用資料庫，大家都看得到） ---------- */
+function msgsOf(k){return MSGS.filter(function(m){return m.k===k}).sort(function(a,b){return (a.at||0)-(b.at||0)})}
+function cnt(k){var n=0;for(var i=0;i<MSGS.length;i++)if(MSGS[i].k===k)n++;return n}
+function cntChip(k){var n=cnt(k);return n?'<span class="chip cmt">'+ic("i-chat")+n+'</span>':''}
+var AVC=["#FBE3DE","#FCF0CF","#E2F0F6","#E6F1DE"];
+function hashc(s){var h=0;s=String(s||"");for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return AVC[Math.abs(h)%4]}
+function who(by){if(!DB)return "我";if(by&&by===MYID)return NAMES[by]||"我";return NAMES[by]||"旅伴"}
+function when(t){var d=new Date(t||0);return (d.getMonth()+1)+"/"+d.getDate()+" "+p2(d.getHours())+":"+p2(d.getMinutes())}
+function msgsHTML(k){
+  var ms=msgsOf(k);
+  if(!ms.length)return '<li class="thr-empty"><svg viewBox="0 0 120 56" aria-hidden="true"><g class="float"><use href="#i-chat" x="18" y="4" width="42" height="42"/></g><g class="float b"><use href="#i-chat" x="64" y="14" width="34" height="34"/></g></svg><span>還沒有人留言，來說點什麼吧！</span></li>';
+  return ms.map(function(m){var mine=DB?(m.by&&m.by===MYID):true,nm=who(m.by);
+    return '<li class="msg'+(mine?' me':'')+'"><span class="av" style="--c:'+hashc(m.by||"me")+'" aria-hidden="true">'+esc((nm||"?").slice(0,1))+'</span><div class="bub"><div class="mh"><b>'+esc(nm)+'</b><time>'+when(m.at)+'</time>'+
+      (mine?'<button type="button" class="mdel" data-mdel="'+esc(m.id)+'" aria-label="刪除這則留言">'+ic("i-x")+'</button>':'')+'</div><p>'+esc(m.text)+'</p></div></li>'}).join("");
+}
+function threadHTML(k){
+  return '<section class="thr" data-thr="'+esc(k)+'" aria-label="討論串"><h3 class="thr-h">'+ic("i-chat")+'討論串<small class="thr-n">'+cnt(k)+' 則</small></h3><ol class="msgs">'+msgsHTML(k)+'</ol>'+
+    '<form class="thr-f" data-k="'+esc(k)+'" autocomplete="off"><label class="sr" for="thr_'+esc(k)+'">留言內容</label><textarea class="inp" id="thr_'+esc(k)+'" rows="2" maxlength="1000" placeholder="寫點什麼…（例如：這家要先訂位嗎？）"></textarea><button type="submit" class="btn green sm">'+ic("i-chat")+'送出</button></form></section>';
+}
+function refreshThreads(){
+  $$("[data-thr]").forEach(function(sec){var k=sec.dataset.thr,ol=sec.querySelector(".msgs"),n=sec.querySelector(".thr-n");
+    var h=msgsHTML(k);if(ol._h!==h){ol._h=h;ol.innerHTML=h;}n.textContent=cnt(k)+" 則";});
+}
+function postMsg(k,text){
+  text=String(text||"").trim();if(!text)return false;
+  if(RO){toast("你目前只有檢視權限，不能留言");return false;}
+  var m={id:uid("m"),k:k,by:MYID||"",text:text.slice(0,1000),at:Date.now()};
+  MSGS.push(m);refreshThreads();renderAll(true);
+  if(DB){DB.doc("msgs/"+m.id).set({k:m.k,by:m.by,text:m.text,at:m.at}).catch(function(e){MSGS=MSGS.filter(function(x){return x.id!==m.id});refreshThreads();renderAll(true);failed(e);});}
+  else save();
+  return true;
+}
+function delMsg(id){
+  MSGS=MSGS.filter(function(x){return x.id!==id});refreshThreads();renderAll(true);
+  if(DB)DB.doc("msgs/"+id).delete().catch(failed);else save();
+}
+var TKEY={it:"it",ht:"ht",sv:"sv",bk:"it"};
+function startComment(k,id){
+  var base=TKEY[k];
+  if(base){var key=base+"_"+id;if(base==="it")openItem(id);else if(base==="ht")openHotel(id);else openSv(id);
+    setTimeout(function(){var sec=$('#shBody [data-thr="'+key+'"]');if(sec){sec.scrollIntoView({block:"start",behavior:reduceMq.matches?"auto":"smooth"});var ta=sec.querySelector("textarea");if(ta)ta.focus({preventScroll:true});}},140);return;}
+  openThread(k,id);
+}
+function openThread(k,id){
+  var title="",eb="";
+  if(k==="ex"){var e=expList().filter(function(x){return x.id===id})[0];title=e?e.n:"";eb="費用";}
+  else if(k==="td"){var t=null;TODOG.forEach(function(g){todoList(g.k).forEach(function(x){if(x.id===id)t=x})});title=t?t.n:"";eb="出發清單";}
+  else if(k==="fl"){var f=flights()[+id];title=f?f.dir+"・"+f.no:"";eb="航班";}
+  openSheet('<div class="sh-eyebrow">'+eb+'</div><h2 class="sh-title" id="shTitle">'+esc(title)+'</h2>'+threadHTML(k+"_"+id),["thread",k,id]);
+  setTimeout(function(){var ta=$("#shBody .thr-f textarea");if(ta)ta.focus();},140);
+}
 function dayOf(id){for(var i=0;i<DAYMETA.length;i++){if(dayIds(i).indexOf(id)>=0)return i}return -1}
 function openItem(id){
   var it=item(id);if(!it)return;
@@ -806,7 +910,7 @@ function openItem(id){
   (inf.map||[]).forEach(function(u,n){h+='<a class="btn aqua" href="'+esc(u)+'" target="_blank" rel="noopener">'+ic("i-pin")+'Google 地圖'+(inf.map.length>1?' '+(n+1):'')+'</a>'});
   (inf.links||[]).forEach(function(l){h+='<a class="btn ghost" href="'+esc(l[1])+'" target="_blank" rel="noopener">'+ic("i-link")+esc(l[0].length>18?l[0].slice(0,18)+"…":l[0])+'</a>'});
   if(it.bid)h+='<button type="button" class="btn '+(isB(it.bid)?'ghost':'green')+' sh-edit" data-bk="'+esc(it.bid)+'" data-reopen="'+esc(id)+'">'+(isB(it.bid)?'改回未訂位':'標記為已訂位')+'</button>';
-  h+=editBtn("item",id)+'</div>';
+  h+=editBtn("item",id)+'</div>'+threadHTML("it_"+id);
   openSheet(h,["item",id]);
 }
 function openHotel(key){
@@ -816,7 +920,7 @@ function openHotel(key){
   h+='<div class="sh-chips">'+(H.dates?'<span class="chip c2">'+esc(H.dates)+'</span>':'')+(H.nights?'<span class="chip">'+esc(H.nights)+' 晚</span>':'')+'</div><dl class="dl">';
   h+=row("i-bed","房型",H.room);h+=row("i-route","交通",H.access);h+=row("i-note","筆記",H.note);h+=row("i-pin","地址",H.addr);
   h+='</dl><div class="sh-acts">'+(H.url?'<a class="btn" href="'+esc(H.url)+'" target="_blank" rel="noopener">'+ic("i-link")+esc(H.site||"網站")+'</a>':'')+
-     (H.addr?'<a class="btn aqua" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(H.addr)+'" target="_blank" rel="noopener">'+ic("i-pin")+'Google 地圖</a>':'')+editBtn("hotel",key)+'</div>';
+     (H.addr?'<a class="btn aqua" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(H.addr)+'" target="_blank" rel="noopener">'+ic("i-pin")+'Google 地圖</a>':'')+editBtn("hotel",key)+'</div>'+threadHTML("ht_"+key);
   openSheet(h,["hotel",key]);
 }
 function openSv(id){
@@ -825,7 +929,7 @@ function openSv(id){
   h+='<div class="sh-eyebrow">'+esc(CATS[x.cat]||"")+'</div><h2 class="sh-title" id="shTitle">'+esc(x.n)+'</h2>';
   h+='<div class="sh-chips"><span class="chip '+(S.checks[x.id]?'yes':'no')+'">'+(S.checks[x.id]?'已買 ✓':'還沒買')+'</span></div><dl class="dl">';
   h+=row("i-shop","購買點",x.shop);h+=row("i-note","說明",x.desc);
-  h+='</dl><div class="sh-acts"><button type="button" class="btn '+(S.checks[x.id]?'ghost':'green')+' sh-edit" data-buy="'+esc(x.id)+'">'+(S.checks[x.id]?'改回還沒買':'標記為已買')+'</button>'+editBtn("sv",id)+'</div>';
+  h+='</dl><div class="sh-acts"><button type="button" class="btn '+(S.checks[x.id]?'ghost':'green')+' sh-edit" data-buy="'+esc(x.id)+'">'+(S.checks[x.id]?'改回還沒買':'標記為已買')+'</button>'+editBtn("sv",id)+'</div>'+threadHTML("sv_"+id);
   openSheet(h,["sv",id]);
 }
 
@@ -985,67 +1089,69 @@ function editTodo(g,id){
 
 /* ---------- 住宿 ---------- */
 function renderHotels(){
-  $("#hotelList").innerHTML=hotelKeys().map(function(k,i){
+  setHTML($("#hotelList"),hotelKeys().map(function(k,i){
     var H=hotel(k),ph=H.img&&H.img[0]?'<img alt="" loading="lazy" src="'+esc(src(H.img[0]))+'">':'<svg viewBox="0 0 100 100" aria-hidden="true"><use href="#'+(H.art||"s-hotel")+'" x="18" y="16" width="64" height="64"/></svg>';
-    return '<button type="button" class="h-card" data-hotel="'+esc(k)+'"><span class="ph" style="--c:'+HCOL[i%4]+'">'+ph+'</span><span class="bd"><span class="nm">'+esc(H.name)+'</span>'+
-      '<span class="dt" style="display:block">'+[H.dates,H.nights?H.nights+" 晚":"",H.area].filter(Boolean).map(esc).join("・")+'</span><span class="meta">'+(H.room?'<span class="chip c2">'+esc(H.room.split("・")[0])+(H.room.indexOf("・")>0?'…':'')+'</span>':'')+'<span class="chip">看詳情</span></span></span></button>';
-  }).join("");
+    return '<button type="button" class="h-card" id="c_ht_'+esc(k)+'" data-hotel="'+esc(k)+'"><span class="ph" style="--c:'+HCOL[i%4]+'">'+ph+'</span><span class="bd"><span class="nm">'+esc(H.name)+'</span>'+
+      '<span class="dt" style="display:block">'+[H.dates,H.nights?H.nights+" 晚":"",H.area].filter(Boolean).map(esc).join("・")+'</span><span class="meta">'+(H.room?'<span class="chip c2">'+esc(H.room.split("・")[0])+(H.room.indexOf("・")>0?'…':'')+'</span>':'')+'<span class="chip">看詳情</span>'+cntChip("ht_"+k)+'</span></span></button>';
+  }).join(""));
 }
 
 /* ---------- 伴手禮 ---------- */
 var svFilter=-1;
 function renderSv(){
   var all=svList();
-  $("#svFilters").innerHTML=['<button type="button" data-f="-1" aria-pressed="'+(svFilter===-1)+'">全部</button>'].concat(CATS.map(function(c,i){return '<button type="button" data-f="'+i+'" aria-pressed="'+(svFilter===i)+'">'+c+'</button>'})).join("");
+  setHTML($("#svFilters"),['<button type="button" data-f="-1" aria-pressed="'+(svFilter===-1)+'">全部</button>'].concat(CATS.map(function(c,i){return '<button type="button" data-f="'+i+'" aria-pressed="'+(svFilter===i)+'">'+c+'</button>'})).join(""));
   var list=all.filter(function(x){return svFilter===-1||x.cat===svFilter});
   $("#svText").textContent="已買 "+all.filter(function(x){return S.checks[x.id]}).length+" / "+all.length;
-  $("#svList").innerHTML=list.map(function(x,i){
+  setHTML($("#svList"),list.map(function(x,i){
     var on=!!S.checks[x.id],im=x.img&&x.img[0];
-    return '<article class="sv'+(on?' done':'')+'" style="animation-delay:'+(i*40)+'ms">'+
+    return '<article class="sv'+(on?' done':'')+'" id="c_sv_'+esc(x.id)+'" style="animation-delay:'+(i*40)+'ms">'+
       '<label class="got"><input type="checkbox" data-k="'+esc(x.id)+'"'+(on?' checked':'')+' aria-label="已買 '+esc(x.n)+'">已買</label>'+
       '<button type="button" class="sv-open" data-sv="'+esc(x.id)+'"><div class="ph'+(im?'':' none')+'">'+(im?'<img alt="" loading="lazy" src="'+esc(src(im))+'">':'<svg viewBox="0 0 100 100" aria-hidden="true"><use href="#s-gift"/></svg>')+'</div>'+
-      '<div class="bd"><div class="nm">'+esc(x.n)+'</div><div class="wh">'+esc(x.shop||"")+'</div><div class="meta"><span class="chip c'+(x.cat|0)+'">'+esc((CATS[x.cat]||"").split(" / ")[0])+'</span></div></div></button></article>';
-  }).join("")||'<p>這個分類還沒有項目</p>';
+      '<div class="bd"><div class="nm">'+esc(x.n)+'</div><div class="wh">'+esc(x.shop||"")+'</div><div class="meta"><span class="chip c'+(x.cat|0)+'">'+esc(CATS[x.cat]||"")+'</span>'+cntChip("sv_"+x.id)+'</div></div></button></article>';
+  }).join("")||'<p>這個分類還沒有項目</p>');
 }
 
 /* ---------- 預約・費用 ---------- */
 function renderBook(){
   var all=allBookings(),yes=all.filter(function(b){return isB(b.it.bid)}),no=all.filter(function(b){return !isB(b.it.bid)});
   function r(b){var it=b.it,on=isB(it.bid);
-    return '<li class="row"><span class="nm"><button type="button" class="linkish" data-open="'+esc(it.id)+'">'+esc(it.n)+'</button><small>'+esc(it.bwhen||("Day "+(b.day+1)))+'</small></span>'+
-      '<button type="button" class="bk-btn" data-bk="'+esc(it.bid)+'" aria-pressed="'+on+'">'+(on?'已訂位 ✓':'未訂位')+'</button></li>';}
-  $("#bookList").innerHTML='<div class="panel" style="--c:var(--green-l)"><h3>需預先訂位／訂票<small>已訂 '+yes.length+' / '+all.length+'</small></h3>'+
+    return '<li class="row" id="c_bk_'+esc(it.id)+'"><span class="nm"><button type="button" class="linkish" data-open="'+esc(it.id)+'">'+esc(it.n)+'</button><small>'+esc(it.bwhen||("Day "+(b.day+1)))+'</small></span>'+
+      '<button type="button" class="bk-btn" data-bk="'+esc(it.bid)+'" aria-pressed="'+on+'">'+(on?'已訂位 ✓':'未訂位')+'</button>'+cmBtn("bk",it.id,it.n)+'</li>';}
+  setHTML($("#bookList"),'<div class="panel" style="--c:var(--green-l)"><h3>需預先訂位／訂票<small>已訂 '+yes.length+' / '+all.length+'</small></h3>'+
     '<div class="grp"><p class="grp-h"><span class="chip no">未訂位</span>'+no.length+' 項</p><ul class="rows">'+(no.map(r).join("")||'<li class="row"><span class="nm">全部都訂好了！</span></li>')+'</ul></div>'+
     '<div class="grp"><p class="grp-h"><span class="chip yes">已訂位</span>'+yes.length+' 項</p><ul class="rows">'+yes.map(r).join("")+'</ul></div>'+
-    '<p class="link-row" style="margin:8px 0 0">要新增預約：打開行程的「✎ 編輯內容」，勾選「需要預約／訂票」。</p></div>';
+    '<p class="link-row" style="margin:8px 0 0">要新增預約：打開行程的「編輯內容」，勾選「需要預約／訂票」。</p></div>');
 }
 function renderExp(){
   var nt=0,jp=0;
-  $("#expList").innerHTML=expList().map(function(e){if(e.cur==="¥")jp+=+e.amt||0;else nt+=+e.amt||0;
-    return '<li class="row exp-row" data-exp="'+esc(e.id)+'" tabindex="0" role="button" aria-label="修改 '+esc(e.n)+'"><span class="nm">'+esc(e.n)+(e.note?'<small>'+esc(e.note)+'</small>':'')+'</span><span class="amt">'+esc(e.cur)+' '+(+e.amt||0).toLocaleString("en-US")+'</span></li>';}).join("");
-  $("#expTot").innerHTML='<span>合計 NT$ '+nt.toLocaleString("en-US")+'</span><span>¥ '+jp.toLocaleString("en-US")+'</span>';
+  setHTML($("#expList"),expList().map(function(e){if(e.cur==="¥")jp+=+e.amt||0;else nt+=+e.amt||0;
+    return '<li class="row exp-row" id="c_ex_'+esc(e.id)+'" data-exp="'+esc(e.id)+'" tabindex="0" role="button" aria-label="修改 '+esc(e.n)+'"><span class="nm">'+esc(e.n)+(e.note?'<small>'+esc(e.note)+'</small>':'')+'</span><span class="amt">'+esc(e.cur)+' '+(+e.amt||0).toLocaleString("en-US")+'</span>'+cmBtn("ex",e.id,e.n)+'</li>';}).join(""));
+  setHTML($("#expTot"),'<span>合計 NT$ '+nt.toLocaleString("en-US")+'</span><span>¥ '+jp.toLocaleString("en-US")+'</span>');
 }
 
 /* ---------- 清單 ---------- */
 function renderTodo(){
   var total=0,done=0;
-  $("#todoList").innerHTML=TODOG.map(function(g){
+  setHTML($("#todoList"),TODOG.map(function(g){
     var its=todoList(g.k),dn=its.filter(function(x){return S.checks[x.id]}).length;total+=its.length;done+=dn;
     return '<div class="panel" style="--c:'+g.c+'"><h3>'+g.t+'<small>'+dn+' / '+its.length+'</small></h3><ul class="rows grp">'+its.map(function(x){var on=!!S.checks[x.id];
-      return '<li class="row'+(on?' done':'')+'"><label><input type="checkbox" data-k="'+esc(x.id)+'"'+(on?' checked':'')+'><span class="nm"><span>'+esc(x.n)+'</span></span></label><button type="button" class="pen" data-edit="todo" data-g="'+g.k+'" data-id="'+esc(x.id)+'" aria-label="修改 '+esc(x.n)+'">✎</button></li>';}).join("")+'</ul>'+
+      return '<li class="row'+(on?' done':'')+'" id="c_td_'+esc(x.id)+'"><label><input type="checkbox" data-k="'+esc(x.id)+'"'+(on?' checked':'')+'><span class="nm"><span>'+esc(x.n)+'</span></span></label>'+cmBtn("td",x.id,x.n)+'<button type="button" class="pen" data-edit="todo" data-g="'+g.k+'" data-id="'+esc(x.id)+'" aria-label="修改 '+esc(x.n)+'"><svg aria-hidden="true"><use href="#i-pen"/></svg></button></li>';}).join("")+'</ul>'+
       (g.link?'<div class="link-row"><a href="'+g.link.u+'" target="_blank" rel="noopener">'+esc(g.link.t)+' ↗</a></div>':'')+
       '<form class="add" data-g="'+g.k+'" autocomplete="off"><input class="inp" name="n" maxlength="40" required placeholder="新增項目…" aria-label="新增到'+g.t+'"><button class="btn sm" type="submit">加入</button></form></div>';
-  }).join("");
+  }).join(""));
   $("#progText").textContent="完成 "+done+" / "+total;
   $("#progBar").style.width=(total?Math.round(done/total*100):0)+"%";
 }
+/* 勾選時只更新計數與快取，不重畫卡片，避免畫面閃爍 */
+function quietRender(fn){var real=setHTML;setHTML=function(el,h){if(el)el._h=h;return false};try{fn();}finally{setHTML=real;}}
 function renderAll(keepTyping){
   renderHero();renderFlights();renderHotels();renderSv();renderBook();renderExp();
   var a=document.activeElement,typing=keepTyping&&a&&a.closest&&a.closest(".add,.day-meta");
   if(!typing){renderTodo();if(S.day!=null)renderDay(S.day,false);}
 }
 function reopenSheet(quiet){if(!sheetView||sheetView[0]==="form")return;var v=sheetView;QUIET=!!quiet;
-  try{if(v[0]==="item")openItem(v[1]);else if(v[0]==="hotel")openHotel(v[1]);else if(v[0]==="sv")openSv(v[1]);}finally{QUIET=false;}}
+  try{if(v[0]==="item")openItem(v[1]);else if(v[0]==="hotel")openHotel(v[1]);else if(v[0]==="sv")openSv(v[1]);else if(v[0]==="thread")refreshThreads();}finally{QUIET=false;}}
 
 /* ---------- 事件 ---------- */
 function bind(){
@@ -1057,6 +1163,8 @@ function bind(){
 
   document.addEventListener("click",function(e){
     var t=e.target,el;
+    if((el=t.closest("[data-cm]"))){e.stopPropagation();startComment(el.dataset.cm,el.dataset.id);return;}
+    if((el=t.closest("[data-mdel]"))){if(!el.classList.contains("armed")){el.classList.add("armed");toast("再按一次刪除這則留言");setTimeout(function(){if(el.isConnected)el.classList.remove("armed")},3000);return;}delMsg(el.dataset.mdel);return;}
     if((el=t.closest("#fmCancel"))){var v=FORM&&FORM.back;FORM=null;if(v)v();else closeSheet();return;}
     if((el=t.closest("#fmDel"))){if(!el.classList.contains("armed")){el.classList.add("armed");el.textContent="再按一次確定刪除";setTimeout(function(){if(el.isConnected){el.classList.remove("armed");el.textContent="刪除";}},3500);return;}
       var d=FORM.onDelete;FORM=null;d();return;}
@@ -1085,7 +1193,10 @@ function bind(){
     if((el=t.closest("[data-bk]"))){var b2=el.dataset.bk;setBk(b2,!isB(b2));renderBook();renderDay(S.day,false);
       if(el.dataset.reopen)openItem(el.dataset.reopen);else{var f=$('#bookList [data-bk="'+b2+'"]');if(f)f.focus();}return;}
     if((el=t.closest("[data-buy]"))){var bk=el.dataset.buy;setCheck(bk,!S.checks[bk]);renderSv();openSv(bk);return;}
-    if((el=t.closest("#svFilters button"))){svFilter=+el.dataset.f;renderSv();return;}
+    if((el=t.closest("#svFilters button"))){svFilter=+el.dataset.f;var g=$("#svList");g.classList.remove("anim");void g.offsetWidth;g.classList.add("anim");renderSv();clearTimeout(g._t);g._t=setTimeout(function(){g.classList.remove("anim")},900);return;}
+  });
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)&&e.target.closest&&e.target.closest(".thr-f")){e.preventDefault();var fm=e.target.closest(".thr-f");if(fm.requestSubmit)fm.requestSubmit();else fm.dispatchEvent(new Event("submit",{cancelable:true,bubbles:true}));}
   });
   document.addEventListener("keydown",function(e){var r=e.target.closest&&e.target.closest("[data-exp]");if(r&&(e.key==="Enter"||e.key===" ")){e.preventDefault();editExp(r.dataset.exp);}});
   document.addEventListener("change",function(e){
@@ -1094,10 +1205,13 @@ function bind(){
     if(tg.id==="dmTitle"||tg.id==="dmStay"){var dd=Object.assign({},S.meta.days||{});dd["d"+S.day]={title:$("#dmTitle").value.trim()||DAYMETA[S.day].title,stay:$("#dmStay").value};setMeta("days",dd);
       if(tg.id==="dmStay")renderDay(S.day,false);else{var h=$("#pane .day-h h3");if(h)h.innerHTML='<small>DAY '+(S.day+1)+'・'+DAYMETA[S.day].d+'（'+DAYMETA[S.day].w+'）</small>'+esc(dd["d"+S.day].title);}return;}
     var k=tg.dataset&&tg.dataset.k;if(!k)return;
-    setCheck(k,tg.checked);if(tg.closest("#svList"))renderSv();else renderTodo();
+    setCheck(k,tg.checked);
+    if(tg.closest("#svList")){var card=tg.closest(".sv");if(card)card.classList.toggle("done",tg.checked);quietRender(renderSv);}
+    else{var rw=tg.closest(".row");if(rw)rw.classList.toggle("done",tg.checked);quietRender(renderTodo);}
   });
   document.addEventListener("submit",function(e){
     var f=e.target;
+    if(f.classList&&f.classList.contains("thr-f")){e.preventDefault();var ta=f.querySelector("textarea");if(postMsg(f.dataset.k,ta.value)){ta.value="";ta.focus();var ol=f.parentNode.querySelector(".msgs");if(ol&&ol.lastElementChild)ol.lastElementChild.scrollIntoView({block:"nearest"});}return;}
     if(f.id==="fm"){e.preventDefault();if(!FORM)return;var r=FORM.onSave(readForm());if(r!==false)FORM=null;return;}
     if(f.id==="svForm"){e.preventDefault();var sn=f.n.value.trim();if(!sn)return;
       setSv(clone(svList()).concat([{id:uid("c"),n:sn,cat:+f.cat.value,shop:f.where.value.trim(),desc:"",img:[]}]));f.reset();renderSv();toast("已加入，點卡片可加照片");return;}
@@ -1138,6 +1252,8 @@ renderTabs();bind();renderAll(false);
   var t=$("#tab"+start);if(t)t.parentNode.scrollLeft=Math.max(0,t.offsetLeft-t.parentNode.clientWidth/2+t.offsetWidth/2);
 })();
 tick();setInterval(tick,1000);syncChip();
+function loadNames(){if(!USER||!USER.profiles)return;var ids=[];MSGS.forEach(function(m){if(m.by&&ids.indexOf(m.by)<0)ids.push(m.by)});if(MYID&&ids.indexOf(MYID)<0)ids.push(MYID);
+  ids=ids.slice(0,64);if(!ids.length)return;Promise.resolve(USER.profiles(ids)).then(function(ps){var ch=false;ids.forEach(function(id){var n=ps&&ps[id]&&ps[id].name;if(n&&NAMES[id]!==n){NAMES[id]=n;ch=true;}});if(ch)refreshThreads();}).catch(function(){});}
 (function connect(){
   if(!window.claude||!window.claude.use){syncChip();return;}
   window.claude.use("db").then(function(db){
@@ -1158,7 +1274,14 @@ tick();setInterval(tick,1000);syncChip();
       snap.docs.forEach(function(d){var v=d.data();if(v&&v.d)PHOTOS[d.id]=v.d;});
       renderAll(true);if(FORM)Object.keys(FORM.imgs||{}).forEach(drawImgs);else if($("#sheet").classList.contains("on"))reopenSheet(true);
     },function(){});
-    window.claude.use("user").then(function(u){if(!u||!u.can)return;Promise.resolve(u.can("data.write")).then(function(ok){if(ok===false){RO=true;syncChip();}});}).catch(function(){});
+    db.collection("msgs").onSnapshot(function(snap){
+      MSGS=snap.docs.map(function(d){var v=d.data()||{};return {id:d.id,k:v.k,by:v.by,text:v.text,at:v.at}});
+      loadNames();refreshThreads();renderAll(true);
+    },function(){});
+    window.claude.use("user").then(function(u){if(!u)return;USER=u;
+      if(u.can)Promise.resolve(u.can("data.write")).then(function(ok){if(ok===false){RO=true;syncChip();}});
+      Promise.resolve(u.id&&u.id()).then(function(id){if(id){MYID=id;loadNames();refreshThreads();renderAll(true);}}).catch(function(){});
+    }).catch(function(){});
   }).catch(function(){syncChip();});
 })();
 })();
