@@ -1,6 +1,7 @@
-/* 東京手帳：離線快取。網頁、圖示、Firebase 程式碼存在手機裡，沒訊號也能打開；
+/* 旅行手帳：離線快取。網頁、圖示、Firebase 程式碼存在手機裡，沒訊號也能打開；
    行程資料由 Firebase 自己存在手機裡，有網路時自動同步。 */
-const V = "tokyo-v2";
+const V = "tokyo-v3";
+const PRE = V.replace(/v\d+$/, ""); /* 只清掉同一個網站的舊快取，不動同網域其他手帳 */
 const CORE = ["./", "./index.html", "./code.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"];
 
 self.addEventListener("install", e => {
@@ -8,7 +9,7 @@ self.addEventListener("install", e => {
   self.skipWaiting();
 });
 self.addEventListener("activate", e => {
-  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V && k.indexOf(PRE) === 0).map(k => caches.delete(k)))).then(() => self.clients.claim()));
 });
 
 /* 先試網路（4 秒內沒回應就先用手機裡的版本），成功就順便更新快取 */
