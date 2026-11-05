@@ -967,10 +967,10 @@ body{letter-spacing:.02em;background-color:#FFFCF6;background-image:url("data:im
 .st-m{margin:4px 0 2px!important}
 .rq{display:block;margin:4px 0;padding:3px 8px;border-left:3px solid var(--c-move);background:var(--c-move-l);border-radius:4px 8px 8px 4px;font-size:calc(12px*var(--fz,1));color:var(--ink2);line-height:1.45;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rq b{font-weight:normal;color:var(--ink)}
-.rx{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
-.rx button{display:inline-flex;align-items:center;gap:3px;padding:1px 8px 1px 4px;border:1.5px solid var(--edge);border-radius:99px;background:var(--card);font:inherit;font-size:calc(12px*var(--fz,1));color:var(--ink);font-family:var(--num)}
-.rx button.me{background:var(--c-meal-l);border-color:#E9CF8E}.rx .stk{width:20px;height:20px}
-.msg.me .rx{justify-content:flex-end}
+.rxs{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.rxs button{display:inline-flex;align-items:center;gap:3px;padding:1px 8px 1px 4px;border:1.5px solid var(--edge);border-radius:99px;background:var(--card);font:inherit;font-size:calc(12px*var(--fz,1));color:var(--ink);font-family:var(--num)}
+.rxs button.me{background:var(--c-meal-l);border-color:#E9CF8E}.rxs .stk{width:20px;height:20px}
+.msg.me .rxs{justify-content:flex-start}
 .ma{display:flex;gap:12px;margin-top:5px}.msg.me .ma{justify-content:flex-end}
 .ma button{display:inline-flex;align-items:center;gap:3px;padding:0;border:0;background:none;font:inherit;font-size:calc(12px*var(--fz,1));color:var(--ink2)}
 .ma svg{width:16px;height:16px;opacity:.75}
@@ -1097,6 +1097,24 @@ input[type=checkbox]:checked{animation:ckpop .28s cubic-bezier(.3,1.6,.5,1)}
 .crew-tt small{margin-left:0!important;font-size:calc(11.5px*var(--fz,1))}
 .crew-h .crew-chev{width:18px!important;height:18px!important;flex:none}
 .crew-face i svg{width:100%!important;height:100%!important}
+/* 留言精簡 */
+.msgs{gap:9px!important}
+.msg{grid-template-columns:30px 1fr!important;gap:7px!important}
+.msg.me{grid-template-columns:1fr 30px!important}
+.msg .av{width:30px!important;height:30px!important}
+.msg .bub{padding:6px 10px 5px!important;box-shadow:0 2px 0 var(--ink)!important}
+.msg.me .bub{box-shadow:0 2px 0 var(--ink)!important}
+.msg .mh{font-size:calc(11px*var(--fz,1));gap:6px}.msg .mh b{font-size:calc(12.5px*var(--fz,1))}
+.msg p{font-size:calc(14px*var(--fz,1));line-height:1.5;margin-top:1px}
+.msg .mbtn,.msg .mdel{width:20px;height:20px}.msg .mbtn svg{width:10px;height:10px}.msg .mdel svg{width:9px;height:9px}
+.mf{display:flex;align-items:center;gap:6px;margin-top:3px;min-height:22px}
+.mf .rxs{margin:0;flex:1;min-width:0}.mf .rxs button{padding:0 7px 0 3px}.mf .rxs .stk{width:17px;height:17px}
+.mf .ma{margin:0 0 0 auto;gap:10px}.msg.me .ma{justify-content:flex-end}
+.mf .ma svg{width:15px;height:15px;opacity:.6}
+.stk.big{width:54px;height:54px}
+.medit-f textarea{min-height:44px!important}
+.medit-a .btn{padding:3px 12px}
+.rcs{display:inline-block;width:16px;height:16px;vertical-align:-3px;margin-right:4px}
 
 </style>
 </head>
@@ -1499,7 +1517,7 @@ var IMG={"it_d7c2b9b7":"data:image/webp;base64,UklGRt7dAABXRUJQVlA4INLdAADweAKdA
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script>window.TRIP_APP_V="2026.11.05.1728";window.FIREBASE_CONFIG={"apiKey": "AIzaSyDHccUn_lxkCU2A0O7GTM3xYlEzikenCNE", "authDomain": "tokyo-trip-8ca87.firebaseapp.com", "projectId": "tokyo-trip-8ca87", "storageBucket": "tokyo-trip-8ca87.firebasestorage.app", "messagingSenderId": "1045211299345", "appId": "1:1045211299345:web:b71253bdcef19fafd67bb0"};window.TRIP_MODE="code";window.TRIP_CHECK="f43b939e58b5e99fe0ec1967b06730ec916c5110a7136853cd517bc82830faec";window.TRIP_ADMIN="3852e949dc0f65311dd3feb544b6471809322c1fa448778038fa7c617a98dc53";window.TRIP_SEED={};</script>
+<script>window.TRIP_APP_V="2026.11.05.1920";window.FIREBASE_CONFIG={"apiKey": "AIzaSyDHccUn_lxkCU2A0O7GTM3xYlEzikenCNE", "authDomain": "tokyo-trip-8ca87.firebaseapp.com", "projectId": "tokyo-trip-8ca87", "storageBucket": "tokyo-trip-8ca87.firebasestorage.app", "messagingSenderId": "1045211299345", "appId": "1:1045211299345:web:b71253bdcef19fafd67bb0"};window.TRIP_MODE="code";window.TRIP_CHECK="f43b939e58b5e99fe0ec1967b06730ec916c5110a7136853cd517bc82830faec";window.TRIP_ADMIN="3852e949dc0f65311dd3feb544b6471809322c1fa448778038fa7c617a98dc53";window.TRIP_SEED={};</script>
 <script>
 /* =========================================================
    Firebase 同步層：把 Firebase 包裝成跟 Claude 分享網頁一樣的資料庫介面，
@@ -2755,8 +2773,8 @@ function cntChip(k){var n=cnt(k),u=unread(k);return n?'<span class="chip cmt'+(u
 /* 未讀：別人在我上次看過之後留的言 */
 function isMine(m){return DB?(!!m.by&&m.by===MYID):true}
 function unread(k){var t=SEEN[k]||0,n=0;for(var i=0;i<MSGS.length;i++){var m=MSGS[i];if(m.k===k&&!isMine(m)&&(m.at||0)>t)n++;}return n}
-function unreadAll(){var t,n=0;for(var i=0;i<MSGS.length;i++){var m=MSGS[i];t=SEEN[m.k]||0;if(!isMine(m)&&(m.at||0)>t)n++;}return n}
-function markSeen(k){var last=0;MSGS.forEach(function(m){if(m.k===k&&(m.at||0)>last)last=m.at});var v=Math.max(last,SEEN[k]||0);if(v&&SEEN[k]===v)return;SEEN[k]=v||Date.now();
+function unreadAll(){var t,n=0;for(var i=0;i<MSGS.length;i++){var m=MSGS[i];t=SEEN[m.k]||0;if(!isMine(m)&&(m.at||0)>t)n++;}rxItems().forEach(function(x){if(x.at>(SEEN[x.k]||0))n++});return n}
+function markSeen(k){var last=0;MSGS.concat(rxItems()).forEach(function(m){if((m.k===k||k==="_all")&&(m.at||0)>last)last=m.at});if(k==="_all"){rxItems().forEach(function(x){if(x.at>(SEEN[x.k]||0))SEEN[x.k]=x.at});}var v=Math.max(last,SEEN[k]||0);if(v&&SEEN[k]===v)return;SEEN[k]=v||Date.now();
   try{localStorage.setItem(SEEN_KEY,JSON.stringify(SEEN))}catch(e){}
   clearTimeout(seenT);seenT=setTimeout(function(){if(DB&&MYID&&!RO)DB.doc("data/users/"+MYID+"/seen").set(SEEN).catch(function(){});},1200);
   bell();renderAll(true);}
@@ -2853,10 +2871,10 @@ function openRecent(tab){
       return '<li><button type="button" class="rc'+(nw?' new':'')+(go?'':' nogo')+'" data-chg="'+esc(x.k||"")+'" data-pg="'+esc(x.pg||"")+'">'+avHTML(x.by,nm)+'<span class="rb"><span class="rt"><b>'+esc(nm)+'</b>'+(nw?'<em>新</em>':'')+'</span><span class="rx">'+esc(x.txt)+'</span><time>'+when(x.at)+'</time></span></button></li>'}).join("")+'</ul>';
     openSheet(h,["recent"]);setTimeout(function(){if(seeLog()&&sheetView&&sheetView[0]==="recent"&&RTAB==="log")openRecent("log");},900);return;
   }
-  var ms=visMsgs().sort(function(a,b){return (b.at||0)-(a.at||0)}).slice(0,40);
+  var ms=visMsgs().concat(rxItems().filter(function(x){return x.at>clrOf(x.k)})).sort(function(a,b){return (b.at||0)-(a.at||0)}).slice(0,40);
   if(!ms.length)h+='<p class="thr-empty" style="display:flex"><svg viewBox="0 0 120 56" aria-hidden="true"><g class="float"><use href="#i-chat" x="18" y="4" width="42" height="42"/></g><g class="float b"><use href="#i-chat" x="64" y="14" width="34" height="34"/></g></svg><span>'+(MSGS.length?'看過的留言都清掉了':'還沒有任何留言')+'</span></p>';
   else h+='<ul class="recent">'+ms.map(function(m){var nw=!isMine(m)&&(m.at||0)>(SEEN[m.k]||0),nm=who(m.by);
-    return '<li><button type="button" class="rc'+(nw?' new':'')+'" data-goto="'+esc(m.k)+'">'+avHTML(m.by,nm)+'<span class="rb"><span class="rt"><b>'+esc(nm)+'</b> 在「'+esc(titleOf(m.k))+'」'+(nw?'<em>新</em>':'')+'</span><span class="rx">'+esc(m.text)+'</span><time>'+when(m.at)+'</time></span></button></li>'}).join("")+'</ul>'+
+    return '<li><button type="button" class="rc'+(nw?' new':'')+'" data-goto="'+esc(m.k)+'">'+avHTML(m.by,nm)+'<span class="rb"><span class="rt"><b>'+esc(nm)+'</b> 在「'+esc(titleOf(m.k))+'」'+(nw?'<em>新</em>':'')+'</span><span class="rx">'+(m.isRx?stk(m.rx,"rcs"):'')+esc(m.text)+'</span><time>'+when(m.at)+'</time></span></button></li>'}).join("")+'</ul>'+
     '';
   openSheet(h,["recent"]);
 }
@@ -2879,8 +2897,8 @@ function msgsHTML(k){
     return '<li class="msg'+(mine?' me':'')+'" data-mid="'+esc(m.id)+'">'+avHTML(m.by,nm)+'<div class="bub"><div class="mh"><b>'+esc(nm)+'</b><time>'+when(m.at)+'</time>'+(m.ed?'<span class="edtag">已編輯</span>':'')+
       (mine?'<span class="mact">'+(m.st?'':'<button type="button" class="mbtn" data-medit="'+esc(m.id)+'" aria-label="編輯這則留言">'+ic("i-pen")+'</button>'):'')+
       (mine?'<button type="button" class="mdel" data-mdel="'+esc(m.id)+'" aria-label="刪除這則留言">'+ic("i-x")+'</button></span>':'')+
-      (!mine&&ISADM&&DB?'<span class="mact"><button type="button" class="mdel adm" data-mhide="'+esc(m.id)+'" aria-label="管理員刪除這則留言">'+ic("i-x")+'</button></span>':'')+'</div>'+quoteHTML(m)+(m.st?'<p class="st-m">'+stk(m.st,"big")+'</p>':'<p>'+esc(m.text)+'</p>')+rxHTML(m)+
-      '<span class="ma"><button type="button" data-reply="'+esc(m.id)+'">'+ic("i-reply")+'回覆</button><button type="button" data-rxpick="'+esc(m.id)+'" aria-label="按表情">'+ic("i-smile")+'</button></span></div></li>'}).join("");
+      (!mine&&ISADM&&DB?'<span class="mact"><button type="button" class="mdel adm" data-mhide="'+esc(m.id)+'" aria-label="管理員刪除這則留言">'+ic("i-x")+'</button></span>':'')+'</div>'+quoteHTML(m)+(m.st?'<p class="st-m">'+stk(m.st,"big")+'</p>':'<p>'+esc(m.text)+'</p>')+'<div class="mf">'+rxHTML(m)+
+      '<span class="ma"><button type="button" data-reply="'+esc(m.id)+'" aria-label="回覆">'+ic("i-reply")+'</button><button type="button" data-rxpick="'+esc(m.id)+'" aria-label="按表情">'+ic("i-smile")+'</button></span></div></div></li>'}).join("");
 }
 function threadHTML(k){
   return '<section class="thr" data-thr="'+esc(k)+'" aria-label="討論串"><h3 class="thr-h">'+ic("i-chat")+'討論串<small class="thr-n">'+cnt(k)+' 則</small></h3><ol class="msgs">'+msgsHTML(k)+'</ol>'+
@@ -3849,16 +3867,21 @@ function v3Me(){if(!DB||!MYID)return;
 var MYRX={},LRX=lsGet(SP+"rx",{}),REPLY={};
 function rxOf(id){var o={};function add(k,u){if(k)(o[k]=o[k]||[]).push(u)}
   if(!DB){add(LRX[id],"me");return o;}
-  Object.keys(CHAT).forEach(function(u){if(u===MYID)return;var r=(CHAT[u]&&CHAT[u].r)||{};add(r[id],u);});if(MYID)add(MYRX[id],MYID);return o;}
+  Object.keys(CHAT).forEach(function(u){if(u===MYID)return;var r=(CHAT[u]&&CHAT[u].r)||{};add(rxK(r[id]),u);});if(MYID)add(rxK(MYRX[id]),MYID);return o;}
+function rxK(v){return v&&typeof v==="object"?v.k:v}
+/* 別人對我的留言按表情 → 也算一則通知 */
+function rxItems(){var out=[];if(!DB||!MYID)return out;var mine={};MSGS.forEach(function(m){if(m.by===MYID)mine[m.id]=m});
+  Object.keys(CHAT).forEach(function(u){if(u===MYID)return;var r=(CHAT[u]&&CHAT[u].r)||{};Object.keys(r).forEach(function(id){var v=r[id],mm=mine[id];if(!mm||!v||typeof v!=="object"||!v.at)return;
+    out.push({id:"rx_"+u+"_"+id,k:mm.k,by:u,rx:v.k,text:"對你的留言按了表情：「"+String(mm.st?"［貼圖］":mm.text).slice(0,30)+"」",at:v.at,isRx:1});});});return out;}
 function rxHTML(m){var o=rxOf(m.id),ks=Object.keys(o);if(!ks.length)return "";
-  return '<span class="rx">'+ks.map(function(k){var us=o[k],me=DB?us.indexOf(MYID)>=0:true;return '<button type="button" data-rx="'+esc(m.id)+'" data-k="'+esc(k)+'" class="'+(me?'me':'')+'" title="'+esc(us.map(who).join("、"))+'">'+stk(k)+us.length+'</button>'}).join("")+'</span>';}
+  return '<span class="rxs">'+ks.map(function(k){var us=o[k],me=DB?us.indexOf(MYID)>=0:true;return '<button type="button" data-rx="'+esc(m.id)+'" data-k="'+esc(k)+'" class="'+(me?'me':'')+'" title="'+esc(us.map(who).join("、"))+'">'+stk(k)+us.length+'</button>'}).join("")+'</span>';}
 function quoteHTML(m){if(!m.re)return "";var q=MSGS.filter(function(x){return x.id===m.re})[0];
   return '<span class="rq">'+(q?'<b>'+esc(who(q.by))+'</b>：'+esc(q.st?"［貼圖］":String(q.text).slice(0,40)):'原留言已刪除')+'</span>';}
 function pickHTML(mode,id){return '<div class="pick" data-pmode="'+mode+'" data-pid="'+esc(id)+'">'+STK.map(function(k){return '<button type="button" data-stk="'+k+'" aria-label="貼圖 '+k+'">'+stk(k)+'</button>'}).join("")+'</div>';}
 function toggleRx(id,k){
   if(!DB){if(LRX[id]===k)delete LRX[id];else LRX[id]=k;lsSet(SP+"rx",LRX);}
   else{if(RO){toast("你目前只有檢視權限");return;}if(!MYID){toast("還在確認你的身分，請稍等一下");return;}
-    var old=MYRX[id];if(old===k)delete MYRX[id];else MYRX[id]=k;saveMine().catch(function(e){if(old)MYRX[id]=old;else delete MYRX[id];failed(e);$$(".msgs").forEach(function(o){o._h=null});refreshThreads();});}
+    var old=MYRX[id];if(rxK(old)===k)delete MYRX[id];else MYRX[id]={k:k,at:Date.now()};saveMine().catch(function(e){if(old)MYRX[id]=old;else delete MYRX[id];failed(e);$$(".msgs").forEach(function(o){o._h=null});refreshThreads();});}
   $$(".msgs").forEach(function(o){o._h=null});refreshThreads();}
 function setReply(k,id){var f=$('.thr-f[data-k="'+k+'"]');if(!f)return;var old=f.querySelector(".rbar");if(old)old.remove();
   if(!id){delete REPLY[k];return;}var m=MSGS.filter(function(x){return x.id===id})[0];if(!m)return;REPLY[k]=id;
