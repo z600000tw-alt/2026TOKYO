@@ -1115,6 +1115,18 @@ input[type=checkbox]:checked{animation:ckpop .28s cubic-bezier(.3,1.6,.5,1)}
 .medit-f textarea{min-height:44px!important}
 .medit-a .btn{padding:3px 12px}
 .rcs{display:inline-block;width:16px;height:16px;vertical-align:-3px;margin-right:4px}
+/* 筆記照片 */
+.nb-i{position:relative;margin:8px 0;border:1.5px solid var(--ink);border-radius:14px;overflow:hidden;background:#F3EEE8;user-select:none;-webkit-user-select:none;box-shadow:0 2px 0 var(--ink)}
+.nb-i img{display:block;width:100%;height:auto;max-height:70vh;object-fit:contain;cursor:zoom-in;background:#fff}
+.nb-il{display:block;padding:28px 10px;text-align:center;font-size:calc(13px*var(--fz,1));color:var(--ink2)}
+.nb-ix{position:absolute;top:8px;right:8px;width:30px;height:30px;display:grid;place-items:center;border:1.5px solid var(--ink);border-radius:50%;background:rgba(255,255,255,.92);padding:0}
+.nb-ix svg{width:13px;height:13px}.nb-ix.armed{background:var(--c-warn-l)}
+.nb-phb{cursor:pointer}
+.nb-tx{gap:6px}
+/* 電腦版對齊：首頁卡片全部跟主內容同寬，頂部列也對齊內容 */
+#flightList{display:block!important}
+.pin-top,.pin-add,.sf,.dn,.crew,.inst,.sd{width:100%!important;max-width:none!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box}
+@media (min-width:700px){.top{padding-left:calc(50% - 324px)!important;padding-right:calc(50% - 324px)!important}}
 
 </style>
 </head>
@@ -1517,7 +1529,7 @@ var IMG={"it_d7c2b9b7":"data:image/webp;base64,UklGRt7dAABXRUJQVlA4INLdAADweAKdA
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script>window.TRIP_APP_V="2026.11.05.1920";window.FIREBASE_CONFIG={"apiKey": "AIzaSyDHccUn_lxkCU2A0O7GTM3xYlEzikenCNE", "authDomain": "tokyo-trip-8ca87.firebaseapp.com", "projectId": "tokyo-trip-8ca87", "storageBucket": "tokyo-trip-8ca87.firebasestorage.app", "messagingSenderId": "1045211299345", "appId": "1:1045211299345:web:b71253bdcef19fafd67bb0"};window.TRIP_MODE="code";window.TRIP_CHECK="f43b939e58b5e99fe0ec1967b06730ec916c5110a7136853cd517bc82830faec";window.TRIP_ADMIN="3852e949dc0f65311dd3feb544b6471809322c1fa448778038fa7c617a98dc53";window.TRIP_SEED={};</script>
+<script>window.TRIP_APP_V="2026.11.10.0807";window.FIREBASE_CONFIG={"apiKey": "AIzaSyDHccUn_lxkCU2A0O7GTM3xYlEzikenCNE", "authDomain": "tokyo-trip-8ca87.firebaseapp.com", "projectId": "tokyo-trip-8ca87", "storageBucket": "tokyo-trip-8ca87.firebasestorage.app", "messagingSenderId": "1045211299345", "appId": "1:1045211299345:web:b71253bdcef19fafd67bb0"};window.TRIP_MODE="code";window.TRIP_CHECK="f43b939e58b5e99fe0ec1967b06730ec916c5110a7136853cd517bc82830faec";window.TRIP_ADMIN="3852e949dc0f65311dd3feb544b6471809322c1fa448778038fa7c617a98dc53";window.TRIP_SEED={};</script>
 <script>
 /* =========================================================
    Firebase 同步層：把 Firebase 包裝成跟 Claude 分享網頁一樣的資料庫介面，
@@ -2746,7 +2758,7 @@ function openSheet(html,view){
   setTimeout(function(){var f=$("#shBody .fm input, #shBody .fm textarea");(f||$("#shClose")).focus()},80);
 }
 function closeSheet(){
-  if(typeof NB!=="undefined"&&NB){try{nbSave()}catch(e){}var nx=NOTES[NB.id];if(nx&&!nx.t&&!nx.body&&!(nx.ink||[]).length){delete NOTES[NB.id];saveNotes();}NB=null;renderDn();}
+  if(typeof NB!=="undefined"&&NB){try{nbSave()}catch(e){}var nx=NOTES[NB.id];if(nx&&!nx.t&&!nx.body&&!(nx.ink||[]).length&&!(nx.blocks||[]).length){delete NOTES[NB.id];saveNotes();}NB=null;renderDn();}
   sheetView=null;$("#sheet").classList.remove("on");$("#sheetBg").classList.remove("on");document.body.classList.remove("lock");
   if(lastFocus&&lastFocus.focus&&lastFocus.isConnected)lastFocus.focus();
 }
@@ -3731,7 +3743,7 @@ function docIc(x){return x.url?ic("i-link"):(x.img&&x.img.length)?ic("i-img"):ic
 function docRow(x){return '<button type="button" class="dn-i" data-doc="'+esc(x.id)+'"><span class="ic">'+docIc(x)+'</span><span class="x"><b>'+esc(x.t)+'</b><small>'+esc(who(x.by))+'・'+mdOf(x.at)+(x.cat?'・'+esc(x.cat):'')+'</small></span>'+cntChip("dc_"+x.id)+'</button>';}
 function inkSvg(ink,cls){return '<svg class="'+(cls||"ink")+'" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet" aria-hidden="true">'+(ink||[]).map(strokeSvg).join("")+'</svg>'}
 function noteRow(x){var hasInk=x.ink&&x.ink.length,sn=String(x.body||"").replace(/\s+/g," ").slice(0,40);
-  return '<button type="button" class="dn-i" data-note="'+esc(x.id)+'"><span class="ic nb">'+(hasInk?inkSvg(x.ink,"th"):ic("i-doc"))+'</span><span class="x"><b>'+esc(x.t||"未命名筆記")+'</b><small>'+mdOf(x.up)+(sn?'・'+esc(sn):hasInk?'・手寫':'')+'</small></span></button>';}
+  return '<button type="button" class="dn-i" data-note="'+esc(x.id)+'"><span class="ic nb">'+(hasInk?inkSvg(x.ink,"th"):x.nph?ic("i-img"):ic("i-doc"))+'</span><span class="x"><b>'+esc(x.t||"未命名筆記")+'</b><small>'+mdOf(x.up)+(sn?'・'+esc(sn):x.nph?'・照片 '+x.nph+' 張':hasInk?'・手寫':'')+'</small></span></button>';}
 function renderDn(){var el=$("#dnCard");if(!el){var fl=$("#flights");if(!fl)return;fl.insertAdjacentHTML("afterend",'<section class="dn" id="dnCard" aria-label="資料與筆記"></section>');el=$("#dnCard");}
   var D=docList(),N=noteList(),sh=DNTAB!=="nb",L=sh?D:N;
   var h='<div class="dn-h">'+ic("i-book")+'資料與筆記</div><div class="dn-t" role="tablist"><button type="button" role="tab" data-dnt="sh" class="'+(sh?'on':'')+'" aria-selected="'+sh+'">共享資料 '+D.length+'</button><button type="button" role="tab" data-dnt="nb" class="'+(sh?'':'on')+'" aria-selected="'+!sh+'">'+ic("i-lock")+'我的筆記 '+N.length+'</button></div>';
@@ -3785,17 +3797,42 @@ function openNotes(){var N=noteList();
 function noteBlocks(x){if(x.blocks&&x.blocks.length)return x.blocks;var b=[];if(x.body)b.push({k:"p",v:x.body});if(x.ink&&x.ink.length)b.push({k:"d",ink:x.ink});return b;}
 function nbTextHTML(v){var ls=String(v||"").split("\n");return ls.map(function(l){return '<div>'+(l?esc(l):'<br>')+'</div>'}).join("");}
 function nbDrawHTML(id,ink){return '<div class="nb-d" contenteditable="false" data-d="'+id+'"><svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet" aria-label="手寫圖，點一下可以編輯">'+(ink||[]).map(strokeSvg).join("")+'</svg></div>';}
+/* 筆記照片：每張存成自己的私人文件 data/users/<我>/np_<id>，只有本人讀得到 */
+var NPH={};
+function npKey(p){return SP+"np_"+p}
+function npGet(p){if(NPH[p])return Promise.resolve(NPH[p]);
+  if(DB&&MYID)return DB.doc("data/users/"+MYID+"/np_"+p).get().then(function(s){var d=s.exists&&(s.data()||{}).d;if(d)NPH[p]=d;return d||null}).catch(function(){return null});
+  try{var v=localStorage.getItem(npKey(p));if(v){NPH[p]=v;return Promise.resolve(v);}}catch(e){}return Promise.resolve(null);}
+function npPut(p,d){NPH[p]=d;if(DB&&MYID)return DB.doc("data/users/"+MYID+"/np_"+p).set({d:d,at:Date.now()});
+  try{localStorage.setItem(npKey(p),d);return Promise.resolve();}catch(e){return Promise.reject({msg:"手機空間不足，照片存不進去"});}}
+function npDel(p){delete NPH[p];if(DB&&MYID)DB.doc("data/users/"+MYID+"/np_"+p).delete().catch(function(){});else try{localStorage.removeItem(npKey(p))}catch(e){}}
+function nbImgHTML(p){return '<div class="nb-i" contenteditable="false" data-p="'+esc(p)+'">'+(NPH[p]?'<img alt="照片" src="'+esc(NPH[p])+'">':'<span class="nb-il">照片載入中…</span>')+
+  '<button type="button" class="nb-ix" data-nbimgdel="'+esc(p)+'" aria-label="刪除這張照片">'+ic("i-x")+'</button></div>';}
+function nbLoadImgs(){$$("#nbEd .nb-i").forEach(function(el){if(el.querySelector("img"))return;var p=el.dataset.p;npGet(p).then(function(d){if(!el.isConnected)return;var l=el.querySelector(".nb-il");
+  if(d){var im=document.createElement("img");im.alt="照片";im.src=d;if(l)l.replaceWith(im);else el.insertBefore(im,el.firstChild);}else if(l)l.textContent="這張照片讀不到";});});}
+function nbPlace(node){var ed=$("#nbEd"),after=null,sel=window.getSelection();
+  if(sel&&sel.rangeCount&&ed.contains(sel.anchorNode)){var n=sel.anchorNode;while(n&&n.parentNode!==ed)n=n.parentNode;after=n;}
+  else if(NB.last&&NB.last.parentNode===ed)after=NB.last;
+  if(after&&after.parentNode===ed)ed.insertBefore(node,after.nextSibling);else ed.appendChild(node);
+  var nx=node.nextSibling;if(!nx||(nx.classList&&(nx.classList.contains("nb-d")||nx.classList.contains("nb-i")))){var pd=document.createElement("div");pd.innerHTML="<br>";ed.insertBefore(pd,node.nextSibling);}
+  NB.last=node;}
+function nbAddPhotos(files){var arr=Array.prototype.slice.call(files||[]);if(!arr.length||!NB)return;if(NB.act)nbAct(null);toast("照片處理中…");
+  arr.reduce(function(pr,file){return pr.then(function(){return shrink(file).then(function(d){var p=uid("np");return npPut(p,d).then(function(){
+      var t=document.createElement("div");t.innerHTML=nbImgHTML(p);nbPlace(t.firstChild);nbEmpty();nbSave();});})
+    .catch(function(e){toast(e&&e.msg?e.msg:"這張照片存不進去，請再試一次");});});},Promise.resolve()).then(function(){toast("照片已加入");});}
+document.addEventListener("selectionchange",function(){if(!NB)return;var ed=$("#nbEd"),sel=window.getSelection();if(!ed||!sel||!sel.rangeCount||!ed.contains(sel.anchorNode))return;var n=sel.anchorNode;while(n&&n.parentNode!==ed)n=n.parentNode;if(n)NB.last=n;});
+document.addEventListener("change",function(e){if(e.target&&e.target.id==="nbPh"){nbAddPhotos(e.target.files);e.target.value="";}});
 function openNote(id,isNew){var x=NOTES[id]||{t:"",blocks:[],at:Date.now(),up:Date.now()};if(isNew){NOTES[id]=x;}
   NB={id:id,tool:(NB&&NB.tool)||"pen",c:(NB&&NB.c)||NBC[0],hist:[],cur:null,ink:{},act:null};
-  var body="";noteBlocks(x).forEach(function(b){if(b.k==="d"){var did=uid("dw");NB.ink[did]=clone(b.ink)||[];body+=nbDrawHTML(did,NB.ink[did]);}else body+=nbTextHTML(b.v);});
-  if(!body||/nb-d[^<]*<svg[\s\S]*<\/svg><\/div>$/.test(body))body+='<div><br></div>';
+  var body="";noteBlocks(x).forEach(function(b){if(b.k==="i"){body+=nbImgHTML(b.p);return;}if(b.k==="d"){var did=uid("dw");NB.ink[did]=clone(b.ink)||[];body+=nbDrawHTML(did,NB.ink[did]);}else body+=nbTextHTML(b.v);});
+  if(!body||/<\/svg><\/div>$|<\/button><\/div>$/.test(body))body+='<div><br></div>';
   var h='<div class="sh-eyebrow">'+ic("i-lock")+'只有你看得到・會自動儲存'+(x.up?'・'+when(x.up):'')+'</div><input class="nb-title" id="nbT" maxlength="60" placeholder="標題" value="'+esc(x.t||"")+'" aria-label="筆記標題">'+
-    '<div class="nb-ed" id="nbEd" contenteditable="true" role="textbox" aria-multiline="true" aria-label="筆記內容" data-ph="寫點什麼…想畫圖就按下面的筆">'+body+'</div>'+
+    '<div class="nb-ed" id="nbEd" contenteditable="true" role="textbox" aria-multiline="true" aria-label="筆記內容" data-ph="寫點什麼…也可以加照片、畫圖">'+body+'</div>'+
     '<div class="nb-bar" id="nbBar"></div><div class="nb-f"><button type="button" class="btn ghost sm" id="nbDel">刪除筆記</button><button type="button" class="btn green sm" id="nbDone">完成</button></div>';
-  openSheet(h,["note",id]);nbBar();nbEmpty();
+  openSheet(h,["note",id]);nbBar();nbEmpty();nbLoadImgs();
   if(isNew)setTimeout(function(){var t=$("#nbT");if(t)t.focus()},120);}
 function nbBar(){var b=$("#nbBar");if(!b||!NB)return;
-  if(!NB.act){b.innerHTML='<div class="tb2 nb-tx"><button type="button" class="t wide" data-nbins="1">'+ic("i-pen")+'<span>手寫・畫圖</span></button><span class="nb-hint">文字直接打；點圖可以再修改</span></div>';return;}
+  if(!NB.act){b.innerHTML='<div class="tb2 nb-tx"><label class="t wide nb-phb">'+ic("i-img")+'<span>照片</span><input type="file" id="nbPh" accept="image/*" multiple hidden></label><button type="button" class="t wide" data-nbins="1">'+ic("i-pen")+'<span>手寫・畫圖</span></button></div>';return;}
   b.innerHTML='<div class="tb2" role="toolbar" aria-label="畫圖工具">'+NBT.map(function(t){return '<button type="button" class="t'+(NB.tool===t[0]?' on':'')+'" data-nbt="'+t[0]+'" aria-label="'+t[2]+'" title="'+t[2]+'">'+ic(t[1])+'</button>'}).join("")+
     '<span class="brk"></span><button type="button" class="t" data-nbcol="1" aria-label="顏色"><span class="sw" id="nbSw" style="background:'+NB.c+'"></span></button><button type="button" class="t" data-nbundo="1" aria-label="復原">'+ic("i-undo")+'</button>'+
     '<button type="button" class="t" data-nbrm="1" aria-label="刪除這張圖">'+ic("i-x")+'</button><button type="button" class="t done" data-nbok="1">完成</button></div>'+
@@ -3805,19 +3842,16 @@ function nbNote(){return NB&&NOTES[NB.id]}
 function nbSerial(){var ed=$("#nbEd"),out=[],buf=[];if(!ed)return null;
   function flush(){var v=buf.join("\n").replace(/\n+$/,"");if(v.trim())out.push({k:"p",v:v});buf=[];}
   function txt(n){if(n.nodeType===3)return n.nodeValue;if(n.nodeName==="BR")return "\n";var s="";n.childNodes.forEach(function(c){s+=txt(c)});return s;}
-  ed.childNodes.forEach(function(n){if(n.nodeType===1&&n.classList.contains("nb-d")){flush();var ink=NB.ink[n.dataset.d]||[];if(ink.length)out.push({k:"d",ink:ink});return;}
+  ed.childNodes.forEach(function(n){if(n.nodeType===1&&n.classList.contains("nb-i")){flush();out.push({k:"i",p:n.dataset.p});return;}if(n.nodeType===1&&n.classList.contains("nb-d")){flush();var ink=NB.ink[n.dataset.d]||[];if(ink.length)out.push({k:"d",ink:ink});return;}
     var s=txt(n);if(n.nodeType===1&&(n.nodeName==="DIV"||n.nodeName==="P"))buf.push(s.replace(/\n$/,""));else{if(buf.length)buf[buf.length-1]+=s;else buf.push(s);}});
   flush();return out;}
-function nbSave(){var x=nbNote();if(!x)return;var bl=nbSerial();if(bl){x.blocks=bl;x.body=bl.filter(function(b){return b.k==="p"}).map(function(b){return b.v}).join("\n");var d=bl.filter(function(b){return b.k==="d"})[0];x.ink=d?d.ink:[];}
+function nbSave(){var x=nbNote();if(!x)return;var bl=nbSerial();if(bl){x.blocks=bl;x.body=bl.filter(function(b){return b.k==="p"}).map(function(b){return b.v}).join("\n");var d=bl.filter(function(b){return b.k==="d"})[0];x.ink=d?d.ink:[];x.nph=bl.filter(function(b){return b.k==="i"}).length;}
   var t=$("#nbT");if(t)x.t=t.value;x.up=Date.now();saveNotes();renderDn();}
 function nbAct(el){$$("#nbEd .nb-d").forEach(function(d){d.classList.toggle("on",d===el)});NB.act=el?el.dataset.d:null;NB.hist=[];nbBar();
   if(el){var ed=$("#nbEd");ed.setAttribute("contenteditable","false");try{document.activeElement.blur()}catch(_){}el.scrollIntoView({block:"nearest",behavior:"smooth"});}
   else{var e2=$("#nbEd");if(e2)e2.setAttribute("contenteditable","true");}}
 function nbInsert(){var ed=$("#nbEd");if(!ed)return;var id=uid("dw");NB.ink[id]=[];
-  var tmp=document.createElement("div");tmp.innerHTML=nbDrawHTML(id,[]);var d=tmp.firstChild,after=null,sel=window.getSelection();
-  if(sel&&sel.rangeCount&&ed.contains(sel.anchorNode)){var n=sel.anchorNode;while(n&&n.parentNode!==ed)n=n.parentNode;after=n;}
-  if(after&&after.parentNode===ed)ed.insertBefore(d,after.nextSibling);else ed.appendChild(d);
-  if(!d.nextSibling||d.nextSibling.classList&&d.nextSibling.classList.contains("nb-d")){var p=document.createElement("div");p.innerHTML="<br>";ed.insertBefore(p,d.nextSibling);}
+  var tmp=document.createElement("div");tmp.innerHTML=nbDrawHTML(id,[]);var d=tmp.firstChild;nbPlace(d);
   nbEmpty();nbAct(d);}
 function nbSvg(){return NB&&NB.act?$('#nbEd .nb-d[data-d="'+NB.act+'"] svg'):null}
 function nbInk(){return NB&&NB.act?(NB.ink[NB.act]=NB.ink[NB.act]||[]):null}
@@ -3844,6 +3878,9 @@ document.addEventListener("paste",function(e){if(!NB||!e.target.closest||!e.targ
   if(document.execCommand)document.execCommand("insertText",false,s);});
 document.addEventListener("click",function(e){var el;if(!NB)return;
   if((el=e.target.closest("[data-nbins]"))){nbInsert();return;}
+  if((el=e.target.closest("[data-nbimgdel]"))){if(!el.classList.contains("armed")){el.classList.add("armed");toast("再按一次刪除這張照片");setTimeout(function(){if(el.isConnected)el.classList.remove("armed")},3000);return;}
+    var bx=el.closest(".nb-i");npDel(el.dataset.nbimgdel);if(bx)bx.remove();nbEmpty();nbSave();toast("已刪除照片");return;}
+  if((el=e.target.closest("#nbEd .nb-i img"))){if(NB.act)nbAct(null);var ims=$$("#nbEd .nb-i img");lbOpen(ims.map(function(x){return x.src}),ims.indexOf(el));return;}
   if((el=e.target.closest("[data-nbok]"))){nbAct(null);nbSave();return;}
   if((el=e.target.closest("[data-nbrm]"))){var d=$('#nbEd .nb-d[data-d="'+NB.act+'"]');if(d){if(nbInk().length&&!el.classList.contains("armed")){el.classList.add("armed");toast("再按一次刪除這張圖");setTimeout(function(){if(el.isConnected)el.classList.remove("armed")},3000);return;}
     delete NB.ink[NB.act];d.remove();}nbAct(null);nbEmpty();nbSave();return;}
@@ -3854,7 +3891,7 @@ document.addEventListener("click",function(e){var el;if(!NB)return;
   if(NB.act&&e.target.closest("#nbEd")&&!e.target.closest(".nb-d")){nbAct(null);return;}
   if((el=e.target.closest("#nbDone"))){if(NB.act)nbAct(null);nbSave();var x3=nbNote();if(x3&&!x3.t&&!(x3.blocks||[]).length){delete NOTES[NB.id];saveNotes();}NB=null;renderDn();openNotes();return;}
   if((el=e.target.closest("#nbDel"))){if(!el.classList.contains("armed")){el.classList.add("armed");el.textContent="再按一次刪除";setTimeout(function(){if(el.isConnected){el.classList.remove("armed");el.textContent="刪除筆記";}},3000);return;}
-    delete NOTES[NB.id];saveNotes();NB=null;renderDn();openNotes();toast("已刪除筆記");return;}
+    (noteBlocks(NOTES[NB.id]||{})||[]).forEach(function(b){if(b.k==="i")npDel(b.p)});delete NOTES[NB.id];saveNotes();NB=null;renderDn();openNotes();toast("已刪除筆記");return;}
 });
 /* Firebase 版：私人資料存在自己的文件，只有本人讀得到 */
 function v3Me(){if(!DB||!MYID)return;
