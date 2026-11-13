@@ -1529,7 +1529,7 @@ var IMG={"it_d7c2b9b7":"data:image/webp;base64,UklGRt7dAABXRUJQVlA4INLdAADweAKdA
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script>window.TRIP_APP_V="2026.11.10.0807";window.FIREBASE_CONFIG={"apiKey": "AIzaSyDHccUn_lxkCU2A0O7GTM3xYlEzikenCNE", "authDomain": "tokyo-trip-8ca87.firebaseapp.com", "projectId": "tokyo-trip-8ca87", "storageBucket": "tokyo-trip-8ca87.firebasestorage.app", "messagingSenderId": "1045211299345", "appId": "1:1045211299345:web:b71253bdcef19fafd67bb0"};window.TRIP_MODE="code";window.TRIP_CHECK="f43b939e58b5e99fe0ec1967b06730ec916c5110a7136853cd517bc82830faec";window.TRIP_ADMIN="3852e949dc0f65311dd3feb544b6471809322c1fa448778038fa7c617a98dc53";window.TRIP_SEED={};</script>
+<script>window.TRIP_APP_V="2026.11.13.1917";window.FIREBASE_CONFIG={"apiKey": "AIzaSyDHccUn_lxkCU2A0O7GTM3xYlEzikenCNE", "authDomain": "tokyo-trip-8ca87.firebaseapp.com", "projectId": "tokyo-trip-8ca87", "storageBucket": "tokyo-trip-8ca87.firebasestorage.app", "messagingSenderId": "1045211299345", "appId": "1:1045211299345:web:b71253bdcef19fafd67bb0"};window.TRIP_MODE="code";window.TRIP_CHECK="f43b939e58b5e99fe0ec1967b06730ec916c5110a7136853cd517bc82830faec";window.TRIP_ADMIN="3852e949dc0f65311dd3feb544b6471809322c1fa448778038fa7c617a98dc53";window.TRIP_SEED={};</script>
 <script>
 /* =========================================================
    Firebase 同步層：把 Firebase 包裝成跟 Claude 分享網頁一樣的資料庫介面，
@@ -3237,7 +3237,7 @@ function renderSv(){
   var all=svList();
   setHTML($("#svFilters"),['<button type="button" data-f="-1" aria-pressed="'+(svFilter===-1)+'">全部</button>'].concat(CATS.map(function(c,i){return '<button type="button" data-f="'+i+'" aria-pressed="'+(svFilter===i)+'">'+c+'</button>'})).join(""));
   var list=all.filter(function(x){return svFilter===-1||x.cat===svFilter});
-  $("#svText").textContent="我已買 "+all.filter(function(x){return isCk(x.id)}).length+" / "+all.length;
+  $("#svText").textContent="我已買 "+all.filter(function(x){return isCk(x.id)}).length+" / "+all.length;if(typeof subCounts==="function")subCounts();
   setHTML($("#svList"),list.map(function(x,i){
     var on=isCk(x.id),im=x.img&&x.img[0];
     return '<article class="sv'+(on?' done':'')+'" id="c_sv_'+esc(x.id)+'" style="animation-delay:'+(i*40)+'ms">'+
@@ -3316,16 +3316,19 @@ function editSplit(){
 
 /* ---------- 清單 ---------- */
 function renderTodo(){
-  var total=0,done=0;
+  var total=0,done=0,cnt={};
   setHTML($("#todoList"),TODOG.map(function(g){
-    var its=todoList(g.k),dn=its.filter(function(x){return isCk(x.id)}).length;total+=its.length;done+=dn;
-    return '<div class="panel" style="--c:'+g.c+'"><h3>'+g.t+'<small>'+dn+' / '+its.length+'</small></h3><ul class="rows grp">'+its.map(function(x){var on=isCk(x.id);
+    var its=todoList(g.k),dn=its.filter(function(x){return isCk(x.id)}).length;total+=its.length;done+=dn;cnt[g.k]=dn+' / '+its.length;
+    return '<div class="panel" style="--c:'+g.c+'"><h3>'+g.t+'<small data-tdn="'+g.k+'">'+dn+' / '+its.length+'</small></h3><ul class="rows grp">'+its.map(function(x){var on=isCk(x.id);
       return '<li class="row'+(on?' done':'')+'" id="c_td_'+esc(x.id)+'"><input type="checkbox" data-k="'+esc(x.id)+'"'+(on?' checked':'')+' aria-label="完成：'+esc(x.n)+'"><button type="button" class="nm td-open" data-edit="todo" data-g="'+g.k+'" data-id="'+esc(x.id)+'"><span>'+esc(x.n)+'</span></button>'+cmBtn("td",x.id,x.n)+'</li>';}).join("")+'</ul>'+
       (g.link?'<div class="link-row"><a href="'+g.link.u+'" target="_blank" rel="noopener">'+esc(g.link.t)+' ↗</a></div>':'')+
       '<form class="add" data-g="'+g.k+'" autocomplete="off"><input class="inp" name="n" maxlength="40" required placeholder="新增項目…" aria-label="新增到'+g.t+'"><button class="btn sm" type="submit">加入</button></form></div>';
   }).join(""));
   $("#progText").textContent="我完成 "+done+" / "+total;
   $("#progBar").style.width=(total?Math.round(done/total*100):0)+"%";
+  /* 勾選時不重畫卡片，所以每組的數字要另外更新 */
+  $$("[data-tdn]").forEach(function(el){var v=cnt[el.dataset.tdn];if(v!=null&&el.textContent!==v)el.textContent=v;});
+  if(typeof subCounts==="function")subCounts();
 }
 /* 勾選時只更新計數與快取，不重畫卡片，避免畫面閃爍 */
 function quietRender(fn){var real=setHTML;setHTML=function(el,h){if(el)el._h=h;return false};try{fn();}finally{setHTML=real;}}
